@@ -1,0 +1,121 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+
+enum LockerLocationEnum {
+  Main
+  Addition
+}
+
+enum BciTypeEnum {
+  None
+  Mother
+  Father
+  Other
+}
+
+enum ContactTypeEnum {
+  Parent
+  Guardian
+  Emergency
+  ReleaseOnly
+  Other
+}
+
+enum GenderEnum {
+  Male
+  Female
+  Other
+}
+
+enum AncestryEnum {
+  White
+  Hispanic
+  Asian
+  Black
+  AmericanIndianOrAlaskanNative
+  NativeHawaiianOrOtherPacific
+}
+
+// Models
+
+model User {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  password String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Student {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  lastName String
+  firstName String
+  grade String
+  homeroomNumber String?
+  lockerNumber String?
+  lockerLocation LockerLocationEnum?
+  dateEnrolled DateTime?
+  daysAbsent Int @default(0)
+  dateExit DateTime?
+  hasLep Boolean?
+  canPhoto Boolean @default(false)
+  bbcid String?
+  sasid String?
+  lasid String?
+
+  livesWithBothParents Boolean?
+  lastSchoolName String?
+  phone String?
+  street String?
+  city String?
+  state String?
+  zip String?
+  dob DateTime?
+  SSN String?
+  gender GenderEnum?
+  ancenstry AncestryEnum?
+  notes String?
+
+
+  contacts Contact[] @relation(fields: [contactIds], references: [id])
+  contactIds String[] @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Contact {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  type ContactTypeEnum
+  lastName String
+  firstName String
+  phone String?
+  email String?
+  street String?
+  city String?
+  state String?
+  zip String?
+  bbcid String?
+
+  bciExpires DateTime?
+  notes String?
+
+  students Student[] @relation(fields: [studentIds], references: [id])
+  studentIds String[] @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
