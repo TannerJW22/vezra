@@ -2,8 +2,10 @@ import Link from "next/link";
 import "./app.css";
 import { Rubik } from "next/font/google";
 import { IoSettingsSharp, IoNotificationsSharp } from "react-icons/io5";
+import { ClerkProvider, SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import { UserButton } from "@clerk/nextjs";
 
-import { AuthDropdown } from "@/components";
+import AuthWidget from "@/components/AuthWidget";
 
 const rubik = Rubik({
 	subsets: ["latin"],
@@ -19,15 +21,17 @@ export const metadata = {
 // :::
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en">
-			<body className={rubik.className}>
-				<HeaderPanel />
-				<div className="flex">
-					<LeftNavPanel />
-					<div className="bg-light-100 w-full h-screen">{children}</div>
-				</div>
-			</body>
-		</html>
+		<ClerkProvider>
+			<html lang="en">
+				<body className={rubik.className}>
+					<HeaderPanel />
+					<div className="flex">
+						<LeftNavPanel />
+						<div className="bg-light-100 w-full h-screen">{children}</div>
+					</div>
+				</body>
+			</html>
+		</ClerkProvider>
 	);
 }
 
@@ -49,7 +53,7 @@ const HeaderPanel: React.FC = () => {
 					<button className="bg-light-100 flex items-center justify-center text-lg text-primary-500 drop-shadow-sm border border-zinc-300 rounded-full h-10 w-10">
 						<IoSettingsSharp />
 					</button>
-					<AuthDropdown />
+					<AuthWidget />
 				</div>
 			</div>
 		</div>
