@@ -49,16 +49,7 @@ enum AncestryEnum {
 
 // Models
 
-model User {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
-  password String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Student {
+model student {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   lastName String
   firstName String
@@ -89,14 +80,14 @@ model Student {
   notes String?
 
 
-  contacts Contact[] @relation(fields: [contactIds], references: [id])
+  contacts contact[] @relation(fields: [contactIds], references: [id])
   contactIds String[] @db.ObjectId
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model Contact {
+model contact {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   type ContactTypeEnum
   lastName String
@@ -112,7 +103,7 @@ model Contact {
   bciExpires DateTime?
   notes String?
 
-  students Student[] @relation(fields: [studentIds], references: [id])
+  students student[] @relation(fields: [studentIds], references: [id])
   studentIds String[] @db.ObjectId
 
   createdAt DateTime @default(now())
