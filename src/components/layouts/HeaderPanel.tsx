@@ -3,9 +3,20 @@
 import { useVezraUser } from "@/hooks";
 import { IoNotificationsSharp, IoSettingsSharp } from "react-icons/io5";
 import AuthWidget from "@/components/AuthWidget";
+import { useEffect } from "react";
+import { redirect } from "next/navigation";
+import LoadingSpinner from "../_loading/LoadingScreen";
 
 export default function HeaderPanel() {
 	const { userIsLoaded, userIsSignedIn, user } = useVezraUser();
+
+	// if (!userIsLoaded) return <LoadingSpinner />;
+
+	useEffect(() => {
+		if (userIsLoaded && !userIsSignedIn) {
+			redirect("/");
+		}
+	}, [userIsSignedIn]);
 
 	return (
 		//

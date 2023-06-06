@@ -7,14 +7,19 @@ import React, { useEffect, useState } from "react";
 import AuthDropdownMenu from "./AuthDropdownMenu";
 import { UserButton } from "@clerk/nextjs";
 import { type VezraUser } from "types";
+import { redirect } from "next/navigation";
 
 export default function AuthWidget({ user }: AuthWidgetProps) {
 	const [showDropdown, setShowDropdown] = useState(false);
 
+	const handleShowDropdown = () => {
+		setShowDropdown(!showDropdown);
+	};
+
 	return (
 		<div>
 			<div className="relative flex items-center justify-center">
-				<button onClick={() => setShowDropdown(!showDropdown)}>
+				<button onClick={() => handleShowDropdown()}>
 					<div className=" z-10 group relative mr-4 h-[62px] w-[62px] rounded-full drop-shadow-md">
 						<img
 							src={
@@ -28,7 +33,7 @@ export default function AuthWidget({ user }: AuthWidgetProps) {
 						<span className="absolute bottom-0 right-0 block h-[17px] w-[17px] rounded-full border-[2.5px] border-white bg-green-700" />
 					</div>
 				</button>
-				{user && showDropdown && <AuthDropdownMenu user={user} />}
+				{user && showDropdown && <AuthDropdownMenu user={user} toggle={handleShowDropdown} />}
 				{/* <UserButton /> */}
 			</div>
 		</div>

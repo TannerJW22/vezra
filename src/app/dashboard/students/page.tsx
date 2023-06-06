@@ -1,5 +1,5 @@
 import React from "react";
 
-export default function Students() {
+export default function StudentsPage() {
 	return <main>Students</main>;
 }
