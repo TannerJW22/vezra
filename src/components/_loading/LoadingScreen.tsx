@@ -1,23 +1,24 @@
 import React from "react";
-import vezraLogo from "public/img/vezra-icon.png";
-import Image from "next/image";
+// import vezraLogo from "public/img/vezra-icon.png";
+// import Image from "next/image";
 
 export default function LoadingScreen({ className, width, height }: LoadingScreenProps) {
 	return (
 		<div
 			className={
-				className || "flex relative bg-light-300 marker:w-full h-screen justify-center items-center"
+				className ||
+				"flex absolute z-50 top-0 left-0 right-0 bottom-0 bg-light-300 marker:w-full h-screen justify-center items-center"
 			}
 		>
-			<div className=" absolute shrink h-16 w-16">
+			{/* <div className="absolute shrink h-16 w-16">
 				<Image
 					className="object-cover w-full h-full bg-light-300"
 					src={vezraLogo}
 					alt="vezra logo"
-					width={100}
-					height={100}
+					width={10}
+					height={10}
 				/>
-			</div>
+			</div> */}
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				style={{

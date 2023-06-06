@@ -1,9 +1,6 @@
-import Link from "next/link";
 import "./app.css";
 import { Rubik } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
-
-import { HeaderPanel, LeftNavPanel } from "@/components/layouts";
 
 const rubik = Rubik({
 	subsets: ["latin"],
