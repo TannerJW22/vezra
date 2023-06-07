@@ -7,9 +7,9 @@ import CheckForRedirect from "@/components/CheckForRedirect";
 import Image from "next/image";
 import kha from "public/img/kha-login-page.png";
 
-import SignInForm from "@/components/_forms/SignInForm";
+import SignInForm from "@/components/(forms)/SignInForm";
 import { useState } from "react";
-import { LoadingScreen } from "@/components/_loading";
+import { LoadingScreen } from "@/components/(loading)";
 
 export default function SignInPage() {
 	const [isLoading, setIsLoading] = useState(true);

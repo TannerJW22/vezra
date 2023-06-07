@@ -2,7 +2,7 @@
 import React from "react";
 import { useVezraUser } from "@/hooks";
 import { useRouter } from "next/navigation";
-import LoadingSpinner from "../_loading/LoadingScreen";
+import LoadingSpinner from "../(loading)/LoadingScreen";
 
 export default function CheckForRedirect({
 	withAuth,

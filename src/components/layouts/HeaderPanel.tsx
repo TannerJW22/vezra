@@ -5,7 +5,7 @@ import { IoNotificationsSharp, IoSettingsSharp } from "react-icons/io5";
 import AuthWidget from "@/components/AuthWidget";
 import { useEffect } from "react";
 import { redirect } from "next/navigation";
-import LoadingSpinner from "../_loading/LoadingScreen";
+import LoadingSpinner from "../(loading)/LoadingScreen";
 
 export default function HeaderPanel() {
 	const { userIsLoaded, userIsSignedIn, user } = useVezraUser();

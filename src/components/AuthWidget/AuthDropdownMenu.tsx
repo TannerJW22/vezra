@@ -8,7 +8,7 @@ import { RiUserSettingsLine } from "react-icons/ri";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { LoadingScreen } from "@/components/_loading";
+import { LoadingScreen } from "@/components/(loading)";
 
 export default function AuthDropdownMenu({ user, toggle }: AuthDropdownMenuProps) {
 	const { signOut, isLoaded } = useAuth();

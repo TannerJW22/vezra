@@ -9,7 +9,7 @@ import { BsFillDiamondFill } from "react-icons/bs";
 import Link from "next/link";
 import { Formik } from "Formik";
 import { useRouter } from "next/navigation";
-import LoadingSpinner from "@/components/_loading/LoadingSpinner";
+import LoadingSpinner from "@/components/(loading)/LoadingSpinner";
 import InlineErrorController from "@/components/InlineErrorController";
 
 export default function SignInForm({}: any) {
@@ -53,7 +53,7 @@ export default function SignInForm({}: any) {
 							<input
 								autoComplete="off"
 								disabled={isFormDisabled}
-								className={`px-2 outline-none border border-zinc-300 rounded-md w-[250px] h-12 hover:bg-light-100 focus:bg-light-100 active:bg-light-100 ${
+								className={`px-2 outline-none border border-zinc-300 rounded-md w-[250px] h-12 hover:bg-light-100 focus:bg-light-100 active:bg-light-100 focus:rounded-none focus:border-b-2 focus:border-x-0 focus:border-t-0  focus:border-primary-500 ${
 									isFormDisabled &&
 									`bg-zinc-200 hover:bg-zinc-200 focus:bg-zinc-200 active:bg-zinc-200`
 								}`}
@@ -67,7 +67,7 @@ export default function SignInForm({}: any) {
 						<div className="mb-5">
 							<input
 								disabled={isFormDisabled}
-								className={`px-2 outline-none border border-zinc-300 rounded-md w-[250px] h-12 hover:bg-light-100 focus:bg-light-100 active:bg-light-100 ${
+								className={`px-2 outline-none border border-zinc-300 rounded-md w-[250px] h-12 hover:bg-light-100 focus:bg-light-100 active:bg-light-100 focus:rounded-none focus:border-b-2 focus:border-x-0 focus:border-t-0  focus:border-primary-500 ${
 									isFormDisabled &&
 									`bg-zinc-200 hover:bg-zinc-200 focus:bg-zinc-200 active:bg-zinc-200`
 								}`}
