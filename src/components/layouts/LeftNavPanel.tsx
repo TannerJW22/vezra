@@ -12,9 +12,9 @@ export default function LeftNavPanel() {
 	const renderStyle = (buttonId: "attendance" | "classes" | "students") => {
 		const leftNavButtonStyle = Object.freeze({
 			active:
-				"h-[58px] flex items-center gap-3 pl-9 py-2.5 rounded-md border-l-8 border-light-100 shadow-md shadow-primary-700 border-primary-300 bg-primary-100 duration-200",
+				"h-[58px] flex items-center gap-3 pl-9 py-2.5 rounded-md border-l-[12px] border-white shadow-md shadow-primary-700 border-primary-300 bg-primary-100 duration-200",
 			inactive:
-				"h-[58px] flex items-center gap-3 pl-4 mx-3 py-2.5 rounded-md border-2 border-dotted shadow-md hover:shadow-primary-700 border-primary-300 hover:border-none hover:bg-primary-100 hover:bg-opacity-[50%] duration-200",
+				"h-[58px] flex items-center gap-3 pl-4 mx-3 py-2.5 rounded-md border-2 border-dotted shadow-md hover:shadow-primary-700 border-primary-300 hover:border-none hover:bg-primary-100 hover:bg-opacity-[50%] transition-transform duration-200",
 		});
 
 		if (buttonId === activeNavButton) return leftNavButtonStyle.active;

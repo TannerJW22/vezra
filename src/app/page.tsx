@@ -15,7 +15,10 @@ export default function SignInPage() {
 	const [isLoading, setIsLoading] = useState(true);
 
 	return (
-		<CheckForRedirect withAuth="/dashboard" className="relative flex justify-center">
+		<CheckForRedirect
+			withAuth="/dashboard"
+			className="relative flex justify-center w-full h-screen"
+		>
 			{isLoading && <LoadingScreen />}
 			<main>
 				<div className="flex justify-center w-full h-screen min-h-[400px] min-w-[525px]">
