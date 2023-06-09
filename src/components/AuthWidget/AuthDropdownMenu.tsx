@@ -35,14 +35,14 @@ export default function AuthDropdownMenu({ user, toggle }: AuthDropdownMenuProps
 				<Link
 					href="/profile"
 					onClick={toggle}
-					className="w-[85%] border-2 border-zinc-100 flex py-2 px-8 items-center gap-3 hover:bg-light-100 hover:border-zinc-200 hover:text-primary-700"
+					className="w-[85%] border-2 bordered-dotted shadow-md shadow-zinc-100 border-zinc-100 flex py-2 px-8 items-center gap-3 hover:bg-light-100 hover:border-zinc-200 hover:text-primary-700"
 				>
 					<RiUserSettingsLine className="text-[1.15rem]" />
 					<span className="text-[0.9rem]">Manage Profile</span>
 				</Link>
 				<button
 					onClick={handleSignOut}
-					className="w-[85%] border-2 border-zinc-100 flex py-2 px-8 items-center gap-3 hover:bg-light-100 hover:border-zinc-200 hover:text-primary-700"
+					className="w-[85%] border-2 bordered-dotted shadow-md shadow-zinc-100 border-zinc-100 flex py-2 px-8 items-center gap-3 hover:bg-light-100 hover:border-zinc-200 hover:text-primary-700"
 				>
 					<FiLogOut className="text-[1.15rem]" />
 					<span className="text-[0.9rem]">Sign Out</span>

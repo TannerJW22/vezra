@@ -2,10 +2,11 @@
 
 import { useVezraUser } from "@/hooks";
 import { IoNotificationsSharp, IoSettingsSharp } from "react-icons/io5";
+import vezraLogo from "public/img/vezra-logo.png";
 import AuthWidget from "@/components/AuthWidget";
 import { useEffect } from "react";
 import { redirect } from "next/navigation";
-import LoadingSpinner from "../(loading)/LoadingScreen";
+import Image from "next/image";
 
 export default function HeaderPanel() {
 	const { userIsLoaded, userIsSignedIn, user } = useVezraUser();
@@ -20,8 +21,11 @@ export default function HeaderPanel() {
 
 	return (
 		//
-		<div className="w-full h-24 border-b border-light-300">
-			<div className="h-full flex items-center justify-end py-1 pr-8">
+		<div className="relative flex w-full h-24 border-b border-light-300">
+			<div className="h-full w-fit ml-1 p-4">
+				<Image src={vezraLogo} alt="vezra icon" width={175} height={40} />
+			</div>
+			<div className="absolute right-0 h-full flex items-center justify-end py-1 pr-8">
 				<div className="flex items-center gap-3">
 					<input
 						className="px-2 outline-none border border-zinc-300 rounded-md w-[250px] h-10 hover:bg-light-100 focus:bg-light-100 active:bg-light-100"
