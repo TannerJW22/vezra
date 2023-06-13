@@ -28,7 +28,7 @@ export default function HeaderPanel() {
 			<div className="absolute right-0 h-full flex items-center justify-end py-1 pr-8">
 				<div className="flex items-center gap-3">
 					<input
-						className="px-2 outline-none border border-zinc-300 rounded-md w-[250px] h-10 hover:bg-light-100 focus:bg-light-100 active:bg-light-100"
+						className="px-2 outline-none border border-zinc-300 rounded-md w-[250px] h-10 hover:bg-light-100 focus:bg-light-100"
 						type="search"
 						placeholder=" Search..."
 					/>

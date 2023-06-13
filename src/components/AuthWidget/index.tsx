@@ -34,7 +34,6 @@ export default function AuthWidget({ user }: AuthWidgetProps) {
 					</div>
 				</button>
 				{user && showDropdown && <AuthDropdownMenu user={user} toggle={handleShowDropdown} />}
-				{/* <UserButton /> */}
 			</div>
 		</div>
 	);
