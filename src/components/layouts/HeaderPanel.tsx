@@ -11,8 +11,6 @@ import Image from "next/image";
 export default function HeaderPanel() {
 	const { userIsLoaded, userIsSignedIn, user } = useVezraUser();
 
-	// if (!userIsLoaded) return <LoadingSpinner />;
-
 	useEffect(() => {
 		if (userIsLoaded && !userIsSignedIn) {
 			redirect("/");

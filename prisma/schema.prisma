@@ -1,21 +1,21 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-generator client {
-  provider = "prisma-client-js"
-}
+// generator client {
+//   provider = "prisma-client-js"
+// }
 
-datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
-}
+// datasource db {
+//   provider = "mongodb"
+//   url      = env("DATABASE_URL")
+// }
 
 // Enums
 
-enum LockerLocationEnum {
-  Main
-  Addition
-}
+// enum LockerLocationEnum {
+//   Main
+//   Addition
+// }
 
 enum BciTypeEnum {
   None
@@ -32,59 +32,59 @@ enum ContactTypeEnum {
   Other
 }
 
-enum GenderEnum {
-  Male
-  Female
-  Other
-}
+// enum GenderEnum {
+//   Male
+//   Female
+//   Other
+// }
 
-enum AncestryEnum {
-  White
-  Hispanic
-  Asian
-  Black
-  AmericanIndianOrAlaskanNative
-  NativeHawaiianOrOtherPacific
-}
+// enum AncestryEnum {
+//   White
+//   Hispanic
+//   Asian
+//   Black
+//   AmericanIndianOrAlaskanNative
+//   NativeHawaiianOrOtherPacific
+// }
 
 // Models
 
 model student {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  lastName String
-  firstName String
-  grade String
-  homeroomNumber String?
-  lockerNumber String?
-  lockerLocation LockerLocationEnum?
-  dateEnrolled DateTime?
-  daysAbsent Int @default(0)
-  dateExit DateTime?
-  hasLep Boolean?
-  canPhoto Boolean @default(false)
-  bbcid String?
-  sasid String?
-  lasid String?
+  // id String @id @default(auto()) @map("_id") @db.ObjectId
+  // lastName String
+  // firstName String
+  // grade String
+  // homeroomNumber String?
+  // lockerNumber String?
+  // lockerLocation LockerLocationEnum?
+  // dateEnrolled DateTime?
+  // daysAbsent Int @default(0)
+  // dateExit DateTime?
+  // hasLep Boolean?
+  // canPhoto Boolean @default(false)
+  // bbcid String?
+  // sasid String?
+  // lasid String?
 
-  livesWithBothParents Boolean?
-  lastSchoolName String?
-  phone String?
-  street String?
-  city String?
-  state String?
-  zip String?
-  dob DateTime?
-  SSN String?
-  gender GenderEnum?
-  ancenstry AncestryEnum?
-  notes String?
+  // livesWithBothParents Boolean?
+  // lastSchoolName String?
+  // phone String?
+  // street String?
+  // city String?
+  // state String?
+  // zip String?
+  // dob DateTime?
+  // SSN String?
+  // gender GenderEnum?
+  // ancenstry AncestryEnum?
+  // notes String?
 
 
-  contacts contact[] @relation(fields: [contactIds], references: [id])
-  contactIds String[] @db.ObjectId
+  // contacts contact[] @relation(fields: [contactIds], references: [id])
+  // contactIds String[] @db.ObjectId
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  // createdAt DateTime @default(now())
+  // updatedAt DateTime @updatedAt
 }
 
 model contact {
