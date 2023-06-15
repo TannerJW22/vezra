@@ -146,7 +146,7 @@ export type studentSchema = {
 	dateEnrolled: Date;
 	homeroomNumber?: string;
 	lockerNumber?: string;
-	lockerLocation?: "Main" | "Addition";
+	lockerLocation?: LockerLocationEnum;
 	daysAbsent?: number;
 	dateExit?: Date;
 	hasLep?: Boolean;
@@ -163,19 +163,32 @@ export type studentSchema = {
 	zip?: number;
 	dob?: Date;
 	ssn?: number;
-	gender?: "Male" | "Female" | "Other";
-	ancenstry?:
-		| "White"
-		| "Hispanic"
-		| "Asian"
-		| "Black"
-		| "American Indian/Alaskan Native"
-		| "NativeHawaiian/OtherPacific";
+	gender?: GenderEnum;
+	ancestry?: AncestryEnum;
 	notes?: string;
 	contactIds: contactSchema[];
 	createdAt?: Date;
 	updatedAt?: Date;
 };
+
+// Custom enum-equivalent that facilitates array methods.
+const _lockerlocationEnum = ["Main", "Addition"] as const;
+export type LockerLocationEnum = (typeof _lockerlocationEnum)[number];
+
+// Custom enum-equivalent that facilitates array methods.
+const _genderEnum = ["Male", "Female", "Other"] as const;
+export type GenderEnum = (typeof _genderEnum)[number];
+
+// Custom enum-equivalent that facilitates array methods.
+const _ancestryEnum = [
+	"White",
+	"Hispanic",
+	"Asian",
+	"Black",
+	"American Indian/Alaskan Native",
+	"NativeHawaiian/OtherPacific",
+] as const;
+export type AncestryEnum = (typeof _ancestryEnum)[number];
 
 export default mongoose.models.studentSchema ||
 	mongoose.model<studentSchema>("Student", studentSchema);
