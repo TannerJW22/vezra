@@ -10,7 +10,6 @@ export default function useVezraUser(): useVezraUserReturn {
 		user: {
 			id: user?.id,
 			username: user?.username,
-
 			firstName: user?.firstName,
 			lastName: user?.lastName,
 			fullName: user?.fullName,
