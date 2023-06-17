@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+
+import { useLayoutEffect } from "react";
 import { useVezraUser } from "@/hooks";
 import { useRouter } from "next/navigation";
 import LoadingSpinner from "../(loading)/LoadingScreen";
@@ -13,15 +14,17 @@ export default function CheckForRedirect({
 	const router = useRouter();
 	const { userIsSignedIn, userIsLoaded } = useVezraUser();
 
+	useLayoutEffect(() => {
+		if (userIsLoaded) {
+			if (withAuth && userIsSignedIn) {
+				router.push(withAuth);
+			} else if (noAuth && !userIsSignedIn) {
+				router.push(noAuth);
+			}
+		}
+	}, [userIsLoaded, userIsSignedIn]);
+
 	if (!userIsLoaded) return <LoadingSpinner />;
-
-	if (withAuth && userIsLoaded && userIsSignedIn) {
-		router.push(withAuth);
-	}
-
-	if (noAuth && userIsLoaded && !userIsSignedIn) {
-		router.push(noAuth);
-	}
 
 	return (
 		//

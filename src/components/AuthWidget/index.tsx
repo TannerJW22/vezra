@@ -5,9 +5,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 import AuthDropdownMenu from "./AuthDropdownMenu";
-import { UserButton } from "@clerk/nextjs";
 import { type VezraUser } from "types";
-import { redirect } from "next/navigation";
 
 export default function AuthWidget({ user }: AuthWidgetProps) {
 	const [showDropdown, setShowDropdown] = useState(false);

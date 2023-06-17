@@ -1,8 +1,8 @@
 import "./app.css";
 import { Rubik } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
-import { Provider as ReduxProvider } from "react-redux";
-import { store } from "@/store/index";
+import ReduxProvider from "@/store";
+import { store } from "@/store";
 
 const rubik = Rubik({
 	subsets: ["latin"],
@@ -16,14 +16,18 @@ export const metadata = {
 };
 
 // :::
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: RootLayoutProps) {
 	return (
 		<ClerkProvider>
-			<ReduxProvider store={store}>
-				<html lang="en">
-					<body className={rubik.className}>{children}</body>
-				</html>
-			</ReduxProvider>
+			<html lang="en">
+				<body className={rubik.className}>
+					<ReduxProvider>{children}</ReduxProvider>
+				</body>
+			</html>
 		</ClerkProvider>
 	);
 }
+
+export type RootLayoutProps = {
+	children: React.ReactNode;
+};

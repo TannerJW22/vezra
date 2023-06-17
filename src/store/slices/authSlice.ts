@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { VezraUser } from "types";
+import { type VezraUser } from "types";
 
-interface AuthSlice {
+type AuthSlice = {
 	userIsLoaded: boolean;
 	userIsSignedIn: boolean;
 	user: Partial<VezraUser>;
-}
+};
 
 const initialState: AuthSlice = {
 	userIsLoaded: false,
