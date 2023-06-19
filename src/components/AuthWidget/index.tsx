@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 import AuthDropdownMenu from "./AuthDropdownMenu";
@@ -40,10 +38,3 @@ export default function AuthWidget({ user }: AuthWidgetProps) {
 export type AuthWidgetProps = {
 	user: VezraUser;
 };
-
-// const fetcher = async (url: any) => {
-// 	const res = await fetch(url);
-// 	return res.json();
-// };
-
-// let { data, error, isLoading } = useSWR("https://dog.ceo/api/breeds/image/random", fetcher);

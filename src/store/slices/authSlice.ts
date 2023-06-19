@@ -1,35 +1,38 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { type VezraUser } from "types";
 
-type AuthSlice = {
-	userIsLoaded: boolean;
-	userIsSignedIn: boolean;
-	user: Partial<VezraUser>;
-};
+// Implementation Pending / Unecessary? // <<--(
 
-const initialState: AuthSlice = {
-	userIsLoaded: false,
-	userIsSignedIn: false,
-	user: {},
-};
+// import { type VezraUser } from "types";
 
-export const authSlice = createSlice({
-	name: "auth",
-	initialState,
-	reducers: {
-		updateUserIsLoaded: (state, action: PayloadAction<boolean>) => {
-			state.userIsLoaded = action.payload;
-		},
+// type AuthSlice = {
+// 	userIsLoaded: boolean;
+// 	userIsSignedIn: boolean;
+// 	user: Partial<VezraUser>;
+// };
 
-		updateUserIsSignedIn: (state, action: PayloadAction<boolean>) => {
-			state.userIsSignedIn = action.payload;
-		},
+// const initialState: AuthSlice = {
+// 	userIsLoaded: false,
+// 	userIsSignedIn: false,
+// 	user: {},
+// };
 
-		updateVezraUser: (state, action: PayloadAction<Partial<VezraUser>>) => {
-			state.user = { ...state.user, ...action.payload };
-		},
-	},
-});
+// export const authSlice = createSlice({
+// 	name: "auth",
+// 	initialState,
+// 	reducers: {
+// 		updateUserIsLoaded: (state, action: PayloadAction<boolean>) => {
+// 			state.userIsLoaded = action.payload;
+// 		},
 
-export const authReducer = authSlice.reducer;
-export const { updateUserIsLoaded, updateUserIsSignedIn, updateVezraUser } = authSlice.actions;
+// 		updateUserIsSignedIn: (state, action: PayloadAction<boolean>) => {
+// 			state.userIsSignedIn = action.payload;
+// 		},
+
+// 		updateVezraUser: (state, action: PayloadAction<Partial<VezraUser>>) => {
+// 			state.user = { ...state.user, ...action.payload };
+// 		},
+// 	},
+// });
+
+// export const authReducer = authSlice.reducer;
+// export const { updateUserIsLoaded, updateUserIsSignedIn, updateVezraUser } = authSlice.actions;

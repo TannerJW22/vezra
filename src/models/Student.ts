@@ -1,4 +1,7 @@
 import mongoose from "mongoose";
+import { z } from "zod";
+
+// --- Mongoose Models
 
 const studentSchema = new mongoose.Schema(
 	{
@@ -22,8 +25,8 @@ const studentSchema = new mongoose.Schema(
 			type: Date,
 			required: [true, "Enrollent Date is required"],
 		},
-		homeroomNumber: {
-			type: Number,
+		homeroom: {
+			type: String,
 			trim: true,
 		},
 		lockerNumber: {
@@ -139,38 +142,7 @@ const studentSchema = new mongoose.Schema(
 	},
 );
 
-export type studentSchema = {
-	lastName: string;
-	firstName: string;
-	grade: string;
-	dateEnrolled: Date;
-	homeroomNumber?: string;
-	lockerNumber?: string;
-	lockerLocation?: LockerLocationEnum;
-	daysAbsent?: number;
-	dateExit?: Date;
-	hasLep?: Boolean;
-	canPhoto?: Boolean;
-	bbcid?: string;
-	sasid?: string;
-	lasid?: string;
-	livesWithBothParents?: Boolean;
-	lastSchoolName?: string;
-	phone?: number;
-	street?: string;
-	city?: string;
-	state?: string;
-	zip?: number;
-	dob?: Date;
-	ssn?: number;
-	gender?: GenderEnum;
-	ancestry?: AncestryEnum;
-	notes?: string;
-	contactIds: contactSchema[];
-	createdAt?: Date;
-	updatedAt?: Date;
-};
-
+// --- Enum Declarations
 // Custom enum-equivalent that facilitates array methods.
 const _lockerlocationEnum = ["Main", "Addition"] as const;
 export type LockerLocationEnum = (typeof _lockerlocationEnum)[number];
@@ -190,5 +162,40 @@ const _ancestryEnum = [
 ] as const;
 export type AncestryEnum = (typeof _ancestryEnum)[number];
 
-export default mongoose.models.studentSchema ||
-	mongoose.model<studentSchema>("Student", studentSchema);
+// --- Zod Schema
+export const ZodStudent = z.object({
+	lastName: z.string(),
+	firstName: z.string(),
+	grade: z.string(),
+	dateEnrolled: z.date(),
+	homeroom: z.string().optional(),
+	lockerNumber: z.string().optional(),
+	lockerLocation: z.enum(_lockerlocationEnum).optional(),
+	daysAbsent: z.number().optional(),
+	dateExit: z.date().optional(),
+	hasLep: z.boolean().optional(),
+	canPhoto: z.boolean().optional(),
+	bbcid: z.string().optional(),
+	sasid: z.string().optional(),
+	lasid: z.string().optional(),
+	livesWithBothParents: z.boolean().optional(),
+	lastSchoolName: z.string().optional(),
+	phone: z.number().optional(),
+	street: z.string().optional(),
+	city: z.string().optional(),
+	state: z.string().optional(),
+	zip: z.number().optional(),
+	dob: z.date().optional(),
+	ssn: z.number().optional(),
+	gender: z.enum(_genderEnum).optional(),
+	ancestry: z.enum(_ancestryEnum).optional(),
+	notes: z.string().optional(),
+	contactIds: z.array(contactSchema).optional(), // <<--|
+	createdAt: z.date().optional(), // <<--|
+	updatedAt: z.date().optional(), // <<--|
+});
+
+// --- TypeScript Type
+export type Student = z.infer<typeof ZodStudent>;
+
+export default mongoose.models.studentSchema || mongoose.model<Student>("Student", studentSchema);

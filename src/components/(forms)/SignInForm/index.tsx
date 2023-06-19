@@ -8,23 +8,21 @@ import Link from "next/link";
 import vezraLogo from "public/img/vezra-logo.png";
 import { BsFillDiamondFill } from "react-icons/bs";
 import { twMerge } from "tailwind-merge";
-import { clsx } from "clsx";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-import { DevTool } from "@hookform/devtools";
 import { useRouter } from "next/navigation";
 import LoadingSpinner from "@/components/(loading)/LoadingSpinner";
 import InlineErrorController from "@/components/InlineErrorController";
 
-const signInFormSchema = z.object({
+const ZodSignInFormSchema = z.object({
 	username: z.string().nonempty(),
 	password: z.string().nonempty(),
 });
 
-type SignInFormData = z.infer<typeof signInFormSchema>;
+type SignInFormData = z.infer<typeof ZodSignInFormSchema>;
 
 // :::
 export default function SignInForm({}: any) {
@@ -32,7 +30,7 @@ export default function SignInForm({}: any) {
 	const { isLoaded, signIn, setActive } = useSignIn();
 
 	const { register, control, handleSubmit, formState } = useForm<SignInFormData>({
-		resolver: zodResolver(signInFormSchema),
+		resolver: zodResolver(ZodSignInFormSchema),
 	});
 
 	const [isFormDisabled, setIsFormDisabled] = useState(false);

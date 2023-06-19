@@ -2,14 +2,21 @@
 
 import { AttendanceIcon } from "@/components/layouts";
 import { useRouter } from "next/navigation";
-import { MouseEventHandler, useReducer, useState } from "react";
+import { useState, useEffect } from "react";
 import { IoSchoolOutline, IoPeopleOutline } from "react-icons/io5";
 
+export type NavButtonId = "attendance" | "classes" | "students" | "";
+
 export default function LeftNavPanel() {
-	const [activeNavButton, setActiveButton] = useState<string>("");
+	const [activeNavButton, setActiveButton] = useState<NavButtonId>("");
 	const router = useRouter();
 
-	const renderStyle = (buttonId: "attendance" | "classes" | "students") => {
+	useEffect(() => {
+		const currentPathId = window.location.pathname.replace("/dashboard/", "");
+		setActiveButton(currentPathId as NavButtonId);
+	}, []);
+
+	const renderStyle = (buttonId: Exclude<NavButtonId, "">) => {
 		const leftNavButtonStyle = Object.freeze({
 			active:
 				"h-[58px] flex items-center gap-3 pl-9 py-2.5 rounded-md border-l-[12px] border-white shadow-md shadow-primary-700 border-primary-300 bg-primary-100 duration-200",
