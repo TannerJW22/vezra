@@ -60,7 +60,6 @@ export default function StudentTable({ studentData }: StudentTableProps) {
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
 		getSortedRowModel: getSortedRowModel(),
-		globalFilterFn: fuzzyTextFilterFn,
 	});
 
 	return (
