@@ -1,4 +1,4 @@
-import StudentTable from "@/components/StudentTable";
+import StudentTable from "@/components/(tables)/StudentTable";
 import { type Student } from "@/models/Student";
 
 export default function StudentPage() {
