@@ -7,7 +7,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 			<HeaderPanel />
 			<div className="flex">
 				<LeftNavPanel />
-				<div className="bg-light-100 w-full h-screen">{children}</div>
+				<div className="bg-light-100 w-full h-[85vh]">{children}</div>
 			</div>
 		</CheckForRedirect>
 	);

@@ -40,7 +40,7 @@ export default function LeftNavPanel() {
 
 	return (
 		//
-		<div className="bg-primary-500 w-64 h-screen rounded-sm shadow-md text-light-300 font-base text-base">
+		<div className="bg-primary-500 w-64 h-[85vh] rounded-sm shadow-md text-light-300 font-base text-base">
 			<div className="mt-8 flex flex-col gap-3.5">
 				<button id="attendance" className={renderStyle("attendance")} onClick={e => handleClick(e)}>
 					<AttendanceIcon className="pointer-events-none" />
