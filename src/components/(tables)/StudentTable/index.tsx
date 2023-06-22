@@ -28,15 +28,26 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/(shadcn-ui)/table";
+import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import DebouncedInput from "@/components/DebouncedInput";
 import { TbRefresh } from "react-icons/tb";
 import { type Student, ZodStudent } from "@/models/Student";
 import { BiRightArrow, BiLeftArrow } from "react-icons/bi";
 import { cn } from "@/lib/utils";
+import { BsArrowDownShort, BsArrowUpShort } from "react-icons/bs";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	_data: TData[];
+}
+
+declare module "@tanstack/table-core" {
+	interface FilterFns {
+		fuzzy: FilterFn<unknown>;
+	}
+	interface FilterMeta {
+		itemRank: RankingInfo;
+	}
 }
 
 // :::
@@ -45,8 +56,6 @@ export function StudentTable<TData, TValue>({ columns, _data }: DataTableProps<T
 	const [globalFilter, setGlobalFilter] = useState("");
 	const [sorting, setSorting] = useState<SortingState>([]);
 	const refresh = useReducer(() => ({}), {})[1];
-
-	const columnHelper = createColumnHelper<Partial<Student>>();
 
 	const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
 		// Rank the item
@@ -60,22 +69,6 @@ export function StudentTable<TData, TValue>({ columns, _data }: DataTableProps<T
 		// Return if the item should be filtered in/out
 		return itemRank.passed;
 	};
-
-	// <<--| Implement Sorting Functionality
-	// const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
-	// 	let dir = 0;
-
-	// 	// Only sort by rank if the column has ranking information
-	// 	if (rowA.columnFiltersMeta[columnId]) {
-	// 		dir = compareItems(
-	// 			rowA.columnFiltersMeta[columnId]?.itemRank!,
-	// 			rowB.columnFiltersMeta[columnId]?.itemRank!,
-	// 		);
-	// 	}
-
-	// 	// Provide an alphanumeric fallback for when the item ranks are equal
-	// 	return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir;
-	// };
 
 	const table = useReactTable({
 		data,
@@ -136,6 +129,7 @@ export function StudentTable<TData, TValue>({ columns, _data }: DataTableProps<T
 					>
 						<TbRefresh className="text-[22px]" />
 					</button>
+					{JSON.stringify(sorting)}
 				</div>
 
 				<div className="flex gap-1 items-center">
@@ -177,26 +171,46 @@ export function StudentTable<TData, TValue>({ columns, _data }: DataTableProps<T
 							<TableRow className="bg-light-100" key={headerGroup.id}>
 								{headerGroup.headers.map(header => {
 									return (
-										<TableHead className="hover:bg-light-200" key={header.id}>
-											{header.isPlaceholder
-												? null
-												: flexRender(header.column.columnDef.header, header.getContext())}
+										<TableHead
+											className="select-none"
+											onClick={() => header.column.toggleSorting()}
+											key={header.id}
+										>
+											<div className="py-2 pl-1 flex gap-4 items-center">
+												<ToggleGroup.Root className="flex" type="single">
+													<ToggleGroup.Item
+														className="px-0.5 border rounded-sm text-primary-500 hover:bg-light-200"
+														value="A"
+													>
+														<BsArrowUpShort className="w-7 h-7" />
+													</ToggleGroup.Item>
+													<ToggleGroup.Item
+														className="px-0.5 border rounded-sm text-primary-500 hover:bg-light-200"
+														value="A"
+													>
+														<BsArrowDownShort className="w-7 h-7" />
+													</ToggleGroup.Item>
+												</ToggleGroup.Root>
+												{header.isPlaceholder
+													? null
+													: flexRender(header.column.columnDef.header, header.getContext())}
+											</div>
 										</TableHead>
 									);
 								})}
 							</TableRow>
 						))}
 					</TableHeader>
-					<TableBody className="">
+					<TableBody>
 						{table.getRowModel().rows?.length ? (
 							table.getRowModel().rows.map(row => (
 								<TableRow
-									className="z-30 cursor-pointer hover:bg-primary-50 duration-100"
+									className="z-30 cursor-pointer select-none hover:bg-primary-50 hover:outline hover:outline-1 hover:outline-primary-100 hover:scale-[1.035] hover:translate-x-1 transition-all duration-200"
 									key={row.id}
 									data-state={row.getIsSelected() && "selected"}
 								>
 									{row.getVisibleCells().map(cell => (
-										<TableCell className="p-2" key={cell.id}>
+										<TableCell className="p-2 max-w-[100px]" key={cell.id}>
 											{flexRender(cell.column.columnDef.cell, cell.getContext())}
 										</TableCell>
 									))}
