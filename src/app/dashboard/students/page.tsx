@@ -2,8 +2,9 @@ import { type Student } from "@/models/Student";
 
 import { columns } from "./(columns)";
 import { StudentTable } from "@/components/(tables)/StudentTable";
+import AddStudentSheet from "@/components/AddStudentForm";
 
-async function getStudentData(): Promise<Partial<Student>[]> {
+async function getStudentTable(): Promise<Partial<Student>[]> {
 	const students: Partial<Student>[] = [
 		{
 			firstName: "Tanner",
@@ -96,12 +97,13 @@ async function getStudentData(): Promise<Partial<Student>[]> {
 
 // :::
 export default async function StudentPage() {
-	const data: Awaited<Partial<Student>[]> = await getStudentData();
+	const data: Awaited<Partial<Student>[]> = await getStudentTable();
 
 	return (
 		<main className="py-3 pl-3 pr-4">
 			<div className="p-5 h-[81vh] bg-white border-t shadow-md">
 				<StudentTable columns={columns} _data={data} />
+				<AddStudentSheet />
 			</div>
 		</main>
 	);

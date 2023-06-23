@@ -1,7 +1,7 @@
 import { type InputHTMLAttributes, useEffect, useState } from "react";
 
 // ::: Debounced Input provided by @tanstack/react-table
-export default function DebouncedInput({
+export default function DebouncedSearchBar({
 	value: initialValue,
 	onChange,
 	debounce = 500,
