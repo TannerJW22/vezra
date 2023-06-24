@@ -1,6 +1,24 @@
 import { ClassValue, clsx } from "clsx";
 import { type FieldError } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
+import { type pseudoServerReturn } from "types";
+
+// :::| Temporary Dev Tool
+export async function pseudoServer<TData>(
+	res: TData,
+	ms: number,
+): Promise<pseudoServerReturn<TData>> {
+	return new Promise(resolve => {
+		setTimeout(() => {
+			const pseudoResponse = {
+				status: 200,
+				statusText: "success",
+				data: res,
+			};
+			return resolve(pseudoResponse);
+		}, ms);
+	});
+}
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));

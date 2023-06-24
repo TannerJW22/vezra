@@ -1,15 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { type Student, ZodStudent } from "@/models/Student";
-
-// Partial<Student> =
-// {
-// 	firstName: "Joe",
-// 	lastName: "Cantellionso",
-// 	grade: "4",
-// 	homeroom: "Staggs",
-// },
+import { type Student } from "@/models/Student";
 
 export const columns: ColumnDef<Partial<Student>>[] = [
 	{

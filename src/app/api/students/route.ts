@@ -1,11 +1,8 @@
-import { type Student } from "@/models/Student";
+import { NextResponse } from "next/server";
+import { pseudoServer } from "@/lib/utils";
 
-import { columns } from "./columns";
-import { StudentTable } from "@/components/(tables)/StudentTable";
-import AddStudentSheet from "@/components/(forms)/AddStudentForm";
-
-async function getStudentTable(): Promise<Partial<Student>[]> {
-	const students: Partial<Student>[] = [
+export async function GET(req: Request) {
+	const fakeData = [
 		{
 			firstName: "Tanner",
 			lastName: "Linsley",
@@ -92,19 +89,6 @@ async function getStudentTable(): Promise<Partial<Student>[]> {
 		},
 	];
 
-	return students;
-}
-
-// :::
-export default async function StudentPage() {
-	const data: Awaited<Partial<Student>[]> = await getStudentTable();
-
-	return (
-		<main className="py-3 pl-3 pr-4">
-			<div className="p-5 h-[81vh] bg-white border-t shadow-md">
-				<StudentTable columns={columns} _data={data} />
-				<AddStudentSheet />
-			</div>
-		</main>
-	);
+	const students = await pseudoServer(fakeData, 1500);
+	return NextResponse.json(students);
 }

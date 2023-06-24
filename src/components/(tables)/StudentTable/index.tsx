@@ -32,7 +32,7 @@ import { BiRightArrow, BiLeftArrow } from "react-icons/bi";
 import { cn } from "@/lib/utils";
 import { BsArrowDownShort, BsArrowUpShort } from "react-icons/bs";
 import { TbUserPlus } from "react-icons/tb";
-import AddStudentForm from "@/components/AddStudentForm";
+import AddStudentForm from "@/components/(forms)/AddStudentForm";
 import {
 	Sheet,
 	SheetContent,

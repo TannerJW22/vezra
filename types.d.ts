@@ -1,3 +1,10 @@
+// :::| Temporary Dev Tool
+export interface pseudoServerReturn<TData> {
+	status: number;
+	statusText: string;
+	data: TData;
+}
+
 export type VezraUser = {
 	id: string | undefined;
 	username: string | null | undefined;
