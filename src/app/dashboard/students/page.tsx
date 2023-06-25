@@ -1,9 +1,14 @@
 import { type Student } from "@/models/Student";
 
 import { columns } from "./columns";
-import { StudentTable } from "@/components/(tables)/StudentTable";
-import AddStudentSheet from "@/components/(forms)/AddStudentForm";
+import StudentTable from "@/app/dashboard/students/StudentTable";
+import AddStudentSheet from "@/app/dashboard/students/AddStudentSheet";
+import StudentTableToolbar from "@/app/dashboard/students/StudentTableToolbar";
+import { Sheet as SheetProvider } from "@/components/_(shadcn-ui)/_sheet";
+import { createContext, useReducer } from "react";
+import { SortingState } from "@tanstack/react-table";
 
+// :::|
 async function getStudentTable(): Promise<Partial<Student>[]> {
 	const students: Partial<Student>[] = [
 		{
@@ -96,15 +101,58 @@ async function getStudentTable(): Promise<Partial<Student>[]> {
 }
 
 // :::
-export default async function StudentPage() {
+export default async function StudentsPage() {
 	const data: Awaited<Partial<Student>[]> = await getStudentTable();
+
+	const ctx = createContext({
+		tableData: [...data],
+		globalFilter: "",
+		sorting: [],
+	});
+
+	const reducer = (
+		state: StudentsPageReducerState,
+		{ type, payload }: StudentsPageReducerAction,
+	) => {
+		switch (type) {
+			case "SET_TABLE_DATA":
+				_evalForCase1_;
+				break;
+			case "SET_GLOBAL_FILTER":
+				_evalForCase1_;
+				break;
+			case "SET_SORTING":
+				_evalForCase1_;
+				break;
+			default:
+				return null;
+		}
+	};
+
+	const [state, dispatch] = useReducer(reducer, ctx); // <<--| Wrap in custom provider so this page can be RSC?
+
+	const refresh = useReducer(() => ({}), {})[1];
 
 	return (
 		<main className="py-3 pl-3 pr-4">
-			<div className="p-5 h-[81vh] bg-white border-t shadow-md">
-				<StudentTable columns={columns} _data={data} />
+			<SheetProvider>
+				<div className="p-5 h-[81vh] bg-white border-t shadow-md">
+					<StudentTableToolbar />
+					<StudentTable columns={columns} _data={data} />
+				</div>
 				<AddStudentSheet />
-			</div>
+			</SheetProvider>
 		</main>
 	);
+}
+
+// :::* Types
+export interface StudentsPageReducerState {
+	tableData: Partial<Student>[];
+	globalFilter: string;
+	sorting: SortingState[];
+}
+export interface StudentsPageReducerAction {
+	type: "SET_TABLE_DATA" | "SET_GLOBAL_FILTER" | "SET_SORTING";
+	payload: any;
 }
