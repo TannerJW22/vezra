@@ -2,7 +2,7 @@
 
 import { useAuth } from "@clerk/nextjs";
 
-import { VezraUser } from "types";
+import { VezraUser } from "@/lib/types";
 import { FiLogOut } from "react-icons/fi";
 import { RiUserSettingsLine } from "react-icons/ri";
 import Link from "next/link";

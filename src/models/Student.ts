@@ -190,7 +190,7 @@ export const ZodStudent = z.object({
 	gender: z.enum(_genderEnum).optional(),
 	ancestry: z.enum(_ancestryEnum).optional(),
 	notes: z.string().optional(),
-	contactIds: z.array(contactSchema).optional(), // <<--|
+	// contactIds: z.array(contactSchema).optional(), // <<--|
 	createdAt: z.date().optional(), // <<--|
 	updatedAt: z.date().optional(), // <<--|
 });

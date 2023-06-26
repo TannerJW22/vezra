@@ -1,5 +1,5 @@
 import { useUser } from "@clerk/nextjs";
-import { type VezraUser, useVezraUserReturn } from "types";
+import { type VezraUser, useVezraUserReturn } from "@/lib/types";
 
 export default function useVezraUser(): useVezraUserReturn {
 	let { isLoaded: userIsLoaded, isSignedIn: userIsSignedIn, user } = useUser();

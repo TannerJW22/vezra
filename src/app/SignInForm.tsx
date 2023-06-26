@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSignIn } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import LoadingSpinner from "@/components/(loading)/LoadingSpinner";
 import InlineErrorController from "@/components/InlineErrorController";
 import { vezraInputStyle } from "@/lib/utils";
+import { twMerge } from "tailwind-merge";
 
 const ZodSignInFormSchema = z.object({
 	username: z.string().nonempty(),
@@ -25,7 +26,7 @@ const ZodSignInFormSchema = z.object({
 type SignInFormData = z.infer<typeof ZodSignInFormSchema>;
 
 // :::
-export default function SignInForm() {
+export default function SignInForm({}: any) {
 	const router = useRouter();
 	const { isLoaded, signIn, setActive } = useSignIn();
 
@@ -36,10 +37,16 @@ export default function SignInForm() {
 	const [isFormDisabled, setIsFormDisabled] = useState(false);
 	const [clerkErrors, setClerkErrors] = useState<string[]>([]);
 
+	const inputStyle = twMerge(
+		"px-2 outline-none border border-zinc-300 w-[250px] h-12 hover:bg-light-100 focus:bg-light-100 active:bg-light-100 focus:border-b-2 focus:border-x-0 focus:border-t-0 focus:border-primary-500",
+		isFormDisabled && "bg-zinc-200 hover:bg-zinc-200 focus:bg-zinc-200 active:bg-zinc-200",
+		formState.errors.username &&
+			"border-l-8 border-t-0 border-b-2 border-r-0 border-red-600 focus:border-l-8 focus:border-t-0 focus:border-b-2 focus:border-r-0 focus:rounded-b-none focus:border-red-600",
+	);
+
 	async function signInUser({ username, password }: SignInFormData) {
 		setIsFormDisabled(true);
 		// <<--| Perform input vaildation step and display any validation errors.
-		// (i.e. current Zod schema is not strict enough)
 
 		// Reset Errors and perform remote authentication request
 		setClerkErrors([]);
@@ -66,7 +73,7 @@ export default function SignInForm() {
 					<input
 						autoComplete="off"
 						disabled={isFormDisabled}
-						className={vezraInputStyle(isFormDisabled, formState.errors.username)}
+						className={inputStyle}
 						id="username"
 						type="text"
 						placeholder=" Username"
@@ -81,7 +88,7 @@ export default function SignInForm() {
 				<div className="mb-5">
 					<input
 						disabled={isFormDisabled}
-						className={vezraInputStyle(isFormDisabled, formState.errors.password)}
+						className={inputStyle}
 						id="password"
 						type="password"
 						placeholder=" Password"

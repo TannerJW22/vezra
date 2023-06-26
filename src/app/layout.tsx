@@ -1,7 +1,7 @@
 import "./globals.css";
 import { Rubik } from "@next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
-// import ReduxProvider from "@/store";
+import ReduxProvider from "@/store";
 
 const rubik = Rubik({
 	subsets: ["latin"],
@@ -20,9 +20,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 		<ClerkProvider>
 			<html lang="en">
 				<body className={rubik.className}>
-					{/* <ReduxProvider> */}
-					{children}
-					{/* </ReduxProvider> */}
+					<ReduxProvider>{children}</ReduxProvider>
 				</body>
 			</html>
 		</ClerkProvider>

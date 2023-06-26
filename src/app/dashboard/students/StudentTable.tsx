@@ -1,6 +1,8 @@
 "use client";
 
-import { useReducer, useState } from "react";
+import type { SortingState } from "@tanstack/react-table";
+
+import { useEffect } from "react";
 import {
 	flexRender,
 	getCoreRowModel,
@@ -8,7 +10,6 @@ import {
 	getSortedRowModel,
 	useReactTable,
 	type FilterFn,
-	type SortingState,
 	getFilteredRowModel,
 	getFacetedRowModel,
 	getFacetedUniqueValues,
@@ -25,21 +26,12 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/_(shadcn-ui)/_table";
-import { DebouncedSearchBar } from "@/components/(inputs)";
-import { TbRefresh } from "react-icons/tb";
-import { type Student, ZodStudent } from "@/models/Student";
-import { BiRightArrow, BiLeftArrow } from "react-icons/bi";
 import { cn } from "@/lib/utils";
 import { BsArrowDownShort, BsArrowUpShort } from "react-icons/bs";
-import { TbUserPlus } from "react-icons/tb";
-import AddStudentForm from "@/app/dashboard/students/AddStudentForm";
-import {
-	SheetContent,
-	SheetDescription,
-	SheetHeader,
-	SheetTitle,
-	SheetTrigger,
-} from "@/components/_(shadcn-ui)/_sheet";
+import { useVezraDispatch, useVezraSelector } from "@/hooks";
+import { setGlobalFilter, setSorting, setTableData } from "@/store";
+import { type StudentTableData } from "@/lib/types";
+import StudentTableToolbar from "@/app/dashboard/students/StudentTableToolbar";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -56,14 +48,13 @@ declare module "@tanstack/table-core" {
 }
 
 // :::
-export default function StudentTable<TData, TValue>({
-	columns,
-	_data,
-}: DataTableProps<TData, TValue>) {
-	const [data, setData] = useState(() => [..._data]);
-	const [globalFilter, setGlobalFilter] = useState("");
-	const [sorting, setSorting] = useState<SortingState>([]);
-	const refresh = useReducer(() => ({}), {})[1];
+export default function StudentTable({ columns, _data }: StudentTableProps) {
+	const dispatch = useVezraDispatch();
+	const { tableData, globalFilter, sorting } = useVezraSelector(state => state.studentPage);
+
+	useEffect(() => {
+		dispatch(setTableData(_data));
+	}, [_data]);
 
 	const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
 		// Rank the item
@@ -79,7 +70,7 @@ export default function StudentTable<TData, TValue>({
 	};
 
 	const table = useReactTable({
-		data,
+		data: tableData,
 		columns,
 		filterFns: {
 			fuzzy: fuzzyFilter,
@@ -88,8 +79,8 @@ export default function StudentTable<TData, TValue>({
 			globalFilter,
 			sorting,
 		},
-		onSortingChange: setSorting,
-		onGlobalFilterChange: setGlobalFilter,
+		onSortingChange: _sorting => dispatch(setSorting(_sorting as SortingState)),
+		onGlobalFilterChange: (_globalFilter: string) => dispatch(setGlobalFilter(_globalFilter)),
 		globalFilterFn: fuzzyFilter,
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
@@ -102,19 +93,6 @@ export default function StudentTable<TData, TValue>({
 		debugHeaders: true,
 		debugColumns: false,
 	});
-
-	const handlePagination = (action: "prev" | "next") => {
-		switch (action) {
-			case "prev":
-				table.previousPage();
-				break;
-			case "next":
-				table.nextPage();
-				break;
-			default:
-				return;
-		}
-	};
 
 	const renderSortingIcon = (sortStatus: "asc" | "desc" | "") => {
 		switch (sortStatus) {
@@ -133,12 +111,11 @@ export default function StudentTable<TData, TValue>({
 		}
 	};
 
-	const postNewStudent = async () => {};
-
 	return (
-		<main className="flex flex-col gap-3 w-[85%]">
-			<div className="rounded-md border">
-				<Table>
+		<main className="p-5 bg-white shadow-md w-full h-[99%]">
+			<div className="px-3 pl-3 pr-8 flex flex-col gap-3 w-[85%]">
+				<StudentTableToolbar table={table} />
+				<Table className="rounded-md border">
 					<TableHeader>
 						{table.getHeaderGroups().map(headerGroup => (
 							<TableRow className="bg-light-100" key={headerGroup.id}>
@@ -197,3 +174,8 @@ export default function StudentTable<TData, TValue>({
 		</main>
 	);
 }
+
+export type StudentTableProps = {
+	columns: any;
+	_data: StudentTableData[];
+};

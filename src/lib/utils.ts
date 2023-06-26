@@ -1,7 +1,7 @@
 import { ClassValue, clsx } from "clsx";
 import { type FieldError } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
-import { type pseudoServerReturn } from "types";
+import { type pseudoServerReturn } from "@/lib/types";
 
 // :::| Temporary Dev Tool
 export async function pseudoServer<TData>(

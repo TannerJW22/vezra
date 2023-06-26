@@ -9,7 +9,7 @@ export default function AddStudentSheet({}: AddStudentSheetProps) {
 			<SheetContent side="right">
 				<SheetHeader>
 					<SheetTitle>Add New Student</SheetTitle>
-					<AddStudentForm postNewStudent={postNewStudent} />
+					{/* <AddStudentForm postNewStudent={postNewStudent} /> */}
 				</SheetHeader>
 			</SheetContent>
 		</div>

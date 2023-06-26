@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 
 import AuthDropdownMenu from "./AuthDropdownMenu";
-import { type VezraUser } from "types";
+import { type VezraUser } from "@/lib/types";
 
 export default function AuthWidget({ user }: AuthWidgetProps) {
 	const [showDropdown, setShowDropdown] = useState(false);

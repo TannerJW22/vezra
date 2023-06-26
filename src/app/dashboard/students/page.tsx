@@ -1,16 +1,19 @@
-import { type Student } from "@/models/Student";
-
 import { columns } from "./columns";
 import StudentTable from "@/app/dashboard/students/StudentTable";
 import AddStudentSheet from "@/app/dashboard/students/AddStudentSheet";
-import StudentTableToolbar from "@/app/dashboard/students/StudentTableToolbar";
-import { Sheet as SheetProvider } from "@/components/_(shadcn-ui)/_sheet";
-import { createContext, useReducer } from "react";
-import { SortingState } from "@tanstack/react-table";
+import { type StudentTableData } from "@/lib/types";
+import { Sheet } from "@/components/_(shadcn-ui)/_sheet";
 
-// :::|
-async function getStudentTable(): Promise<Partial<Student>[]> {
-	const students: Partial<Student>[] = [
+// :::| Refactor to API call inside the RSC below
+// async function getStudentTable(): Promise<StudentTableData[]> {
+// 	return students;
+// }
+
+// const data: Awaited<StudentTableData[]> = await getStudentTable();
+
+// :::
+export default function StudentsPage() {
+	const students: StudentTableData[] = [
 		{
 			firstName: "Tanner",
 			lastName: "Linsley",
@@ -97,62 +100,12 @@ async function getStudentTable(): Promise<Partial<Student>[]> {
 		},
 	];
 
-	return students;
-}
-
-// :::
-export default async function StudentsPage() {
-	const data: Awaited<Partial<Student>[]> = await getStudentTable();
-
-	const ctx = createContext({
-		tableData: [...data],
-		globalFilter: "",
-		sorting: [],
-	});
-
-	const reducer = (
-		state: StudentsPageReducerState,
-		{ type, payload }: StudentsPageReducerAction,
-	) => {
-		switch (type) {
-			case "SET_TABLE_DATA":
-				_evalForCase1_;
-				break;
-			case "SET_GLOBAL_FILTER":
-				_evalForCase1_;
-				break;
-			case "SET_SORTING":
-				_evalForCase1_;
-				break;
-			default:
-				return null;
-		}
-	};
-
-	const [state, dispatch] = useReducer(reducer, ctx); // <<--| Wrap in custom provider so this page can be RSC?
-
-	const refresh = useReducer(() => ({}), {})[1];
-
 	return (
-		<main className="py-3 pl-3 pr-4">
-			<SheetProvider>
-				<div className="p-5 h-[81vh] bg-white border-t shadow-md">
-					<StudentTableToolbar />
-					<StudentTable columns={columns} _data={data} />
-				</div>
+		<main className="bg-light-200 py-3 pl-3 pr-4 h-[100%]">
+			<Sheet>
+				<StudentTable columns={columns} _data={students} />
 				<AddStudentSheet />
-			</SheetProvider>
+			</Sheet>
 		</main>
 	);
-}
-
-// :::* Types
-export interface StudentsPageReducerState {
-	tableData: Partial<Student>[];
-	globalFilter: string;
-	sorting: SortingState[];
-}
-export interface StudentsPageReducerAction {
-	type: "SET_TABLE_DATA" | "SET_GLOBAL_FILTER" | "SET_SORTING";
-	payload: any;
 }
