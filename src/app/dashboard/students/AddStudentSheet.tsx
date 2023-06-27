@@ -1,6 +1,12 @@
+import AddStudentForm from "./AddStudentForm";
 import { SheetContent, SheetHeader, SheetTitle } from "@/components/_(shadcn-ui)/_sheet";
-import AddStudentForm from "@/app/dashboard/students/AddStudentForm";
 
+// -=-=-= Types & Validators -=-=-= //
+type AddStudentSheetProps = {
+	//
+};
+
+// =-=-=- Main Component =-=-=- //
 export default function AddStudentSheet({}: AddStudentSheetProps) {
 	const postNewStudent = async () => {};
 
@@ -15,7 +21,3 @@ export default function AddStudentSheet({}: AddStudentSheetProps) {
 		</div>
 	);
 }
-
-export type AddStudentSheetProps = {
-	//
-};

@@ -1,7 +1,13 @@
 import CheckForRedirect from "@/components/CheckForRedirect";
 import { HeaderPanel, LeftNavPanel } from "@/components/layouts";
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+// -=-=-= Types & Validators -=-=-= //
+type DashboardLayoutProps = {
+	children: React.ReactNode;
+};
+
+// =-=-=- Main Component =-=-=- //
+export default function DashboardLayout({ children }: DashboardLayoutProps) {
 	return (
 		<CheckForRedirect noAuth="/">
 			<HeaderPanel />

@@ -1,8 +1,11 @@
-import CheckForRedirect from "@/components/CheckForRedirect";
 import Image from "next/image";
-import kha from "public/img/kha-login-page.png";
-import SignInForm from "@/app/SignInForm";
 
+import CheckForRedirect from "@/components/CheckForRedirect";
+import SignInForm from "./SignInForm";
+
+import kha from "public/img/kha-login-page.png";
+
+// =-=-=- Main Component =-=-=- //
 export default function SignInPage() {
 	return (
 		<CheckForRedirect

@@ -1,8 +1,15 @@
 import "./globals.css";
 import { Rubik } from "@next/font/google";
+
 import { ClerkProvider } from "@clerk/nextjs";
 import ReduxProvider from "@/store";
 
+// -=-=-= Types & Validators -=-=-= //
+type RootLayoutProps = {
+	children: React.ReactNode;
+};
+
+// -=-=-= External Constants -=-=-= //
 const rubik = Rubik({
 	subsets: ["latin"],
 	weight: ["300", "400", "500", "700", "900"],
@@ -14,7 +21,7 @@ export const metadata = {
 	description: "",
 };
 
-// :::
+// =-=-=- Main Component =-=-=- //
 export default function RootLayout({ children }: RootLayoutProps) {
 	return (
 		<ClerkProvider>
@@ -26,7 +33,3 @@ export default function RootLayout({ children }: RootLayoutProps) {
 		</ClerkProvider>
 	);
 }
-
-export type RootLayoutProps = {
-	children: React.ReactNode;
-};

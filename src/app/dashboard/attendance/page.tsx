@@ -1,5 +1,4 @@
-import React from "react";
-
+// =-=-=- Main Component =-=-=- //
 export default function AttendancePage() {
 	return <main>Attendance</main>;
 }

@@ -1,57 +1,62 @@
-import { z } from "zod";
-import { type Table } from "@tanstack/react-table";
+// ::: Imports
 
-// :::| Temporary Dev Tool
-export interface pseudoServerReturn<TData> {
-	status: number;
-	statusText: string;
-	data: TData;
-}
+// External Library Types
+import type { FieldError } from "react-hook-form";
+import type { ClassValue } from "clsx";
+import type { Table, ColumnDef } from "@tanstack/react-table";
+import type { TypedUseSelectorHook } from "react-redux";
+import type { ZodType } from "zod";
 
-export type VezraUser = {
-	id: string | undefined;
-	username: string | null | undefined;
-	firstName: string | null | undefined;
-	lastName: string | null | undefined;
-	fullName: string | null | undefined;
-	profileImageUrl: string | undefined;
-	role: "Administrator" | "Staff" | undefined;
+// "@/app/..."
+import type { SignInFormData } from "@/app/SignInForm";
+
+// "@/models/..."
+import type { Student, LockerLocationEnum, GenderEnum, AncestryEnum } from "@/models/Student";
+
+// "@/hooks/..."
+import type { VezraUser, useVezraUserReturn } from "@/hooks/useVezraUser";
+
+// "@/store/..."
+import type { RootState, VezraDispatch } from "@/store/index";
+import type { StudentPageSlice } from "@/store/slices/studentPageSlice";
+
+// "@/lib/utils/..."
+import type { pseudoServerReturn } from "@/lib/utils";
+
+// "@/app/dashboard/students/..."
+import type {
+	VezraSortingState,
+	StudentTableData,
+	AddStudentFormSchema,
+} from "@/app/dashboard/students/AddStudentForm";
+
+// ::: Exports
+
+// External Library Types
+export { ColumnDef, ZodType, FieldError, ClassValue, Table, TypedUseSelectorHook };
+
+// Internal Custom Types
+export {
+	VezraSortingState,
+	StudentTableData,
+	StudentPageContext,
+	RootState,
+	VezraDispatch,
+	VezraUser,
+	useVezraUserReturn,
+	pseudoServerReturn,
+	SignInFormData,
+	StudentTableData,
+	Student,
+	LockerLocationEnum,
+	GenderEnum,
+	AncestryEnum,
 };
 
-export type useVezraUserReturn = {
-	userIsLoaded: boolean | undefined;
-	userIsSignedIn: boolean | undefined;
-	user: VezraUser;
-};
-
-export type StudentPageContextProps = {
-	data: StudentTableData[];
-	children: React.ReactNode;
-};
+////////////////////////////////
+////////////////////////////////
 
 export type StudentsPageReducerAction = {
 	type: "SET_TABLE_DATA" | "SET_GLOBAL_FILTER" | "SET_SORTING";
 	payload: unknown;
 };
-
-export const ZodVezraSortingState = z.object({
-	id: z.string(),
-	desc: z.boolean(),
-});
-export type VezraSortingState = z.infer<typeof ZodVezraSortingState>;
-
-export const ZodStudentTableData = z.object({
-	lastName: z.string(),
-	firstName: z.string(),
-	grade: z.string(),
-	homeroom: z.string(),
-});
-export type StudentTableData = z.infer<typeof ZodStudentTableData>;
-
-export const ZodStudentPageContext = z.object({
-	table: z.object(), // <<--| typeof Table
-	tableData: z.array(ZodStudentTableData),
-	globalFilter: z.string(),
-	sorting: z.array(ZodVezraSortingState),
-});
-export type StudentPageContext = z.infer<typeof ZodStudentPageContext>;

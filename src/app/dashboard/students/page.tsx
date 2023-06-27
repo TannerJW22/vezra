@@ -1,7 +1,7 @@
-import { columns } from "./columns";
-import StudentTable from "@/app/dashboard/students/StudentTable";
-import AddStudentSheet from "@/app/dashboard/students/AddStudentSheet";
-import { type StudentTableData } from "@/lib/types";
+import type { ColumnDef, Student, StudentTableData } from "@/lib/types";
+
+import StudentTable from "./StudentTable";
+import AddStudentSheet from "./AddStudentSheet";
 import { Sheet } from "@/components/_(shadcn-ui)/_sheet";
 
 // :::| Refactor to API call inside the RSC below
@@ -11,7 +11,27 @@ import { Sheet } from "@/components/_(shadcn-ui)/_sheet";
 
 // const data: Awaited<StudentTableData[]> = await getStudentTable();
 
-// :::
+// -=-=-= External Constants -=-=-= //
+export const columns: ColumnDef<Partial<Student>>[] = [
+	{
+		accessorKey: "lastName",
+		header: "Last Name",
+	},
+	{
+		accessorKey: "firstName",
+		header: "First Name",
+	},
+	{
+		accessorKey: "grade",
+		header: "Grade",
+	},
+	{
+		accessorKey: "homeroom",
+		header: "Homeroom",
+	},
+];
+
+// =-=-=- Main Component =-=-=- //
 export default function StudentsPage() {
 	const students: StudentTableData[] = [
 		{

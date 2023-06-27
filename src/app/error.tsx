@@ -1,5 +1,12 @@
 "use client";
 
+// -=-=-= Types & Validators -=-=-= //
+type ErrorPageProps = {
+	error: Error;
+	reset: () => void;
+};
+
+// =-=-=- Main Component =-=-=- //
 export default function ErrorPage({ error, reset }: ErrorPageProps) {
 	return (
 		//
@@ -10,8 +17,3 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
 		</div>
 	);
 }
-
-type ErrorPageProps = {
-	error: Error;
-	reset: () => void;
-};

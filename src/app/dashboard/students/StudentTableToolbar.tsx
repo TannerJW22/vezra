@@ -1,15 +1,23 @@
 "use client";
 
-import { DebouncedSearchBar } from "@/components/(inputs)";
-import { SheetTrigger } from "@/components/_(shadcn-ui)/_sheet";
-import { useVezraDispatch, useVezraSelector } from "@/hooks";
-import { StudentTableData } from "@/lib/types";
-import { cn } from "@/lib/utils";
-import { setGlobalFilter, setSorting } from "@/store";
-import { Table } from "@tanstack/react-table";
+import type { Table, StudentTableData } from "@/lib/types";
+
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import { TbRefresh, TbUserPlus } from "react-icons/tb";
 
+import { DebouncedSearchBar } from "@/components/(inputs)";
+import { SheetTrigger } from "@/components/_(shadcn-ui)/_sheet";
+
+import { useVezraDispatch, useVezraSelector } from "@/hooks";
+import { cn } from "@/lib/utils";
+import { setGlobalFilter, setSorting } from "@/store";
+
+// -=-=-= Types & Validators -=-=-= //
+export type StudentTableToolbarProps = {
+	table: Table<StudentTableData>;
+};
+
+// =-=-=- Main Component =-=-=- //
 export default function StudentTableToolbar({ table }: StudentTableToolbarProps) {
 	const dispatch = useVezraDispatch();
 	// @ts-ignore
@@ -91,7 +99,3 @@ export default function StudentTableToolbar({ table }: StudentTableToolbarProps)
 		</div>
 	);
 }
-
-export type StudentTableToolbarProps = {
-	table: Table<StudentTableData>;
-};

@@ -1,7 +1,14 @@
-import CheckForRedirect from "@/components/CheckForRedirect";
 import { UserProfile } from "@clerk/nextjs";
 
-export default function ProfilePage() {
+import CheckForRedirect from "@/components/CheckForRedirect";
+
+// -=-=-= Types & Validators -=-=-= //
+type ProfilePageProps = {
+	//
+};
+
+// =-=-=- Main Component =-=-=- //
+export default function ProfilePage({}: ProfilePageProps) {
 	return (
 		<CheckForRedirect noAuth="/" className="flex justify-center p-4">
 			<UserProfile />

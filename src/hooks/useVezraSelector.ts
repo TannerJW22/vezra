@@ -1,5 +1,6 @@
-import { TypedUseSelectorHook, useSelector } from "react-redux";
-import type { RootState } from "@/store";
+import type { RootState, TypedUseSelectorHook } from "@/lib/types";
+
+import { useSelector } from "react-redux";
 
 export const useVezraSelector: TypedUseSelectorHook<RootState> = useSelector;
 export default useVezraSelector;

@@ -1,5 +1,4 @@
-import React from "react";
-
+// =-=-=- Main Component =-=-=- //
 export default function ClassesPage() {
 	return <main>Classes</main>;
 }

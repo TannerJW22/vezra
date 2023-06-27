@@ -1,15 +1,14 @@
 "use client";
 
-import type { SortingState } from "@tanstack/react-table";
-
 import { useEffect } from "react";
 import {
+	type FilterFn,
+	type SortingState,
 	flexRender,
 	getCoreRowModel,
 	getPaginationRowModel,
 	getSortedRowModel,
 	useReactTable,
-	type FilterFn,
 	getFilteredRowModel,
 	getFacetedRowModel,
 	getFacetedUniqueValues,
@@ -18,6 +17,7 @@ import {
 } from "@tanstack/react-table";
 import { RankingInfo, rankItem } from "@tanstack/match-sorter-utils";
 
+import StudentTableToolbar from "./StudentTableToolbar";
 import {
 	Table,
 	TableBody,
@@ -26,18 +26,18 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/_(shadcn-ui)/_table";
+
 import { cn } from "@/lib/utils";
 import { BsArrowDownShort, BsArrowUpShort } from "react-icons/bs";
 import { useVezraDispatch, useVezraSelector } from "@/hooks";
 import { setGlobalFilter, setSorting, setTableData } from "@/store";
 import { type StudentTableData } from "@/lib/types";
-import StudentTableToolbar from "@/app/dashboard/students/StudentTableToolbar";
 
+// -=-=-= Types & Validators -=-=-= //
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	_data: TData[];
 }
-
 declare module "@tanstack/table-core" {
 	interface FilterFns {
 		fuzzy: FilterFn<unknown>;
@@ -47,7 +47,12 @@ declare module "@tanstack/table-core" {
 	}
 }
 
-// :::
+type StudentTableProps = {
+	columns: any;
+	_data: StudentTableData[];
+};
+
+// =-=-=- Main Component =-=-=- //
 export default function StudentTable({ columns, _data }: StudentTableProps) {
 	const dispatch = useVezraDispatch();
 	const { tableData, globalFilter, sorting } = useVezraSelector(state => state.studentPage);
@@ -174,8 +179,3 @@ export default function StudentTable({ columns, _data }: StudentTableProps) {
 		</main>
 	);
 }
-
-export type StudentTableProps = {
-	columns: any;
-	_data: StudentTableData[];
-};

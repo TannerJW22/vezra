@@ -1,22 +1,22 @@
 "use client";
-// <<--| Implementation Pending
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { z } from "zod";
-
-import { vezraInputStyle } from "@/lib/utils";
-import { useState } from "react";
-
-const ZodAddStudentFormSchema = z.object({
+// -=-=-= Types & Validators -=-=-= //
+export const ZodAddStudentFormSchema = z.object({
 	// username: z.string().nonempty(),
 	// password: z.string().nonempty(),
 });
+export type AddStudentFormSchema = z.infer<typeof ZodAddStudentFormSchema>;
 
-type AddStudentFormSchema = z.infer<typeof ZodAddStudentFormSchema>;
+type AddStudentFormProps = {
+	postNewStudent: () => Promise<void>;
+};
 
-// :::
+// =-=-=- Main Component =-=-=- //
 export default function AddStudentForm({ postNewStudent }: AddStudentFormProps) {
 	const { register, control, handleSubmit, formState } = useForm<AddStudentFormSchema>({
 		resolver: zodResolver(ZodAddStudentFormSchema),
@@ -74,7 +74,3 @@ export default function AddStudentForm({ postNewStudent }: AddStudentFormProps) 
 		</div>
 	);
 }
-
-export type AddStudentFormProps = {
-	postNewStudent: () => Promise<void>;
-};

@@ -1,12 +1,15 @@
 "use client";
 
-import { store } from "@/store";
 import { Provider } from "react-redux";
 
-export default function ReduxProvider({ children }: ReduxProviderProps) {
-	return <Provider store={store}>{children}</Provider>;
-}
+import { store } from "@/store";
 
+// -=-=-= Types & Validators -=-=-= //
 export type ReduxProviderProps = {
 	children: React.ReactNode;
 };
+
+// =-=-=- Main Component =-=-=- //
+export default function ReduxProvider({ children }: ReduxProviderProps) {
+	return <Provider store={store}>{children}</Provider>;
+}

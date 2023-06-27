@@ -1,32 +1,34 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSignIn } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-
-import vezraLogo from "public/img/vezra-logo.png";
-import { BsFillDiamondFill } from "react-icons/bs";
-
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useRouter } from "next/navigation";
 import LoadingSpinner from "@/components/(loading)/LoadingSpinner";
 import InlineErrorController from "@/components/InlineErrorController";
-import { vezraInputStyle } from "@/lib/utils";
-import { twMerge } from "tailwind-merge";
 
-const ZodSignInFormSchema = z.object({
+import { cn } from "@/lib/utils";
+import { BsFillDiamondFill } from "react-icons/bs";
+import vezraLogo from "public/img/vezra-logo.png";
+
+// -=-=-= Types & Validators -=-=-= //
+export const ZodSignInFormSchema = z.object({
 	username: z.string().nonempty(),
 	password: z.string().nonempty(),
 });
+export type SignInFormData = z.infer<typeof ZodSignInFormSchema>;
 
-type SignInFormData = z.infer<typeof ZodSignInFormSchema>;
+type SignInFormProps = {
+	//
+};
 
-// :::
-export default function SignInForm({}: any) {
+// =-=-=- Main Component =-=-=- //
+export default function SignInForm({}: SignInFormProps) {
 	const router = useRouter();
 	const { isLoaded, signIn, setActive } = useSignIn();
 
@@ -37,7 +39,7 @@ export default function SignInForm({}: any) {
 	const [isFormDisabled, setIsFormDisabled] = useState(false);
 	const [clerkErrors, setClerkErrors] = useState<string[]>([]);
 
-	const inputStyle = twMerge(
+	const inputStyle = cn(
 		"px-2 outline-none border border-zinc-300 w-[250px] h-12 hover:bg-light-100 focus:bg-light-100 active:bg-light-100 focus:border-b-2 focus:border-x-0 focus:border-t-0 focus:border-primary-500",
 		isFormDisabled && "bg-zinc-200 hover:bg-zinc-200 focus:bg-zinc-200 active:bg-zinc-200",
 		formState.errors.username &&

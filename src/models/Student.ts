@@ -162,7 +162,7 @@ const _ancestryEnum = [
 ] as const;
 export type AncestryEnum = (typeof _ancestryEnum)[number];
 
-// --- Zod Schema
+// -=-=-= Types & Validators -=-=-= //
 export const ZodStudent = z.object({
 	lastName: z.string(),
 	firstName: z.string(),
@@ -194,8 +194,6 @@ export const ZodStudent = z.object({
 	createdAt: z.date().optional(), // <<--|
 	updatedAt: z.date().optional(), // <<--|
 });
-
-// --- TypeScript Type
 export type Student = z.infer<typeof ZodStudent>;
 
-export default mongoose.models.studentSchema || mongoose.model<Student>("Student", studentSchema);
+export default mongoose.model<Student>("Student", studentSchema);
