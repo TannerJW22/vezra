@@ -1,6 +1,9 @@
-import { type InputHTMLAttributes, useEffect, useState } from "react";
+import type { InputHTMLAttributes } from "react";
 
-// ::: Debounced Input provided by @tanstack/react-table
+import { useEffect, useState } from "react";
+
+// =-=-=- Main Component =-=-=- //
+// Debounced Input provided by @tanstack/react-table
 export default function DebouncedSearchBar({
 	value: initialValue,
 	onChange,

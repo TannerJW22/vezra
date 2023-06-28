@@ -20,6 +20,7 @@
 .DS_Store
 *.pem
 _raw-ui-kit/
+TODO.txt
 
 # debug
 npm-debug.log*

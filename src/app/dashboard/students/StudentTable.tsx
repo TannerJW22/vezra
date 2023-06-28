@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import type { FilterFn, SortingState, StudentTableData } from "@/lib/types";
+
+import { useState } from "react";
 import {
-	type FilterFn,
-	type SortingState,
 	flexRender,
 	getCoreRowModel,
 	getPaginationRowModel,
@@ -13,7 +13,6 @@ import {
 	getFacetedRowModel,
 	getFacetedUniqueValues,
 	getFacetedMinMaxValues,
-	ColumnDef,
 } from "@tanstack/react-table";
 import { RankingInfo, rankItem } from "@tanstack/match-sorter-utils";
 
@@ -29,15 +28,8 @@ import {
 
 import { cn } from "@/lib/utils";
 import { BsArrowDownShort, BsArrowUpShort } from "react-icons/bs";
-import { useVezraDispatch, useVezraSelector } from "@/hooks";
-import { setGlobalFilter, setSorting, setTableData } from "@/store";
-import { type StudentTableData } from "@/lib/types";
 
 // -=-=-= Types & Validators -=-=-= //
-interface DataTableProps<TData, TValue> {
-	columns: ColumnDef<TData, TValue>[];
-	_data: TData[];
-}
 declare module "@tanstack/table-core" {
 	interface FilterFns {
 		fuzzy: FilterFn<unknown>;
@@ -49,17 +41,14 @@ declare module "@tanstack/table-core" {
 
 type StudentTableProps = {
 	columns: any;
-	_data: StudentTableData[];
+	data: StudentTableData[];
 };
 
 // =-=-=- Main Component =-=-=- //
-export default function StudentTable({ columns, _data }: StudentTableProps) {
-	const dispatch = useVezraDispatch();
-	const { tableData, globalFilter, sorting } = useVezraSelector(state => state.studentPage);
-
-	useEffect(() => {
-		dispatch(setTableData(_data));
-	}, [_data]);
+export default function StudentTable({ columns, data }: StudentTableProps) {
+	const [tableData, setTableData] = useState<StudentTableData[]>(data);
+	const [sorting, setSorting] = useState<SortingState>([]);
+	const [filter, setFilter] = useState("");
 
 	const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
 		// Rank the item
@@ -81,11 +70,11 @@ export default function StudentTable({ columns, _data }: StudentTableProps) {
 			fuzzy: fuzzyFilter,
 		},
 		state: {
-			globalFilter,
+			globalFilter: filter,
 			sorting,
 		},
-		onSortingChange: _sorting => dispatch(setSorting(_sorting as SortingState)),
-		onGlobalFilterChange: (_globalFilter: string) => dispatch(setGlobalFilter(_globalFilter)),
+		onSortingChange: setSorting,
+		onGlobalFilterChange: setFilter,
 		globalFilterFn: fuzzyFilter,
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
@@ -119,7 +108,12 @@ export default function StudentTable({ columns, _data }: StudentTableProps) {
 	return (
 		<main className="p-5 bg-white shadow-md w-full h-[99%]">
 			<div className="px-3 pl-3 pr-8 flex flex-col gap-3 w-[85%]">
-				<StudentTableToolbar table={table} />
+				<StudentTableToolbar
+					table={table}
+					filter={filter}
+					setFilter={setFilter}
+					setSorting={setSorting}
+				/>
 				<Table className="rounded-md border">
 					<TableHeader>
 						{table.getHeaderGroups().map(headerGroup => (

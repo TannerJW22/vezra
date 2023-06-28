@@ -5,20 +5,10 @@ import { ZodSignInFormSchema } from "@/app/SignInForm";
 import { ZodStudent } from "@/models/Student";
 
 // "@/store/..."
-import {
-	ZodStudentTableData,
-	ZodVezraSortingState,
-	ZodStudentPageSlice,
-} from "@/store/slices/studentPageSlice";
+/////
 
 // "@/app/dashboard/students/..."
 import { ZodAddStudentFormSchema } from "@/app/dashboard/students/AddStudentForm";
+import { ZodStudentTableData } from "@/app/dashboard/students/page";
 
-export {
-	ZodVezraSortingState,
-	ZodStudentPageSlice,
-	ZodAddStudentFormSchema,
-	ZodSignInFormSchema,
-	ZodStudent,
-	ZodStudentTableData,
-};
+export { ZodAddStudentFormSchema, ZodSignInFormSchema, ZodStudent, ZodStudentTableData };

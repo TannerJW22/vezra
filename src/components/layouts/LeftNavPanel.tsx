@@ -1,13 +1,20 @@
 "use client";
 
-import { AttendanceIcon } from "@/components/layouts";
-import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { IoSchoolOutline, IoPeopleOutline } from "react-icons/io5";
 
+import { AttendanceIcon } from "@/components/layouts";
+
+// -=-=-= Types & Validators -=-=-= //
 export type NavButtonId = "attendance" | "classes" | "students" | "";
 
-export default function LeftNavPanel() {
+type LeftNavPanelProps = {
+	//
+};
+
+// =-=-=- Main Component =-=-=- //
+export default function LeftNavPanel({}: LeftNavPanelProps) {
 	const [activeNavButton, setActiveButton] = useState<NavButtonId>("");
 	const router = useRouter();
 

@@ -1,5 +1,12 @@
-import React from "react";
+// -=-=-= Types & Validators -=-=-= //
+export type LoadingSpinnerProps = {
+	className?: string;
+	width?: string;
+	height?: string;
+	color?: string;
+};
 
+// =-=-=- Main Component =-=-=- //
 export default function LoadingSpinner({ className, width, height, color }: LoadingSpinnerProps) {
 	return (
 		<div className={className || "flex h-fit w-fit justify-center items-center"}>
@@ -39,10 +46,3 @@ export default function LoadingSpinner({ className, width, height, color }: Load
 		</div>
 	);
 }
-
-export type LoadingSpinnerProps = {
-	className?: string;
-	width?: string;
-	height?: string;
-	color?: string;
-};

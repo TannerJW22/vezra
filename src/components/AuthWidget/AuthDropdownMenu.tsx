@@ -1,13 +1,19 @@
 "use client";
+import type { VezraUser } from "@/lib/types";
 
 import { useAuth } from "@clerk/nextjs";
-
-import { VezraUser } from "@/lib/types";
 import { FiLogOut } from "react-icons/fi";
 import { RiUserSettingsLine } from "react-icons/ri";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+// -=-=-= Types & Validators -=-=-= //
+export type AuthDropdownMenuProps = {
+	user: VezraUser;
+	toggle: () => void;
+};
+
+// =-=-=- Main Component =-=-=- //
 export default function AuthDropdownMenu({ user, toggle }: AuthDropdownMenuProps) {
 	const { signOut } = useAuth();
 	const router = useRouter();
@@ -45,8 +51,3 @@ export default function AuthDropdownMenu({ user, toggle }: AuthDropdownMenuProps
 		</div>
 	);
 }
-
-export type AuthDropdownMenuProps = {
-	user: VezraUser;
-	toggle: () => void;
-};

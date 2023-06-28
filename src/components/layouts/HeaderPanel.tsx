@@ -1,14 +1,22 @@
 "use client";
 
-import { useVezraUser } from "@/hooks";
-import { IoNotificationsSharp, IoSettingsSharp } from "react-icons/io5";
-import vezraLogo from "public/img/vezra-logo.png";
-import AuthWidget from "@/components/AuthWidget";
 import { useEffect } from "react";
+
+import { IoNotificationsSharp, IoSettingsSharp } from "react-icons/io5";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 
-export default function HeaderPanel() {
+import AuthWidget from "@/components/AuthWidget";
+import { useVezraUser } from "@/hooks";
+import vezraLogo from "public/img/vezra-logo.png";
+
+// -=-=-= Types & Validators -=-=-= //
+type HeaderPanelProps = {
+	//
+};
+
+// =-=-=- Main Component =-=-=- //
+export default function HeaderPanel({}: HeaderPanelProps) {
 	const { userIsLoaded, userIsSignedIn, user } = useVezraUser();
 
 	useEffect(() => {

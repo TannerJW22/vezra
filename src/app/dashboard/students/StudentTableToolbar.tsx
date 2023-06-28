@@ -1,6 +1,6 @@
 "use client";
 
-import type { Table, StudentTableData } from "@/lib/types";
+import type { Table, StudentTableData, SortingState } from "@/lib/types";
 
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import { TbRefresh, TbUserPlus } from "react-icons/tb";
@@ -8,22 +8,23 @@ import { TbRefresh, TbUserPlus } from "react-icons/tb";
 import { DebouncedSearchBar } from "@/components/(inputs)";
 import { SheetTrigger } from "@/components/_(shadcn-ui)/_sheet";
 
-import { useVezraDispatch, useVezraSelector } from "@/hooks";
 import { cn } from "@/lib/utils";
-import { setGlobalFilter, setSorting } from "@/store";
 
 // -=-=-= Types & Validators -=-=-= //
 export type StudentTableToolbarProps = {
 	table: Table<StudentTableData>;
+	filter: string;
+	setFilter: (filter: string) => void;
+	setSorting: (sorting: SortingState) => void;
 };
 
 // =-=-=- Main Component =-=-=- //
-export default function StudentTableToolbar({ table }: StudentTableToolbarProps) {
-	const dispatch = useVezraDispatch();
-	// @ts-ignore
-	const { globalFilter }: { globalFilter: string; table: Table<StudentTableData> } =
-		useVezraSelector(state => state.studentPage);
-
+export default function StudentTableToolbar({
+	table,
+	filter,
+	setFilter,
+	setSorting,
+}: StudentTableToolbarProps) {
 	const handlePagination = (action: "prev" | "next") => {
 		switch (action) {
 			case "prev":
@@ -42,15 +43,15 @@ export default function StudentTableToolbar({ table }: StudentTableToolbarProps)
 			<div className="flex gap-3 items-center">
 				<DebouncedSearchBar
 					className="px-2 mr-1 outline-none border border-zinc-300 rounded-md w-[250px] h-10 hover:bg-light-100 focus:bg-light-100"
-					value={globalFilter ?? ""}
-					onChange={(value: unknown) => dispatch(setGlobalFilter(String(value)))}
+					value={filter ?? ""}
+					onChange={(value: unknown) => setFilter(String(value))}
 					type="search"
 					placeholder=" Search..."
 				/>
 				<button
 					onClick={() => {
-						dispatch(setGlobalFilter(""));
-						dispatch(setSorting([]));
+						setFilter("");
+						setSorting([]);
 						table.setPageIndex(0);
 					}}
 					className="flex gap-1.5 items-center justify-center rounded-xl h-9 w-36 bg-light-100 text-primary-500 drop-shadow-sm border border-zinc-300 hover:bg-light-200"

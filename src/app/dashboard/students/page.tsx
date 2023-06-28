@@ -1,4 +1,6 @@
-import type { ColumnDef, Student, StudentTableData } from "@/lib/types";
+import type { ColumnDef, Student } from "@/lib/types";
+
+import { z } from "zod";
 
 import StudentTable from "./StudentTable";
 import AddStudentSheet from "./AddStudentSheet";
@@ -10,6 +12,19 @@ import { Sheet } from "@/components/_(shadcn-ui)/_sheet";
 // }
 
 // const data: Awaited<StudentTableData[]> = await getStudentTable();
+
+// -=-=-= Types & Validators -=-=-= //
+export const ZodStudentTableData = z.object({
+	lastName: z.string(),
+	firstName: z.string(),
+	grade: z.string(),
+	homeroom: z.string(),
+});
+export type StudentTableData = z.infer<typeof ZodStudentTableData>;
+
+type StudentPageProps = {
+	//
+};
 
 // -=-=-= External Constants -=-=-= //
 export const columns: ColumnDef<Partial<Student>>[] = [
@@ -32,7 +47,7 @@ export const columns: ColumnDef<Partial<Student>>[] = [
 ];
 
 // =-=-=- Main Component =-=-=- //
-export default function StudentsPage() {
+export default function StudentsPage({}: StudentPageProps) {
 	const students: StudentTableData[] = [
 		{
 			firstName: "Tanner",
@@ -123,7 +138,7 @@ export default function StudentsPage() {
 	return (
 		<main className="bg-light-200 py-3 pl-3 pr-4 h-[100%]">
 			<Sheet>
-				<StudentTable columns={columns} _data={students} />
+				<StudentTable columns={columns} data={students} />
 				<AddStudentSheet />
 			</Sheet>
 		</main>

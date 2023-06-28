@@ -1,10 +1,17 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import type { VezraUser } from "@/lib/types";
+
+import { useState } from "react";
 
 import AuthDropdownMenu from "./AuthDropdownMenu";
-import { type VezraUser } from "@/lib/types";
 
+// -=-=-= Types & Validators -=-=-= //
+type AuthWidgetProps = {
+	user: VezraUser;
+};
+
+// =-=-=- Main Component =-=-=- //
 export default function AuthWidget({ user }: AuthWidgetProps) {
 	const [showDropdown, setShowDropdown] = useState(false);
 
@@ -34,7 +41,3 @@ export default function AuthWidget({ user }: AuthWidgetProps) {
 		</div>
 	);
 }
-
-export type AuthWidgetProps = {
-	user: VezraUser;
-};

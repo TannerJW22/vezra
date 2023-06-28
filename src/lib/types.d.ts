@@ -3,7 +3,7 @@
 // External Library Types
 import type { FieldError } from "react-hook-form";
 import type { ClassValue } from "clsx";
-import type { Table, ColumnDef } from "@tanstack/react-table";
+import type { Table, FilterFn, ColumnDef, ColumnSort, SortingState } from "@tanstack/react-table";
 import type { TypedUseSelectorHook } from "react-redux";
 import type { ZodType } from "zod";
 
@@ -18,7 +18,6 @@ import type { VezraUser, useVezraUserReturn } from "@/hooks/useVezraUser";
 
 // "@/store/..."
 import type { RootState, VezraDispatch } from "@/store/index";
-import type { StudentPageSlice } from "@/store/slices/studentPageSlice";
 
 // "@/lib/utils/..."
 import type { pseudoServerReturn } from "@/lib/utils";
@@ -26,9 +25,9 @@ import type { pseudoServerReturn } from "@/lib/utils";
 // "@/app/dashboard/students/..."
 import type {
 	VezraSortingState,
-	StudentTableData,
 	AddStudentFormSchema,
 } from "@/app/dashboard/students/AddStudentForm";
+import type { StudentTableData } from "@/app/dashboard/students/page";
 
 // ::: Exports
 
@@ -37,9 +36,10 @@ export { ColumnDef, ZodType, FieldError, ClassValue, Table, TypedUseSelectorHook
 
 // Internal Custom Types
 export {
-	VezraSortingState,
+	ColumnSort,
+	SortingState,
+	FilterFn,
 	StudentTableData,
-	StudentPageContext,
 	RootState,
 	VezraDispatch,
 	VezraUser,

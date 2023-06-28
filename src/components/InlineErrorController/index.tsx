@@ -1,6 +1,13 @@
-import { type FieldError } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 
+// -=-=-= Types & Validators -=-=-= //
+type InlineErrorControllerProps = {
+	errors: any;
+	className?: string;
+	type: "server" | "zod";
+};
+
+// =-=-=- Main Component =-=-=- //
 export default function InlineErrorController({
 	className,
 	type = "zod",
@@ -42,9 +49,3 @@ export default function InlineErrorController({
 
 	return <p></p>;
 }
-
-type InlineErrorControllerProps = {
-	errors: any;
-	className?: string;
-	type: "server" | "zod";
-};

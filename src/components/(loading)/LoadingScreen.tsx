@@ -1,7 +1,14 @@
-import React from "react";
 import vezraLogo from "public/img/vezra-icon.png";
 import Image from "next/image";
 
+// -=-=-= Types & Validators -=-=-= //
+type LoadingScreenProps = {
+	className?: string;
+	width?: string;
+	height?: string;
+};
+
+// =-=-=- Main Component =-=-=- //
 export default function LoadingScreen({ className, width, height }: LoadingScreenProps) {
 	return (
 		<div
@@ -55,9 +62,3 @@ export default function LoadingScreen({ className, width, height }: LoadingScree
 		</div>
 	);
 }
-
-export type LoadingScreenProps = {
-	className?: string;
-	width?: string;
-	height?: string;
-};

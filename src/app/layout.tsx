@@ -3,6 +3,8 @@ import { Rubik } from "@next/font/google";
 
 import { ClerkProvider } from "@clerk/nextjs";
 import ReduxProvider from "@/store";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 // -=-=-= Types & Validators -=-=-= //
 type RootLayoutProps = {
