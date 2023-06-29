@@ -1,4 +1,4 @@
-import { MagicDiv } from "@/../SANDBOX";
+import { MagicDiv } from "@/app/dashboard/classes/SANDBOX";
 
 // =-=-=- Main Component =-=-=- //
 export default function ClassesPage() {

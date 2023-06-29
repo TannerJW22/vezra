@@ -12,5 +12,5 @@ type MagicDivProps = {
 // }
 
 export function MagicDiv({ children }: MagicDivProps) {
-	return <div className="bg-green-400">{children}</div>;
+	return <div className="bg-red-100">{children}</div>;
 }
