@@ -1,16 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type MagicDivProps = {
 	children: React.ReactNode;
-	// className: any;
+	[key: string]: unknown;
 };
 
-// export function Parent() {
-// 	return <div className="bg-black">Hello from MagicDiv</div>;
-// }
+type ParentProps = {
+	children: React.ReactNode;
+	[key: string]: unknown;
+};
 
-export function MagicDiv({ children }: MagicDivProps) {
-	return <div className="bg-red-100">{children}</div>;
+export function MockProject({ children }: ParentProps) {
+	const [state, setState] = useState({
+		className: "text-xl",
+	}); // <<--| Turn into useMagicElement Hook?
+
+	return <MagicDiv {...state}>{children}</MagicDiv>;
+}
+
+export function MagicDiv({ children, ...props }: MagicDivProps) {
+	return <div {...props}>{children}</div>;
 }

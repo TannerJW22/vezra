@@ -1,11 +1,11 @@
-import { MagicDiv } from "@/app/dashboard/classes/SANDBOX";
+import { MockProject } from "@/app/dashboard/classes/SANDBOX";
 
 // =-=-=- Main Component =-=-=- //
 export default function ClassesPage() {
 	return (
 		<main>
 			Classes
-			<MagicDiv>Hello from MagicDiv</MagicDiv>
+			<MockProject>Hello from MagicDiv</MockProject>
 		</main>
 	);
 }
