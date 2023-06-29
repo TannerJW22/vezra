@@ -29,7 +29,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
 		<ClerkProvider>
 			<html lang="en">
 				<body className={rubik.className}>
-					<ReduxProvider>{children}</ReduxProvider>
+					{/* <ReduxProvider> */}
+					{children}
+					{/* </ReduxProvider> */}
 				</body>
 			</html>
 		</ClerkProvider>
