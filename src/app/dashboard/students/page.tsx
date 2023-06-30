@@ -27,7 +27,7 @@ type StudentPageProps = {
 };
 
 // -=-=-= External Constants -=-=-= //
-export const columns: ColumnDef<Partial<Student>>[] = [
+const columns: ColumnDef<Partial<Student>>[] = [
 	{
 		accessorKey: "lastName",
 		header: "Last Name",

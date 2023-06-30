@@ -15,7 +15,7 @@ type ParentProps = {
 export function MockProject({ children }: ParentProps) {
 	const [state, setState] = useState({
 		className: "text-xl",
-	}); // <<--| Turn into useMagicElement Hook?
+	}); // <<--| Turn into useClassName Hook?
 
 	return <MagicDiv {...state}>{children}</MagicDiv>;
 }
