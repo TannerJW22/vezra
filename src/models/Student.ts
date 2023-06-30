@@ -1,5 +1,4 @@
-import { ZodStudent } from "@/lib/validators";
-
+import { ZodContact } from "@/lib/validators";
 import mongoose from "mongoose";
 import { z } from "zod";
 
@@ -18,8 +17,6 @@ export const _ancestryEnum = [
   "NativeHawaiian/OtherPacific",
 ] as const;
 export type AncestryEnum = (typeof _ancestryEnum)[number];
-
-export type Student = z.infer<typeof ZodStudent>;
 
 // Mongoose Model
 const studentSchema = new mongoose.Schema(
@@ -160,5 +157,38 @@ const studentSchema = new mongoose.Schema(
     // Options Object
   }
 );
+
+export const ZodStudent = z.object({
+  lastName: z.string(),
+  firstName: z.string(),
+  grade: z.string(),
+  dateEnrolled: z.date(),
+  homeroom: z.string().optional(),
+  lockerNumber: z.string().optional(),
+  lockerLocation: z.enum(_lockerlocationEnum).optional(),
+  daysAbsent: z.number().optional(),
+  dateExit: z.date().optional(),
+  hasLep: z.boolean().optional(),
+  canPhoto: z.boolean().optional(),
+  bbcid: z.string().optional(),
+  sasid: z.string().optional(),
+  lasid: z.string().optional(),
+  livesWithBothParents: z.boolean().optional(),
+  lastSchoolName: z.string().optional(),
+  phone: z.number().optional(),
+  street: z.string().optional(),
+  city: z.string().optional(),
+  state: z.string().optional(),
+  zip: z.number().optional(),
+  dob: z.date().optional(),
+  ssn: z.number().optional(),
+  gender: z.enum(_genderEnum).optional(),
+  ancestry: z.enum(_ancestryEnum).optional(),
+  notes: z.string().optional(),
+  contacts: z.array(z.lazy(() => ZodContact)).optional(), // <<--|
+  createdAt: z.date().optional(), // <<--|
+  updatedAt: z.date().optional(), // <<--|
+});
+export type Student = z.infer<typeof ZodStudent>;
 
 export default mongoose.model<Student>("Student", studentSchema);

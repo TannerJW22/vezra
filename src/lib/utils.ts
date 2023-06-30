@@ -5,28 +5,28 @@ import { twMerge } from "tailwind-merge";
 
 // -=-=-= Types -=-=-= //
 export interface pseudoServerReturn<TData> {
-	status: number;
-	statusText: string;
-	data: TData;
+  status: number;
+  statusText: string;
+  data: TData;
 }
 
 // =-=-=- Utility Functions =-=-=- //
 export async function pseudoServer<TData>(
-	res: TData,
-	ms: number,
+  res: TData,
+  ms: number
 ): Promise<pseudoServerReturn<TData>> {
-	return new Promise(resolve => {
-		setTimeout(() => {
-			const pseudoResponse = {
-				status: 200,
-				statusText: "success",
-				data: res,
-			};
-			return resolve(pseudoResponse);
-		}, ms);
-	});
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const pseudoResponse = {
+        status: 200,
+        statusText: "success",
+        data: res,
+      };
+      return resolve(pseudoResponse);
+    }, ms);
+  });
 }
 
 export function cn(...inputs: ClassValue[]) {
-	return twMerge(clsx(inputs));
+  return twMerge(clsx(inputs));
 }

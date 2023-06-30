@@ -17,12 +17,7 @@ import type { ZodType } from "zod";
 import type { SignInFormData } from "@/app/SignInForm";
 
 // "@/models/..."
-import {
-  AncestryEnum,
-  GenderEnum,
-  LockerLocationEnum,
-  Student,
-} from "@/models/Student";
+import { Student } from "@/models/Student";
 
 // "@/hooks/..."
 import type { VezraUser, useVezraUserReturn } from "@/hooks/useVezraUser";
@@ -62,7 +57,4 @@ export type {
   StudentTableData,
   SignInFormData,
   Student,
-  LockerLocationEnum,
-  GenderEnum,
-  AncestryEnum,
 };

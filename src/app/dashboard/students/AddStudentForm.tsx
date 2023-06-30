@@ -1,34 +1,39 @@
 "use client";
 
-import { ZodAddStudentForm, ZodSignInFormData } from "@/lib/validators";
-
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 // -=-=-= Types -=-=-= //
+export const ZodAddStudentForm = z.object({
+  // username: z.string().nonempty(),
+  // password: z.string().nonempty(),
+});
 export type AddStudentForm = z.infer<typeof ZodAddStudentForm>;
 
 type AddStudentFormProps = {
-	postNewStudent: () => Promise<void>;
+  postNewStudent: () => Promise<void>;
 };
 
 // =-=-=- Main Component =-=-=- //
-export default function AddStudentForm({ postNewStudent }: AddStudentFormProps) {
-	const { register, control, handleSubmit, formState } = useForm<AddStudentForm>({
-		resolver: zodResolver(ZodAddStudentForm),
-	});
+export default function AddStudentForm({
+  postNewStudent,
+}: AddStudentFormProps) {
+  const { register, control, handleSubmit, formState } =
+    useForm<AddStudentForm>({
+      resolver: zodResolver(ZodAddStudentForm),
+    });
 
-	const [isFormDisabled, setIsFormDisabled] = useState(false);
-	const [dbErrors, setDbErrors] = useState<string[]>([]);
+  const [isFormDisabled, setIsFormDisabled] = useState(false);
+  const [dbErrors, setDbErrors] = useState<string[]>([]);
 
-	return (
-		//
-		//
-		<div>
-			<form onSubmit={handleSubmit(postNewStudent)} noValidate>
-				{/* <div className="mb-5">
+  return (
+    //
+    //
+    <div>
+      <form onSubmit={handleSubmit(postNewStudent)} noValidate>
+        {/* <div className="mb-5">
 					<input
 						autoComplete="off"
 						disabled={isFormDisabled}
@@ -68,7 +73,7 @@ export default function AddStudentForm({ postNewStudent }: AddStudentFormProps) 
 					</button>
 				</div>
 				{!isFormDisabled && <InlineErrorController type="server" errors={clerkErrors} />} */}
-			</form>
-		</div>
-	);
+      </form>
+    </div>
+  );
 }
