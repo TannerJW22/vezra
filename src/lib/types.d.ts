@@ -1,9 +1,15 @@
 // ::: Imports
 
 // External Library Types
-import type { FieldError } from "react-hook-form";
+import type {
+  ColumnDef,
+  ColumnSort,
+  FilterFn,
+  SortingState,
+  Table,
+} from "@tanstack/react-table";
 import type { ClassValue } from "clsx";
-import type { Table, FilterFn, ColumnDef, ColumnSort, SortingState } from "@tanstack/react-table";
+import type { FieldError } from "react-hook-form";
 import type { TypedUseSelectorHook } from "react-redux";
 import type { ZodType } from "zod";
 
@@ -11,7 +17,12 @@ import type { ZodType } from "zod";
 import type { SignInFormData } from "@/app/SignInForm";
 
 // "@/models/..."
-import type { Student, LockerLocationEnum, GenderEnum, AncestryEnum } from "@/models/Student";
+import {
+  AncestryEnum,
+  GenderEnum,
+  LockerLocationEnum,
+  Student,
+} from "@/models/Student";
 
 // "@/hooks/..."
 import type { VezraUser, useVezraUserReturn } from "@/hooks/useVezraUser";
@@ -23,40 +34,35 @@ import type { RootState, VezraDispatch } from "@/store/index";
 import type { pseudoServerReturn } from "@/lib/utils";
 
 // "@/app/dashboard/students/..."
-import type {
-	VezraSortingState,
-	AddStudentFormSchema,
-} from "@/app/dashboard/students/AddStudentForm";
 import type { StudentTableData } from "@/app/dashboard/students/page";
 
 // ::: Exports
 
 // External Library Types
-export { ColumnDef, ZodType, FieldError, ClassValue, Table, TypedUseSelectorHook };
-
-// Internal Custom Types
-export {
-	ColumnSort,
-	SortingState,
-	FilterFn,
-	StudentTableData,
-	RootState,
-	VezraDispatch,
-	VezraUser,
-	useVezraUserReturn,
-	pseudoServerReturn,
-	SignInFormData,
-	StudentTableData,
-	Student,
-	LockerLocationEnum,
-	GenderEnum,
-	AncestryEnum,
+export type {
+  ColumnDef,
+  ZodType,
+  FieldError,
+  ClassValue,
+  Table,
+  TypedUseSelectorHook,
 };
-
-////////////////////////////////
-////////////////////////////////
-
-export type StudentsPageReducerAction = {
-	type: "SET_TABLE_DATA" | "SET_GLOBAL_FILTER" | "SET_SORTING";
-	payload: unknown;
+// Internal Custom Types
+export type {
+  ColumnSort,
+  SortingState,
+  FilterFn,
+  StudentTableData,
+  RootState,
+  VezraDispatch,
+  VezraUser,
+  useVezraUserReturn,
+  pseudoServerReturn,
+  SignInFormData,
+  StudentTableData,
+  SignInFormData,
+  Student,
+  LockerLocationEnum,
+  GenderEnum,
+  AncestryEnum,
 };

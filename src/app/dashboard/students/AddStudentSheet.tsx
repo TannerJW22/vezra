@@ -1,7 +1,7 @@
 import AddStudentForm from "./AddStudentForm";
 import { SheetContent, SheetHeader, SheetTitle } from "@/components/_(shadcn-ui)/_sheet";
 
-// -=-=-= Types & Validators -=-=-= //
+// -=-=-= Types -=-=-= //
 type AddStudentSheetProps = {
 	//
 };

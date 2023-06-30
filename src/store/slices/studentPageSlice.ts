@@ -3,7 +3,7 @@
 // import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // import { z } from "zod";
 
-// // -=-=-= Types & Validators -=-=-= //
+// // -=-=-= Types -=-=-= //
 
 // // =-=-=- Slice Declaration =-=-=- //
 // const initialState = {

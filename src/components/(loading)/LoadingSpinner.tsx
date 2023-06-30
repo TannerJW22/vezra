@@ -1,4 +1,4 @@
-// -=-=-= Types & Validators -=-=-= //
+// -=-=-= Types -=-=-= //
 export type LoadingSpinnerProps = {
 	className?: string;
 	width?: string;

@@ -2,7 +2,7 @@ import { UserProfile } from "@clerk/nextjs";
 
 import CheckForRedirect from "@/components/CheckForRedirect";
 
-// -=-=-= Types & Validators -=-=-= //
+// -=-=-= Types -=-=-= //
 type ProfilePageProps = {
 	//
 };

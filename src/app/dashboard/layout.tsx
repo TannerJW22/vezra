@@ -1,7 +1,7 @@
 import CheckForRedirect from "@/components/CheckForRedirect";
 import { HeaderPanel, LeftNavPanel } from "@/components/layouts";
 
-// -=-=-= Types & Validators -=-=-= //
+// -=-=-= Types -=-=-= //
 type DashboardLayoutProps = {
 	children: React.ReactNode;
 };

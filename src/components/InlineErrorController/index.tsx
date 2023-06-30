@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge";
 
-// -=-=-= Types & Validators -=-=-= //
+// -=-=-= Types -=-=-= //
 type InlineErrorControllerProps = {
 	errors: any;
 	className?: string;

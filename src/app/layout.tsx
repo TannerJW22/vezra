@@ -6,7 +6,7 @@ import ReduxProvider from "@/store";
 import { Suspense } from "react";
 import Loading from "./loading";
 
-// -=-=-= Types & Validators -=-=-= //
+// -=-=-= Types -=-=-= //
 type RootLayoutProps = {
 	children: React.ReactNode;
 };

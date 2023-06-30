@@ -1,4 +1,5 @@
 import type { ColumnDef, Student } from "@/lib/types";
+import { ZodStudentTableData } from "@/lib/validators";
 
 import { z } from "zod";
 
@@ -13,13 +14,7 @@ import { Sheet } from "@/components/_(shadcn-ui)/_sheet";
 
 // const data: Awaited<StudentTableData[]> = await getStudentTable();
 
-// -=-=-= Types & Validators -=-=-= //
-export const ZodStudentTableData = z.object({
-	lastName: z.string(),
-	firstName: z.string(),
-	grade: z.string(),
-	homeroom: z.string(),
-});
+// -=-=-= Types -=-=-= //
 export type StudentTableData = z.infer<typeof ZodStudentTableData>;
 
 type StudentPageProps = {

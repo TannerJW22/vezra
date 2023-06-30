@@ -10,7 +10,7 @@ import { SheetTrigger } from "@/components/_(shadcn-ui)/_sheet";
 
 import { cn } from "@/lib/utils";
 
-// -=-=-= Types & Validators -=-=-= //
+// -=-=-= Types -=-=-= //
 export type StudentTableToolbarProps = {
 	table: Table<StudentTableData>;
 	filter: string;

@@ -1,12 +1,13 @@
 "use client";
 
+import { ZodSignInFormData } from "@/lib/validators";
+
 import { useState } from "react";
 import { useSignIn } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import LoadingSpinner from "@/components/(loading)/LoadingSpinner";
@@ -16,12 +17,11 @@ import { cn } from "@/lib/utils";
 import { BsFillDiamondFill } from "react-icons/bs";
 import vezraLogo from "public/img/vezra-logo.png";
 
-// -=-=-= Types & Validators -=-=-= //
-export const ZodSignInFormSchema = z.object({
-	username: z.string().nonempty(),
-	password: z.string().nonempty(),
-});
-export type SignInFormData = z.infer<typeof ZodSignInFormSchema>;
+// -=-=-= Types -=-=-= //
+export type SignInFormData = {
+	username: string;
+	password: string;
+};
 
 type SignInFormProps = {
 	//
@@ -33,7 +33,7 @@ export default function SignInForm({}: SignInFormProps) {
 	const { isLoaded, signIn, setActive } = useSignIn();
 
 	const { register, control, handleSubmit, formState } = useForm<SignInFormData>({
-		resolver: zodResolver(ZodSignInFormSchema),
+		resolver: zodResolver(ZodSignInFormData),
 	});
 
 	const [isFormDisabled, setIsFormDisabled] = useState(false);

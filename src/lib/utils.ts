@@ -3,7 +3,7 @@ import type { ClassValue } from "@/lib/types";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-// -=-=-= Types & Validators -=-=-= //
+// -=-=-= Types -=-=-= //
 export interface pseudoServerReturn<TData> {
 	status: number;
 	statusText: string;

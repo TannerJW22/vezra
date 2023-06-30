@@ -5,6 +5,8 @@ import SignInForm from "./SignInForm";
 
 import kha from "public/img/kha-login-page.png";
 
+// -=-=-= Types -=-=-= //
+
 // =-=-=- Main Component =-=-=- //
 export default function SignInPage() {
 	return (

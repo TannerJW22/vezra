@@ -47,6 +47,7 @@
 	"devDependencies": {
 		"@hookform/devtools": "^4.3.1",
 		"@types/node": "^20.2.4",
+		"prettier-plugin-organize-imports": "^3.2.2",
 		"prisma": "^4.14.1",
 		"ts-node": "^10.9.1",
 		"tslib": "^2.5.2"

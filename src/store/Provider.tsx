@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 
 import { store } from "@/store";
 
-// -=-=-= Types & Validators -=-=-= //
+// -=-=-= Types -=-=-= //
 export type ReduxProviderProps = {
 	children: React.ReactNode;
 };

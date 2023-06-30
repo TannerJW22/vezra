@@ -29,7 +29,7 @@ import {
 import { cn } from "@/lib/utils";
 import { BsArrowDownShort, BsArrowUpShort } from "react-icons/bs";
 
-// -=-=-= Types & Validators -=-=-= //
+// -=-=-= Types -=-=-= //
 declare module "@tanstack/table-core" {
 	interface FilterFns {
 		fuzzy: FilterFn<unknown>;

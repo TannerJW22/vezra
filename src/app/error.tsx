@@ -1,6 +1,6 @@
 "use client";
 
-// -=-=-= Types & Validators -=-=-= //
+// -=-=-= Types -=-=-= //
 type ErrorPageProps = {
 	error: Error;
 	reset: () => void;

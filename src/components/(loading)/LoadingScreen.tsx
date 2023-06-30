@@ -1,7 +1,7 @@
 import vezraLogo from "public/img/vezra-icon.png";
 import Image from "next/image";
 
-// -=-=-= Types & Validators -=-=-= //
+// -=-=-= Types -=-=-= //
 type LoadingScreenProps = {
 	className?: string;
 	width?: string;

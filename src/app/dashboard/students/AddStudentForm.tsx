@@ -1,16 +1,14 @@
 "use client";
 
+import { ZodAddStudentForm, ZodSignInFormData } from "@/lib/validators";
+
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-// -=-=-= Types & Validators -=-=-= //
-export const ZodAddStudentFormSchema = z.object({
-	// username: z.string().nonempty(),
-	// password: z.string().nonempty(),
-});
-export type AddStudentFormSchema = z.infer<typeof ZodAddStudentFormSchema>;
+// -=-=-= Types -=-=-= //
+export type AddStudentForm = z.infer<typeof ZodAddStudentForm>;
 
 type AddStudentFormProps = {
 	postNewStudent: () => Promise<void>;
@@ -18,8 +16,8 @@ type AddStudentFormProps = {
 
 // =-=-=- Main Component =-=-=- //
 export default function AddStudentForm({ postNewStudent }: AddStudentFormProps) {
-	const { register, control, handleSubmit, formState } = useForm<AddStudentFormSchema>({
-		resolver: zodResolver(ZodAddStudentFormSchema),
+	const { register, control, handleSubmit, formState } = useForm<AddStudentForm>({
+		resolver: zodResolver(ZodAddStudentForm),
 	});
 
 	const [isFormDisabled, setIsFormDisabled] = useState(false);
