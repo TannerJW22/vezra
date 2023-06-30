@@ -1,14 +1,6 @@
+import { ZodContact, _contactTypeEnum } from "@/lib/validators";
 import mongoose from "mongoose";
 import { z } from "zod";
-
-export const _contactTypeEnum = [
-  "Parent",
-  "Guardian",
-  "Emergency",
-  "ReleaseOnly",
-  "Other",
-] as const;
-export type ContactTypeEnum = (typeof _contactTypeEnum)[number];
 
 const contactSchema = new mongoose.Schema(
   {
@@ -84,23 +76,7 @@ const contactSchema = new mongoose.Schema(
   }
 );
 
-export const ZodContact = z.object({
-  type: z.enum(_contactTypeEnum),
-  lastName: z.string(),
-  firstName: z.string(),
-  phone: z.number().optional(),
-  email: z.string().optional(),
-  street: z.string().optional(),
-  city: z.string().optional(),
-  state: z.string().optional(),
-  zip: z.number().optional(),
-  bbcid: z.string().optional(),
-  bciExpires: z.date().optional(),
-  notes: z.string().optional(),
-  students: z.array(z.unknown()).optional(), // <<--| {unknown()} bypasses circular dependency (couldnt solve)
-  createdAt: z.date().optional(), // <<--|
-  updatedAt: z.date().optional(), // <<--|
-});
+export type ContactTypeEnum = (typeof _contactTypeEnum)[number];
 export type Contact = z.infer<typeof ZodContact>;
 
 export default mongoose.model<Contact>("Contact", contactSchema);

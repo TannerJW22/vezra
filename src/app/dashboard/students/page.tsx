@@ -3,6 +3,7 @@ import type { ColumnDef, Student } from "@/lib/types";
 import { z } from "zod";
 
 import { Sheet } from "@/components/_(shadcn-ui)/_sheet";
+import { ZodStudentTableData } from "@/lib/validators";
 import AddStudentSheet from "./AddStudentSheet";
 import StudentTable from "./StudentTable";
 
@@ -14,12 +15,6 @@ import StudentTable from "./StudentTable";
 // const data: Awaited<StudentTableData[]> = await getStudentTable();
 
 // -=-=-= Types -=-=-= //
-export const ZodStudentTableData = z.object({
-  lastName: z.string(),
-  firstName: z.string(),
-  grade: z.string(),
-  homeroom: z.string(),
-});
 export type StudentTableData = z.infer<typeof ZodStudentTableData>;
 
 type StudentPageProps = {

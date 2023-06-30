@@ -1,15 +1,12 @@
 "use client";
 
+import { ZodAddStudentForm } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 // -=-=-= Types -=-=-= //
-export const ZodAddStudentForm = z.object({
-  // username: z.string().nonempty(),
-  // password: z.string().nonempty(),
-});
 export type AddStudentForm = z.infer<typeof ZodAddStudentForm>;
 
 type AddStudentFormProps = {

@@ -13,15 +13,11 @@ import LoadingSpinner from "@/components/(loading)/LoadingSpinner";
 import InlineErrorController from "@/components/InlineErrorController";
 
 import { cn } from "@/lib/utils";
+import { ZodSignInFormData } from "@/lib/validators";
 import vezraLogo from "public/img/vezra-logo.png";
 import { BsFillDiamondFill } from "react-icons/bs";
 
 // -=-=-= Types -=-=-= //
-export const ZodSignInFormData = z.object({
-  username: z.string().nonempty(),
-  password: z.string().nonempty(),
-});
-
 export type SignInFormData = z.infer<typeof ZodSignInFormData>;
 
 type SignInFormProps = {
