@@ -1,6 +1,7 @@
 import { ZodContact } from "@/lib/validators";
 import { z } from "zod";
 
+const _gradeEnum = ["K", "1", "2", "3", "4", "5"] as const;
 const _lockerlocationEnum = ["Main", "Addition"] as const;
 const _genderEnum = ["Male", "Female", "Other"] as const;
 const _ancestryEnum = [
@@ -15,7 +16,7 @@ const _ancestryEnum = [
 const ZodStudent = z.object({
   lastName: z.string(),
   firstName: z.string(),
-  grade: z.string(),
+  grade: z.enum(_gradeEnum),
   dateEnrolled: z.date(),
   homeroom: z.string().optional(),
   lockerNumber: z.string().optional(),
@@ -45,4 +46,4 @@ const ZodStudent = z.object({
 });
 
 export default ZodStudent;
-export { _ancestryEnum, _genderEnum, _lockerlocationEnum };
+export { _ancestryEnum, _gradeEnum, _genderEnum, _lockerlocationEnum };

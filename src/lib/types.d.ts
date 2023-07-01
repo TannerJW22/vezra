@@ -18,13 +18,22 @@ import type { SignInFormData } from "@/app/SignInForm";
 
 // "@/models/..."
 import type { Contact } from "@/models/Contact";
-import type { Student } from "@/models/Student";
+import type {
+  AncestryEnum,
+  GenderEnum,
+  GradeEnum,
+  LockerLocationEnum,
+  Student,
+} from "@/models/Student";
 
 // "@/hooks/..."
 import type { VezraUser, useVezraUserReturn } from "@/hooks/useVezraUser";
 
 // "@/store/..."
 import type { RootState, VezraDispatch } from "@/store/index";
+
+// "@/lib/constants/..."
+import type { Theme } from "@/lib/constants";
 
 // "@/lib/utils/..."
 import type { pseudoServerReturn } from "@/lib/utils";
@@ -45,6 +54,7 @@ export type {
 };
 // Internal Custom Types
 export type {
+  Theme,
   ColumnSort,
   SortingState,
   FilterFn,
@@ -58,5 +68,9 @@ export type {
   StudentTableData,
   SignInFormData,
   Student,
+  AncestryEnum,
+  GenderEnum,
+  GradeEnum,
+  LockerLocationEnum,
   Contact,
 };

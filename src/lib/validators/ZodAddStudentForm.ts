@@ -1,8 +1,10 @@
-import { z } from "zod";
+import ZodStudent from "./ZodStudent";
 
-const ZodAddStudentForm = z.object({
-  // username: z.string().nonempty(),
-  // password: z.string().nonempty(),
+const ZodAddStudentForm = ZodStudent.pick({
+  lastName: true,
+  firstName: true,
+  grade: true,
+  dateEnrolled: true,
 });
 
 export default ZodAddStudentForm;

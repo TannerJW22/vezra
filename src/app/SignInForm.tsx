@@ -11,6 +11,7 @@ import { z } from "zod";
 
 import LoadingSpinner from "@/components/(loading)/LoadingSpinner";
 import InlineErrorController from "@/components/InlineErrorController";
+import { theme } from "@/lib/constants";
 
 import { cn } from "@/lib/utils";
 import { ZodSignInFormData } from "@/lib/validators";
@@ -36,16 +37,6 @@ export default function SignInForm({}: SignInFormProps) {
 
   const [isFormDisabled, setIsFormDisabled] = useState(false);
   const [clerkErrors, setClerkErrors] = useState<string[]>([]);
-
-  const theme = {
-    input: cn(
-      "px-2 outline-none border border-zinc-300 w-[250px] h-12 hover:bg-light-100 focus:bg-light-100 active:bg-light-100 focus:border-b-2 focus:border-x-0 focus:border-t-0 focus:border-primary-500",
-      isFormDisabled &&
-        "bg-zinc-200 hover:bg-zinc-200 focus:bg-zinc-200 active:bg-zinc-200",
-      formState.errors.username &&
-        "border-l-8 border-t-0 border-b-2 border-r-0 border-red-600 focus:border-l-8 focus:border-t-0 focus:border-b-2 focus:border-r-0 focus:rounded-b-none focus:border-red-600"
-    ),
-  };
 
   async function signInUser({ username, password }: SignInFormData) {
     setIsFormDisabled(true);
@@ -79,7 +70,11 @@ export default function SignInForm({}: SignInFormProps) {
           <input
             autoComplete="off"
             disabled={isFormDisabled}
-            className={theme.input}
+            className={cn(
+              theme.input.base,
+              isFormDisabled && theme.input.onDisable,
+              formState.errors.username && theme.input.onError
+            )}
             id="username"
             type="text"
             placeholder=" Username"
@@ -97,7 +92,11 @@ export default function SignInForm({}: SignInFormProps) {
         <div className="mb-5">
           <input
             disabled={isFormDisabled}
-            className={theme.input}
+            className={cn(
+              theme.input.base,
+              isFormDisabled && theme.input.onDisable,
+              formState.errors.password && theme.input.onError
+            )}
             id="password"
             type="password"
             placeholder=" Password"
@@ -124,7 +123,6 @@ export default function SignInForm({}: SignInFormProps) {
           <InlineErrorController type="server" errors={clerkErrors} />
         )}
       </form>
-      {/* <DevTool control={control} /> */}
       <p className="text-base font-medium text-zinc-800">
         Not an Authorized User?
         <br />

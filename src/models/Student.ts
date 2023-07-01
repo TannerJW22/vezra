@@ -2,6 +2,7 @@ import {
   ZodStudent,
   _ancestryEnum,
   _genderEnum,
+  _gradeEnum,
   _lockerlocationEnum,
 } from "@/lib/validators";
 import mongoose from "mongoose";
@@ -147,6 +148,7 @@ const studentSchema = new mongoose.Schema(
   }
 );
 
+export type GradeEnum = (typeof _gradeEnum)[number];
 export type LockerLocationEnum = (typeof _lockerlocationEnum)[number];
 export type GenderEnum = (typeof _genderEnum)[number];
 export type AncestryEnum = (typeof _ancestryEnum)[number];
