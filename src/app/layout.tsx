@@ -3,6 +3,7 @@ import { Rubik } from "@next/font/google";
 import "./globals.css";
 
 import { ClerkProvider } from "@clerk/nextjs";
+import ThemeProvider from "./ThemeProvider";
 
 // -=-=-= Types -=-=-= //
 type RootLayoutProps = {
@@ -25,13 +26,15 @@ export const metadata = {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={rubik.className}>
-          {/* <ReduxProvider> */}
-          {children}
-          {/* </ReduxProvider> */}
-        </body>
-      </html>
+      <ThemeProvider>
+        <html lang="en">
+          <body className={rubik.className}>
+            {/* <ReduxProvider> */}
+            {children}
+            {/* </ReduxProvider> */}
+          </body>
+        </html>
+      </ThemeProvider>
     </ClerkProvider>
   );
 }

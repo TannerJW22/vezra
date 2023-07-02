@@ -5,30 +5,28 @@ import SignInForm from "./SignInForm";
 
 import kha from "public/img/kha-login-page.png";
 
-// -=-=-= Types -=-=-= //
-
 // =-=-=- Main Component =-=-=- //
 export default function SignInPage() {
-	return (
-		<CheckForRedirect
-			withAuth="/dashboard"
-			className="relative flex justify-center w-full h-screen"
-		>
-			<main>
-				<div className="flex justify-center w-full h-screen min-h-[400px] min-w-[525px]">
-					<div className="h-full w-full min-w-[600px] bg-primary-500" />
-					<div className=" shrink h-full w-full">
-						<Image
-							className="object-cover w-full h-full"
-							src={kha}
-							alt="vezra logo"
-							width={1150}
-							height={500}
-						/>
-					</div>
-				</div>
-				<SignInForm />
-			</main>
-		</CheckForRedirect>
-	);
+  return (
+    <CheckForRedirect
+      withAuth="/dashboard"
+      className="relative flex justify-center w-full h-screen"
+    >
+      <main>
+        <div className="flex justify-center w-full h-screen min-h-[400px] min-w-[525px]">
+          <div className="h-full w-full min-w-[600px] bg-primary-500" />
+          <div className=" shrink h-full w-full">
+            <Image
+              className="object-cover w-full h-full"
+              src={kha}
+              alt="vezra logo"
+              width={1150}
+              height={500}
+            />
+          </div>
+        </div>
+        <SignInForm />
+      </main>
+    </CheckForRedirect>
+  );
 }

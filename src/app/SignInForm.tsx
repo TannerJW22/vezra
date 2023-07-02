@@ -5,14 +5,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { ThemeContext } from "@/app/ThemeProvider";
 import LoadingSpinner from "@/components/(loading)/LoadingSpinner";
 import InlineErrorController from "@/components/InlineErrorController";
-import { theme } from "@/lib/constants";
 
+import { Theme } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { ZodSignInFormData } from "@/lib/validators";
 import vezraLogo from "public/img/vezra-logo.png";
@@ -29,6 +30,7 @@ type SignInFormProps = {
 export default function SignInForm({}: SignInFormProps) {
   const router = useRouter();
   const { isLoaded, signIn, setActive } = useSignIn();
+  const theme: Theme = useContext(ThemeContext);
 
   const { register, control, handleSubmit, formState } =
     useForm<SignInFormData>({

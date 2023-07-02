@@ -1,11 +1,11 @@
 "use client";
 
+import { ThemeContext } from "@/app/ThemeProvider";
 import { LoadingSpinner } from "@/components/(loading)";
-import { theme } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { ZodAddStudentForm } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -27,6 +27,7 @@ export default function AddStudentForm({
 
   const [isFormDisabled, setIsFormDisabled] = useState(false);
   const [dbErrors, setDbErrors] = useState<string[]>([]);
+  const theme = useContext(ThemeContext);
 
   return (
     //

@@ -38,6 +38,9 @@ import type { Theme } from "@/lib/constants";
 // "@/lib/utils/..."
 import type { pseudoServerReturn } from "@/lib/utils";
 
+// "@/components/..."
+import type { InputProps } from "@/components/(inputs)/Input";
+
 // "@/app/dashboard/students/..."
 import type { StudentTableData } from "@/app/dashboard/students/page";
 
@@ -54,6 +57,7 @@ export type {
 };
 // Internal Custom Types
 export type {
+  InputProps,
   Theme,
   ColumnSort,
   SortingState,
