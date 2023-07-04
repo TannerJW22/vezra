@@ -6,10 +6,10 @@ import { store } from "@/store";
 
 // -=-=-= Types -=-=-= //
 export type ReduxProviderProps = {
-	children: React.ReactNode;
+  children: React.ReactNode;
 };
 
 // =-=-=- Main Component =-=-=- //
 export default function ReduxProvider({ children }: ReduxProviderProps) {
-	return <Provider store={store}>{children}</Provider>;
+  return <Provider store={store}>{children}</Provider>;
 }

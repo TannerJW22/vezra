@@ -1,14 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 // import { authReducer } from "./slices/authSlice";
-import ReduxProvider from "./Provider";
+import ReduxProvider from "./ReduxProvider";
 
 // Slices Re-exports
 // import { updateUserIsLoaded, updateUserIsSignedIn, updateVezraUser } from "./slices/authSlice";
 
 export const store = configureStore({
-	reducer: {
-		// auth: authReducer,
-	},
+  reducer: {
+    // auth: authReducer,
+  },
 });
 
 export default ReduxProvider;

@@ -13,8 +13,8 @@ import { ThemeContext } from "@/app/ThemeProvider";
 import LoadingSpinner from "@/components/(loading)/LoadingSpinner";
 import InlineErrorController from "@/components/InlineErrorController";
 
+import Input from "@/components/(inputs)/Input";
 import { Theme } from "@/lib/types";
-import { cn } from "@/lib/utils";
 import { ZodSignInFormData } from "@/lib/validators";
 import vezraLogo from "public/img/vezra-logo.png";
 import { BsFillDiamondFill } from "react-icons/bs";
@@ -32,10 +32,9 @@ export default function SignInForm({}: SignInFormProps) {
   const { isLoaded, signIn, setActive } = useSignIn();
   const theme: Theme = useContext(ThemeContext);
 
-  const { register, control, handleSubmit, formState } =
-    useForm<SignInFormData>({
-      resolver: zodResolver(ZodSignInFormData),
-    });
+  const { register, watch, handleSubmit, formState } = useForm<SignInFormData>({
+    resolver: zodResolver(ZodSignInFormData),
+  });
 
   const [isFormDisabled, setIsFormDisabled] = useState(false);
   const [clerkErrors, setClerkErrors] = useState<string[]>([]);
@@ -61,28 +60,28 @@ export default function SignInForm({}: SignInFormProps) {
   return (
     <div className="absolute top-16 left-12 sm:left-32 md:left-1/3 max-w-[375px] bg-white shadow-lg shadow-zinc-700 overflow-hidden rounded-lg py-8 px-10 text-center justify-center items-center sm:px-12 md:px-[60px]">
       <Image
-        className="mb-4"
+        className="mb-6"
         src={vezraLogo}
         alt="vezra logo"
         width={250}
         height={75}
       />
       <form onSubmit={handleSubmit(signInUser)} noValidate>
-        <div className="mb-5">
-          <input
+        <div className="mb-6">
+          <Input
             autoComplete="off"
             disabled={isFormDisabled}
-            className={cn(
-              theme.input.base,
-              isFormDisabled && theme.input.onDisable,
-              formState.errors.username && theme.input.onError
-            )}
+            config={{
+              syncDisable: isFormDisabled,
+              syncError: formState.errors.username?.message,
+              syncValue: watch("username"),
+              syncFnProps: () =>
+                register("username", {
+                  required: "Username is required",
+                }),
+            }}
             id="username"
             type="text"
-            placeholder=" Username"
-            {...register("username", {
-              required: "Username is required",
-            })}
           />
           {formState.errors.username && (
             <InlineErrorController
@@ -92,19 +91,19 @@ export default function SignInForm({}: SignInFormProps) {
           )}
         </div>
         <div className="mb-5">
-          <input
+          <Input
+            config={{
+              syncDisable: isFormDisabled,
+              syncError: formState.errors.password?.message,
+              syncValue: watch("password"),
+              syncFnProps: () =>
+                register("password", {
+                  required: "Password is required",
+                }),
+            }}
             disabled={isFormDisabled}
-            className={cn(
-              theme.input.base,
-              isFormDisabled && theme.input.onDisable,
-              formState.errors.password && theme.input.onError
-            )}
             id="password"
             type="password"
-            placeholder=" Password"
-            {...register("password", {
-              required: "Password is required",
-            })}
           />
           {formState.errors.password && (
             <InlineErrorController

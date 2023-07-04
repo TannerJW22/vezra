@@ -1,0 +1,86 @@
+[
+  {
+    "firstName": "Tanner",
+    "lastName": "Linsley",
+    "grade": "3",
+    "homeroom": "Santerre"
+  },
+  {
+    "firstName": "Candy",
+    "lastName": "Miller",
+    "grade": "1",
+    "homeroom": "White"
+  },
+  {
+    "firstName": "Jose",
+    "lastName": "Canstellionso",
+    "grade": "4",
+    "homeroom": "Staggs"
+  },
+  {
+    "firstName": "John",
+    "lastName": "Doe",
+    "grade": "2",
+    "homeroom": "Smith"
+  },
+  {
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "grade": "5",
+    "homeroom": "Johnson"
+  },
+  {
+    "firstName": "Tiger",
+    "lastName": "Lily",
+    "grade": "3",
+    "homeroom": "Decci"
+  },
+  {
+    "firstName": "Tardy",
+    "lastName": "Merryno",
+    "grade": "1",
+    "homeroom": "Wheater"
+  },
+  {
+    "firstName": "Jazadina",
+    "lastName": "Canasdonso",
+    "grade": "4",
+    "homeroom": "Staggs"
+  },
+  {
+    "firstName": "Freddy",
+    "lastName": "Doodlebop",
+    "grade": "2",
+    "homeroom": "Sampson"
+  },
+  {
+    "firstName": "Dickers",
+    "lastName": "Canter",
+    "grade": "5",
+    "homeroom": "Piper"
+  },
+  {
+    "firstName": "Cheri",
+    "lastName": "Burdett",
+    "grade": "1",
+    "homeroom": "Hopkins"
+  },
+  {
+    "firstName": "Austin",
+    "lastName": "Smithers",
+    "grade": "4",
+    "homeroom": "Smith"
+  },
+  {
+    "firstName": "Kody",
+    "lastName": "Nickerson",
+    "grade": "2",
+    "homeroom": "Hangini"
+  },
+  {
+    "firstName": "Valerie",
+    "lastName": "Martin",
+    "grade": "5",
+    "homeroom": "Bowman"
+  }
+]
