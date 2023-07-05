@@ -1,6 +1,12 @@
 "use client";
 
-import type { FilterFn, SortingState, StudentTableData } from "@/lib/types";
+import type {
+  ColumnDef,
+  FilterFn,
+  SortingState,
+  Student,
+  StudentTableData,
+} from "@/lib/types";
 
 import { RankingInfo, rankItem } from "@tanstack/match-sorter-utils";
 import {
@@ -15,6 +21,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useState } from "react";
+import { z } from "zod";
 
 import {
   Table,
@@ -26,10 +33,15 @@ import {
 } from "@/components/_(shadcn-ui)/_table";
 import StudentTableToolbar from "./StudentTableToolbar";
 
-import { cn } from "@/lib/utils";
+import { _baseURL_, cn } from "@/lib/utils";
+import { ZodStudentTableData } from "@/lib/validators";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { BsArrowDownShort, BsArrowUpShort } from "react-icons/bs";
 
 // -=-=-= Types -=-=-= //
+
+export type StudentTableData = z.infer<typeof ZodStudentTableData>;
 declare module "@tanstack/table-core" {
   interface FilterFns {
     fuzzy: FilterFn<unknown>;
@@ -40,13 +52,12 @@ declare module "@tanstack/table-core" {
 }
 
 type StudentTableProps = {
-  columns: any;
-  data: StudentTableData[];
+  columns: ColumnDef<Partial<Student>>[];
 };
 
 // =-=-=- Main Component =-=-=- //
-export default function StudentTable({ columns, data }: StudentTableProps) {
-  const [tableData, setTableData] = useState<StudentTableData[]>(data);
+export default function StudentTable({ columns }: StudentTableProps) {
+  const [tableData, setTableData] = useState<StudentTableData[]>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [filter, setFilter] = useState("");
 
@@ -87,6 +98,20 @@ export default function StudentTable({ columns, data }: StudentTableProps) {
     debugHeaders: true,
     debugColumns: false,
   });
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["getAllStudents"],
+    queryFn: () =>
+      axios
+        .get(`${_baseURL_}/api/students`)
+        .then((res) => setTableData(res.data.students)),
+  });
+
+  if (isLoading) {
+    console.log("Students is Loading...");
+    return <p>Loading...</p>;
+  }
+  if (!isLoading) console.log("Students >> ", data); // <<--*
 
   const renderSortingIcon = (sortStatus: "asc" | "desc" | "") => {
     switch (sortStatus) {

@@ -1,11 +1,17 @@
+import dbConnect from "@/lib/mongoDB";
+import { Student } from "@/models/Student";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   let students;
-  // const res = await Student.find();
-  const res = await fetch("http://jsonplaceholder.typicode.com/users", {
-    method: "GET",
-  }).then((data) => (students = data));
 
-  return NextResponse.json(students);
+  try {
+    await dbConnect();
+    const res = await Student.find();
+    students = res;
+  } catch (err) {
+    console.error(err);
+  }
+
+  return NextResponse.json({ students });
 }

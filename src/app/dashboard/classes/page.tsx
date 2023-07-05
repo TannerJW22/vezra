@@ -2,6 +2,7 @@
 
 import { _baseURL_ } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 // =-=-=- Main Component =-=-=- //
 export default function ClassesPage() {
@@ -11,10 +12,8 @@ export default function ClassesPage() {
     isError,
   } = useQuery({
     queryKey: ["getAllStudents"],
-    queryFn: async () =>
-      await fetch(`${_baseURL_}/api/students`, {
-        method: "GET",
-      }).then((res) => res.json()),
+    queryFn: () =>
+      axios.get(`${_baseURL_}/api/students`).then((res) => res.data.students),
   });
 
   if (isLoading) {

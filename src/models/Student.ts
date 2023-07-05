@@ -154,4 +154,9 @@ export type GenderEnum = (typeof _genderEnum)[number];
 export type AncestryEnum = (typeof _ancestryEnum)[number];
 export type Student = z.infer<typeof ZodStudent>;
 
-export default mongoose.model<Student>("Student", studentSchema);
+// export default mongoose.model<Student>("Student", studentSchema);
+
+export const Student =
+  mongoose.models && "Student" in mongoose.models
+    ? (mongoose.models.Student as mongoose.Model<Student>)
+    : mongoose.model<Student>("Student", studentSchema);

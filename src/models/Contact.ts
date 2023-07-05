@@ -79,4 +79,9 @@ const contactSchema = new mongoose.Schema(
 export type ContactTypeEnum = (typeof _contactTypeEnum)[number];
 export type Contact = z.infer<typeof ZodContact>;
 
-export default mongoose.model<Contact>("Contact", contactSchema);
+// export default mongoose.model<Contact>("Contact", contactSchema);
+
+export const Contact =
+  mongoose.models && "Contact" in mongoose.models
+    ? (mongoose.models.Contact as mongoose.Model<Contact>)
+    : mongoose.model<Contact>("Contact", contactSchema);
