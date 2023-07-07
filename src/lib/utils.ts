@@ -13,10 +13,28 @@ export const _baseURL_ =
 
 // =-=-=- Utility Functions =-=-=- //
 
+// :::
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+// :::
 export function toTitleCase(string: string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
+  const words = string.split(" ");
+
+  const capitalizedWords = words.map((word) => {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  });
+
+  return capitalizedWords.join(" ");
+}
+
+// :::
+export function enumToChoicesAdaptor<TEnum>(enumArray: ReadonlyArray<TEnum>) {
+  return enumArray.map((val) => {
+    return {
+      label: val,
+      value: val,
+    };
+  });
 }

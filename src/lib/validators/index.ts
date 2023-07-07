@@ -1,11 +1,11 @@
 import ZodAddStudentForm from "./ZodAddStudentForm";
-import ZodContact, { _contactTypeEnum } from "./ZodContact";
+import ZodContact, { contactTypeEnum } from "./ZodContact";
 import ZodSignInFormData from "./ZodSignInFormData";
 import ZodStudent, {
-  _ancestryEnum,
-  _genderEnum,
-  _gradeEnum,
-  _lockerlocationEnum,
+  ancestryEnum,
+  genderEnum,
+  gradeEnum,
+  lockerlocationEnum,
 } from "./ZodStudent";
 import ZodStudentTableData from "./ZodStudentTableData";
 
@@ -15,9 +15,9 @@ export {
   ZodStudentTableData,
   ZodStudent,
   ZodContact,
-  _gradeEnum,
-  _contactTypeEnum,
-  _ancestryEnum,
-  _genderEnum,
-  _lockerlocationEnum,
+  gradeEnum,
+  contactTypeEnum,
+  ancestryEnum,
+  genderEnum,
+  lockerlocationEnum,
 };

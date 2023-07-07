@@ -1,12 +1,6 @@
 "use client";
 
-import type {
-  ColumnDef,
-  FilterFn,
-  SortingState,
-  Student,
-  StudentTableData,
-} from "@/lib/types";
+import type { ColumnDef, FilterFn, SortingState, Student } from "@/lib/types";
 
 import { RankingInfo, rankItem } from "@tanstack/match-sorter-utils";
 import {

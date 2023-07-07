@@ -1,9 +1,12 @@
 "use client";
 
 import { ThemeContext } from "@/app/ThemeProvider";
+import Input from "@/components/(inputs)/Input";
+import SingleSelect from "@/components/(inputs)/SingleSelect";
 import { LoadingSpinner } from "@/components/(loading)";
-import { cn } from "@/lib/utils";
-import { ZodAddStudentForm } from "@/lib/validators";
+import InlineErrorController from "@/components/InlineErrorController";
+import { cn, enumToChoicesAdaptor } from "@/lib/utils";
+import { ZodAddStudentForm, gradeEnum } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -20,7 +23,7 @@ type AddStudentFormProps = {
 export default function AddStudentForm({
   postNewStudent,
 }: AddStudentFormProps) {
-  const { register, control, handleSubmit, formState } =
+  const { register, watch, control, handleSubmit, formState } =
     useForm<AddStudentForm>({
       resolver: zodResolver(ZodAddStudentForm),
     });
@@ -34,51 +37,56 @@ export default function AddStudentForm({
     //
     <div>
       <form onSubmit={handleSubmit(postNewStudent)} noValidate>
-        <div className="flex flex-col gap-5 mb-5">
-          <input
+        <div className="flex flex-col gap-6 mb-5 pt-5">
+          <Input
+            config={{
+              syncDisable: isFormDisabled,
+              syncError: formState.errors.lastName?.message,
+              syncValue: watch("lastName"),
+              syncFnProps: () =>
+                register("lastName", {
+                  required: "Last Name is required",
+                }),
+            }}
             autoComplete="off"
             disabled={isFormDisabled}
-            className={cn(
-              theme.input.base,
-              isFormDisabled && theme.input.onDisable
-              // formState.errors.password && theme.input.onError
-            )}
-            id="lastName"
+            id="Last Name"
             type="text"
-            placeholder=" Last Name"
-            // {...register("username", {
-            //   required: "Username is required",
-            // })}
           />
-          {/* {formState.errors.username && (
+          {formState.errors.lastName && (
             <InlineErrorController
               type="zod"
-              errors={formState.errors.username.message}
+              errors={formState.errors.lastName.message}
             />
-          )} */}
+          )}
 
-          <input
+          <Input
+            config={{
+              syncDisable: isFormDisabled,
+              syncError: formState.errors.firstName?.message,
+              syncValue: watch("firstName"),
+              syncFnProps: () =>
+                register("firstName", {
+                  required: "First Name is required",
+                }),
+            }}
             autoComplete="off"
             disabled={isFormDisabled}
-            className={cn(
-              theme.input.base,
-              isFormDisabled && theme.input.onDisable
-              // formState.errors.password && theme.input.onError
-            )}
-            id="firstName"
+            id="First Name"
             type="text"
-            placeholder=" First Name"
-            // {...register("username", {
-            //   required: "Username is required",
-            // })}
           />
-          {/* {formState.errors.username && (
+          {formState.errors.firstName && (
             <InlineErrorController
               type="zod"
-              errors={formState.errors.username.message}
+              errors={formState.errors.firstName.message}
             />
-          )} */}
-          {/* // <<--| Replace below input w/ Dropdown & Change Typing to Enum */}
+          )}
+
+          <SingleSelect
+            name="grade"
+            choices={enumToChoicesAdaptor(gradeEnum)}
+            control={control}
+          />
           <input
             autoComplete="off"
             disabled={isFormDisabled}
@@ -89,7 +97,6 @@ export default function AddStudentForm({
             )}
             id="grade"
             type="text"
-            placeholder=" Grade"
             // {...register("username", {
             //   required: "Username is required",
             // })}

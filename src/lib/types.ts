@@ -9,12 +9,11 @@ import type {
   Table,
 } from "@tanstack/react-table";
 import type { ClassValue } from "clsx";
-import type { FieldError } from "react-hook-form";
+import type { Control, FieldError, FieldValues } from "react-hook-form";
 import type { TypedUseSelectorHook } from "react-redux";
 import type { ZodType } from "zod";
 
 // "@/app/..."
-import type { SignInFormData } from "@/app/SignInForm";
 
 // "@/models/..."
 import type { Contact } from "@/models/Contact";
@@ -33,16 +32,15 @@ import type { VezraUser, useVezraUserReturn } from "@/hooks/useVezraUser";
 import type { RootState, VezraDispatch } from "@/store/index";
 
 // "@/lib/constants/..."
-import type { Theme } from "@/lib/constants";
+import type { Theme } from "@/app/ThemeProvider";
 
 // "@/lib/utils/..."
-import type { pseudoServerReturn } from "@/lib/utils";
 
 // "@/components/..."
 import type { InputProps } from "@/components/(inputs)/Input";
 
 // "@/app/dashboard/students/..."
-import type { StudentTableData } from "@/app/dashboard/students/page";
+import type { StudentTableData } from "@/app/dashboard/students/StudentTable";
 
 // ::: Exports
 
@@ -51,26 +49,24 @@ export type {
   ColumnDef,
   ZodType,
   FieldError,
+  Control,
+  FieldValues,
   ClassValue,
   Table,
   TypedUseSelectorHook,
 };
 // Internal Custom Types
 export type {
+  StudentTableData,
   InputProps,
   Theme,
   ColumnSort,
   SortingState,
   FilterFn,
-  StudentTableData,
   RootState,
   VezraDispatch,
   VezraUser,
   useVezraUserReturn,
-  pseudoServerReturn,
-  SignInFormData,
-  StudentTableData,
-  SignInFormData,
   Student,
   AncestryEnum,
   GenderEnum,

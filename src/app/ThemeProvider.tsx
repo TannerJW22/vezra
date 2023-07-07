@@ -29,7 +29,7 @@ export type ThemeProviderProps = {
 export default function ThemeProvider({ children }: ThemeProviderProps) {
   const [value, setValue] = useState<Theme>({
     input: {
-      base: "peer px-2 pt-1 outline-none border border-zinc-300 w-[250px] h-[52px] hover:bg-light-100 focus:bg-light-100 active:bg-light-100 focus:border-b-2 focus:border-x-0 focus:border-t-0 focus:border-primary-500",
+      base: "peer px-2 pt-1 outline-none border border-zinc-300 w-[250px] h-[46px] hover:bg-light-100 focus:bg-light-100 active:bg-light-100 focus:border-b-2 focus:border-x-0 focus:border-t-0 focus:border-primary-500 appearance-none focus:outline-none",
       onDisable:
         "bg-zinc-200 hover:bg-zinc-200 focus:bg-zinc-200 active:bg-zinc-200",
       onError:

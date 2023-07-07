@@ -1,10 +1,10 @@
 import { ZodContact } from "@/lib/validators";
 import { z } from "zod";
 
-const _gradeEnum = ["K", "1", "2", "3", "4", "5"] as const;
-const _lockerlocationEnum = ["Main", "Addition"] as const;
-const _genderEnum = ["Male", "Female", "Other"] as const;
-const _ancestryEnum = [
+const gradeEnum = ["K", "1", "2", "3", "4", "5"] as const;
+const lockerlocationEnum = ["Main", "Addition"] as const;
+const genderEnum = ["Male", "Female", "Other"] as const;
+const ancestryEnum = [
   "White",
   "Hispanic",
   "Asian",
@@ -16,11 +16,11 @@ const _ancestryEnum = [
 const ZodStudent = z.object({
   lastName: z.string(),
   firstName: z.string(),
-  grade: z.enum(_gradeEnum),
+  grade: z.enum(gradeEnum),
   dateEnrolled: z.date(),
   homeroom: z.string().optional(),
   lockerNumber: z.string().optional(),
-  lockerLocation: z.enum(_lockerlocationEnum).optional(),
+  lockerLocation: z.enum(lockerlocationEnum).optional(),
   daysAbsent: z.number().optional(),
   dateExit: z.date().optional(),
   hasLep: z.boolean().optional(),
@@ -37,8 +37,8 @@ const ZodStudent = z.object({
   zip: z.number().optional(),
   dob: z.date().optional(),
   ssn: z.number().optional(),
-  gender: z.enum(_genderEnum).optional(),
-  ancestry: z.enum(_ancestryEnum).optional(),
+  gender: z.enum(genderEnum).optional(),
+  ancestry: z.enum(ancestryEnum).optional(),
   notes: z.string().optional(),
   contacts: z.array(z.lazy(() => ZodContact)).optional(), // <<--|
   createdAt: z.date().optional(), // <<--|
@@ -46,4 +46,4 @@ const ZodStudent = z.object({
 });
 
 export default ZodStudent;
-export { _ancestryEnum, _gradeEnum, _genderEnum, _lockerlocationEnum };
+export { ancestryEnum, gradeEnum, genderEnum, lockerlocationEnum };

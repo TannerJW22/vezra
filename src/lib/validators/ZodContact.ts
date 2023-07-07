@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const _contactTypeEnum = [
+const contactTypeEnum = [
   "Parent",
   "Guardian",
   "Emergency",
@@ -9,7 +9,7 @@ const _contactTypeEnum = [
 ] as const;
 
 const ZodContact = z.object({
-  type: z.enum(_contactTypeEnum),
+  type: z.enum(contactTypeEnum),
   lastName: z.string(),
   firstName: z.string(),
   phone: z.number().optional(),
@@ -27,4 +27,4 @@ const ZodContact = z.object({
 });
 
 export default ZodContact;
-export { _contactTypeEnum };
+export { contactTypeEnum };
