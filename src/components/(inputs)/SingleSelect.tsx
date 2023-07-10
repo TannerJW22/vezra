@@ -1,118 +1,171 @@
 "use client";
 
-import type { Control, FieldValues } from "@/lib/types";
+import type { Control, FieldValues, Path, PathValue } from "@/lib/types";
 
-import { cn, toTitleCase } from "@/lib/utils";
-import { ChangeEvent, useState } from "react";
+import { ThemeContext } from "@/app/ThemeProvider";
+import { cn } from "@/lib/utils";
+import {
+  InputHTMLAttributes,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { UseFormSetValue, useController } from "react-hook-form";
+import { BiDownArrow } from "react-icons/bi";
 
-import { Controller } from "react-hook-form";
-import { z } from "zod";
-
-// import {
-//   FormControl,
-//   FormDescription,
-//   FormField,
-//   FormItem,
-//   FormLabel,
-//   FormMessage,
-// } from "@/components/ui/form";
-
-const FormSchema = z.object({
-  email: z
-    .string({
-      required_error: "Please select an email to display.",
-    })
-    .email(),
-});
-
-// -=-=-= Types & Validators -=-=-= //
-type SelectChoice = {
-  label: string;
-  value: string;
-};
-
-type SingleSelectProps = {
-  name: string;
-  control: unknown;
-  description?: string;
-  choices: SelectChoice[];
-};
+// -=-=-= Types -=-=-= //
+type SingleSelectProps<TFormSchema extends FieldValues> =
+  InputHTMLAttributes<HTMLInputElement> & {
+    config: {
+      id: string;
+      label: string;
+      choices: ReadonlyArray<string>;
+      syncFnProps: () => any;
+      syncValue: string;
+      syncSetValue: UseFormSetValue<TFormSchema>;
+      syncControl: Control<TFormSchema>;
+      syncError?: any;
+      syncDisable?: string | string[] | boolean;
+      syncCustomDefault?: unknown;
+    };
+  };
 
 // =-=-=- Main Component =-=-=- //
-export default function SingleSelect({
-  name,
-  control,
-  description,
-  choices,
-}: SingleSelectProps) {
-  const [selectedChoice, setSelectedChoice] = useState("");
+export default function SingleSelect<TFormSchema extends FieldValues>({
+  config,
+  className,
+  ...props
+}: SingleSelectProps<TFormSchema>) {
+  // RHF handles everything but visible choice and menu toggle
 
-  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedChoice(event.target.value);
+  const theme = useContext(ThemeContext);
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const [activeChoice, setActiveChoice] = useState(undefined);
+  const menuRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    console.log("menuIsOpen", menuIsOpen); // <<--*
+    console.log("menuRef.current", menuRef.current); // <<--*
+
+    const closeMenuOnBlur = (event: Event) => {
+      console.log("menuIsOpen >>>", menuIsOpen); // <<--*
+      console.log("menuRef.current >>>", menuRef.current); // <<--*
+      console.log("event.target >>>", event.target); // <<--*
+
+      if (
+        menuIsOpen &&
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node)
+      ) {
+        console.log("hello from inside"); // <<--*
+        setMenuIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", closeMenuOnBlur);
+
+    return () => {
+      document.removeEventListener("mousedown", closeMenuOnBlur);
+    };
+  }, [menuIsOpen]);
+
+  const {
+    field: { onChange, onBlur, value, ref },
+    fieldState: { invalid, isTouched, isDirty, error },
+    formState,
+  } = useController({
+    name: config?.id as Path<TFormSchema>,
+    control: config?.syncControl,
+    defaultValue: (config?.syncCustomDefault || "") as PathValue<
+      TFormSchema,
+      Path<TFormSchema>
+    >,
+  });
+
+  const handleSelect = (e: any) => {
+    // --- Universal "Clear" Option --- //
+    if (e.target.textContent === "...") {
+      setActiveChoice(undefined);
+      config.syncSetValue(
+        config.id as Path<TFormSchema>,
+        "" as PathValue<TFormSchema, Path<TFormSchema>>,
+        {
+          // shouldValidate: true,
+          shouldDirty: true,
+        }
+      );
+      setMenuIsOpen(false);
+      //
+    } else {
+      // --- Normal Selection --- //
+      setActiveChoice(e.target.textContent);
+      config.syncSetValue(
+        config.id as Path<TFormSchema>,
+        e.target.textContent,
+        {
+          // shouldValidate: true,
+          shouldDirty: true,
+        }
+      );
+      setMenuIsOpen(false);
+    }
   };
 
   return (
-    <Controller
-      name={name}
-      control={control as Control<FieldValues>}
-      rules={{ required: true }}
-      render={({
-        field: { onChange, onBlur, value, name, ref },
-        fieldState: { invalid, isTouched, isDirty, error },
-        formState,
-      }) => (
-        <div className=" px-2 flex flex-row-reverse justify-end gap-4 items-center">
-          <div className="peer flex justify-center items-center w-[125px] h-[46px] border border-zinc-300 hover:bg-light-100 focus:bg-light-100">
-            <select
-              className="bg-transparent"
-              value={selectedChoice}
-              onChange={handleChange}
-            >
-              <option className="bg-transparent" value="">
-                Select...
-              </option>
-              {choices.map((choice) => (
-                <option className="bg-transparent" value={choice.value}>
-                  {toTitleCase(String(choice.label))}
-                </option>
-              ))}
-            </select>
-          </div>
-          <label
-            className={cn(
-              "text-slate-400 peer-hover:text-primary-500",
-              selectedChoice !== "" && "text-primary-500 font-medium"
-            )}
+    //
+    <div className="relative w-fit">
+      <input
+        {...props}
+        {...config.syncFnProps()}
+        readOnly
+        id={config.id}
+        disabled={config.syncDisable}
+        onClick={() => {
+          console.log("onClick works"); // <<--*
+          setMenuIsOpen(true);
+        }}
+        className={cn(
+          cn(theme.singleSelect.base, className),
+          config?.syncDisable && theme.singleSelect.onDisable,
+          config?.syncError && theme.singleSelect.onError
+        )}
+      />
+      <label
+        className={cn(
+          theme.singleSelect.label.placeholder,
+          menuIsOpen && theme.singleSelect.label.header,
+          config.syncValue && theme.singleSelect.label.header
+        )}
+        htmlFor={config.id}
+      >
+        {config.label}
+      </label>
+      <BiDownArrow
+        onClick={() => setMenuIsOpen(true)}
+        className={theme.singleSelect.arrow}
+      />
+      {menuIsOpen && (
+        <ul ref={menuRef} className={theme.singleSelect.menu}>
+          <li
+            onClick={(e) => handleSelect(e)}
+            className={theme.singleSelect.menuItem}
           >
-            {toTitleCase(name)}
-          </label>
-        </div>
+            {"..."}
+          </li>
+          {config.choices.map((value, i) => {
+            return (
+              <li
+                key={i}
+                onClick={(e) => handleSelect(e)}
+                className={theme.singleSelect.menuItem}
+              >
+                {value}
+              </li>
+            );
+          })}
+        </ul>
       )}
-    />
-
-    // <FormField
-    //   control={control}
-    //   name="email"
-    //   // @ts-ignore
-    //   render={({ field }) => (
-    //     <FormItem>
-    //       <FormLabel>Email</FormLabel>
-    //       <Select onValueChange={field.onChange} defaultValue={field.value}>
-    //         <FormControl>
-    //           <SelectTrigger>
-    //             <SelectValue placeholder="Select a verified email to display" />
-    //           </SelectTrigger>
-    //         </FormControl>
-    //         <SelectContent>
-    //           {choices.map(({ value, label }: SelectChoice) => {
-    //             <SelectItem value={value}>{label}</SelectItem>;
-    //           })}
-    //         </SelectContent>
-    //       </Select>
-    //       <FormDescription>{description}</FormDescription>
-    //       <FormMessage />
-    //     </FormItem>
-    //   )}
-    // />
+    </div>
   );
 }

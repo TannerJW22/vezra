@@ -1,34 +1,33 @@
 "use client";
 
 import { ThemeContext } from "@/app/ThemeProvider";
-import { cn, toTitleCase } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { InputHTMLAttributes, useContext } from "react";
 
 // -=-=-= Types -=-=-= //
-export type InputProps = InputHTMLAttributes<HTMLInputElement> & {
-  config?: {
+type InputProps = InputHTMLAttributes<HTMLInputElement> & {
+  config: {
+    id: string;
+    label: string;
+    syncFnProps: () => any;
+    syncValue: string | number;
     syncError?: any;
     syncDisable?: string | string[] | boolean;
-    syncValue?: string | number;
-    syncFnProps?: () => any;
-    customLabel?: string;
   };
 };
 
 // =-=-=- Main Component =-=-=- //
-export default function Input({
-  config = {},
-  className,
-  ...props
-}: InputProps) {
+export default function Input({ config, className, ...props }: InputProps) {
   const theme = useContext(ThemeContext);
 
   return (
     //
     <div className="relative">
       <input
-        {...(config.syncFnProps && config.syncFnProps())}
+        {...config.syncFnProps()}
         {...props}
+        id={config.id}
+        disabled={config.syncDisable}
         className={cn(
           cn(theme.input.base, className),
           config?.syncDisable && theme.input.onDisable,
@@ -38,12 +37,12 @@ export default function Input({
       />
       <label
         className={cn(
-          theme.label.placeholder,
-          (config.syncValue || props.value) && theme.label.header
+          theme.input.label.placeholder,
+          config.syncValue && theme.input.label.header
         )}
-        htmlFor={props.id}
+        htmlFor={config.id}
       >
-        {config.customLabel || toTitleCase(props.id || "")}
+        {config.label}
       </label>
     </div>
   );

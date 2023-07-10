@@ -69,9 +69,9 @@ export default function SignInForm({}: SignInFormProps) {
       <form onSubmit={handleSubmit(signInUser)} noValidate>
         <div className="mb-6">
           <Input
-            autoComplete="off"
-            disabled={isFormDisabled}
             config={{
+              id: "username",
+              label: "Username",
               syncDisable: isFormDisabled,
               syncError: formState.errors.username?.message,
               syncValue: watch("username"),
@@ -80,7 +80,6 @@ export default function SignInForm({}: SignInFormProps) {
                   required: "Username is required",
                 }),
             }}
-            id="username"
             type="text"
           />
           {formState.errors.username && (
@@ -93,6 +92,8 @@ export default function SignInForm({}: SignInFormProps) {
         <div className="mb-5">
           <Input
             config={{
+              id: "password",
+              label: "Password",
               syncDisable: isFormDisabled,
               syncError: formState.errors.password?.message,
               syncValue: watch("password"),
@@ -101,9 +102,8 @@ export default function SignInForm({}: SignInFormProps) {
                   required: "Password is required",
                 }),
             }}
-            disabled={isFormDisabled}
-            id="password"
             type="password"
+            autoComplete="off"
           />
           {formState.errors.password && (
             <InlineErrorController

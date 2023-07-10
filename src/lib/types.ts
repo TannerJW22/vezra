@@ -9,7 +9,14 @@ import type {
   Table,
 } from "@tanstack/react-table";
 import type { ClassValue } from "clsx";
-import type { Control, FieldError, FieldValues } from "react-hook-form";
+import type {
+  Control,
+  FieldError,
+  FieldValues,
+  Path,
+  PathValue,
+  UseFormWatch,
+} from "react-hook-form";
 import type { TypedUseSelectorHook } from "react-redux";
 import type { ZodType } from "zod";
 
@@ -37,7 +44,6 @@ import type { Theme } from "@/app/ThemeProvider";
 // "@/lib/utils/..."
 
 // "@/components/..."
-import type { InputProps } from "@/components/(inputs)/Input";
 
 // "@/app/dashboard/students/..."
 import type { StudentTableData } from "@/app/dashboard/students/StudentTable";
@@ -54,11 +60,13 @@ export type {
   ClassValue,
   Table,
   TypedUseSelectorHook,
+  UseFormWatch,
+  Path,
+  PathValue,
 };
 // Internal Custom Types
 export type {
   StudentTableData,
-  InputProps,
   Theme,
   ColumnSort,
   SortingState,

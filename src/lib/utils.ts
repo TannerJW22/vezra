@@ -28,13 +28,3 @@ export function toTitleCase(string: string) {
 
   return capitalizedWords.join(" ");
 }
-
-// :::
-export function enumToChoicesAdaptor<TEnum>(enumArray: ReadonlyArray<TEnum>) {
-  return enumArray.map((val) => {
-    return {
-      label: val,
-      value: val,
-    };
-  });
-}
