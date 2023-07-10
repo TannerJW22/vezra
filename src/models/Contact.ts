@@ -1,4 +1,4 @@
-import { ZodContact, _contactTypeEnum } from "@/lib/validators";
+import { ZodContact, contactTypeEnum } from "@/lib/validators";
 import mongoose from "mongoose";
 import { z } from "zod";
 
@@ -76,7 +76,7 @@ const contactSchema = new mongoose.Schema(
   }
 );
 
-export type ContactTypeEnum = (typeof _contactTypeEnum)[number];
+export type ContactTypeEnum = (typeof contactTypeEnum)[number];
 export type Contact = z.infer<typeof ZodContact>;
 
 // export default mongoose.model<Contact>("Contact", contactSchema);
