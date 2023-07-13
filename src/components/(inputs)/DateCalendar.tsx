@@ -10,25 +10,20 @@ import type {
 
 import { ThemeContext } from "@/app/ThemeProvider";
 import { cn } from "@/lib/utils";
-import {
-  InputHTMLAttributes,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { InputHTMLAttributes, useContext, useRef, useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { useController } from "react-hook-form";
 import { BiDownArrow } from "react-icons/bi";
 
 // -=-=-= Types -=-=-= //
-type SingleSelectProps<
+type DateSelectProps<
   TFormSchema extends FieldValues,
   TInputValue
 > = InputHTMLAttributes<HTMLInputElement> & {
   config: {
     id: string;
     label: string;
-    choices: ReadonlyArray<string>;
     syncFnProps: () => any;
     syncValue: TInputValue;
     syncSetValue: UseFormSetValue<TFormSchema>;
@@ -40,45 +35,23 @@ type SingleSelectProps<
 };
 
 // =-=-=- Main Component =-=-=- //
-export default function SingleSelect<
+export default function DateSelect<
   TFormSchema extends FieldValues,
   TInputValue
->({
-  config,
-  className,
-  ...props
-}: SingleSelectProps<TFormSchema, TInputValue>) {
+>({ config, className, ...props }: DateSelectProps<TFormSchema, TInputValue>) {
   // React Hook Form handles everything but isMenuOpen and activeChoice (which controls displayed label).
 
   const theme = useContext(ThemeContext);
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const menuRef = useRef<HTMLUListElement>(null);
+  const [activeChoice, setActiveChoice] = useState(undefined);
+  const menuRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    console.log("isMenuOpen", isMenuOpen); // <<--*
-    console.log("menuRef.current", menuRef.current); // <<--*
-
-    const closeMenuOnBlur = (event: Event) => {
-      console.log("isMenuOpen >>>", isMenuOpen); // <<--*
-      console.log("menuRef.current >>>", menuRef.current); // <<--*
-      console.log("event.target >>>", event.target); // <<--*
-
-      if (
-        isMenuOpen &&
-        menuRef.current &&
-        !menuRef.current.contains(event.target as Node)
-      ) {
-        console.log("hello from inside"); // <<--*
-        setIsMenuOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", closeMenuOnBlur);
-
-    return () => {
-      document.removeEventListener("mousedown", closeMenuOnBlur);
-    };
-  }, [isMenuOpen]);
+  // useEffect(() => {
+  //   console.log("startDate >>> ", startDate); // <<--*
+  //   console.log("isMenuOpen >>> ", isMenuOpen); // <<--*
+  //   console.log("activeChoice >>> ", activeChoice); // <<--*
+  // }, [startDate, isMenuOpen, activeChoice]);
 
   const {
     field: { onChange, onBlur, value, ref },
@@ -93,31 +66,16 @@ export default function SingleSelect<
     >,
   });
 
-  const handleSelect = (e: any) => {
-    // --- Universal "Clear" Option --- //
-    if (e.target.textContent === "...") {
-      config.syncSetValue(
-        config.id as Path<TFormSchema>,
-        "" as PathValue<TFormSchema, Path<TFormSchema>>,
-        {
-          // shouldValidate: true,
-          shouldDirty: true,
-        }
-      );
-      setIsMenuOpen(false);
-      //
-    } else {
-      // --- Normal Selection --- //
-      config.syncSetValue(
-        config.id as Path<TFormSchema>,
-        e.target.textContent,
-        {
-          // shouldValidate: true,
-          shouldDirty: true,
-        }
-      );
-      setIsMenuOpen(false);
-    }
+  const handleSelect = (date: Date) => {
+    config.syncSetValue(
+      config.id as Path<TFormSchema>,
+      date as PathValue<TFormSchema, Path<TFormSchema>>,
+      {
+        // shouldValidate: true,
+        shouldDirty: true,
+      }
+    );
+    setIsMenuOpen(false);
   };
 
   return (
@@ -154,25 +112,13 @@ export default function SingleSelect<
         className={theme.singleSelect.arrow}
       />
       {isMenuOpen && (
-        <ul ref={menuRef} className={theme.singleSelect.menu}>
-          <li
-            onClick={(e) => handleSelect(e)}
-            className={theme.singleSelect.menuItem}
-          >
-            {"..."}
-          </li>
-          {config.choices.map((value, i) => {
-            return (
-              <li
-                key={i}
-                onClick={(e) => handleSelect(e)}
-                className={theme.singleSelect.menuItem}
-              >
-                {value}
-              </li>
-            );
-          })}
-        </ul>
+        <DatePicker
+          className="absolute z-10"
+          startOpen={true}
+          onClickOutside={() => setIsMenuOpen(false)}
+          shouldCloseOnSelect={false}
+          onChange={(date: Date) => handleSelect(date)}
+        />
       )}
     </div>
   );

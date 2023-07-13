@@ -1,23 +1,34 @@
 "use client";
 
+import type { Control, FieldValues, UseFormSetValue } from "@/lib/types";
+
 import { ThemeContext } from "@/app/ThemeProvider";
 import { cn } from "@/lib/utils";
 import { InputHTMLAttributes, useContext } from "react";
 
 // -=-=-= Types -=-=-= //
-type InputProps = InputHTMLAttributes<HTMLInputElement> & {
+type InputProps<
+  TFormSchema extends FieldValues,
+  TInputValue
+> = InputHTMLAttributes<HTMLInputElement> & {
   config: {
     id: string;
     label: string;
     syncFnProps: () => any;
-    syncValue: string | number;
+    syncValue: TInputValue;
+    syncSetValue: UseFormSetValue<TFormSchema>;
+    syncControl: Control<TFormSchema>;
     syncError?: any;
     syncDisable?: string | string[] | boolean;
   };
 };
 
 // =-=-=- Main Component =-=-=- //
-export default function Input({ config, className, ...props }: InputProps) {
+export default function Input<TFormSchema extends FieldValues, TInputValue>({
+  config,
+  className,
+  ...props
+}: InputProps<TFormSchema, TInputValue>) {
   const theme = useContext(ThemeContext);
 
   return (

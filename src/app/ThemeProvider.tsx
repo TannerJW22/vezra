@@ -27,6 +27,18 @@ export type Theme = {
     };
     arrow: string;
   };
+  dateCalendar: {
+    base: string;
+    menu: string;
+    menuItem: string;
+    onDisable: string;
+    onError: string;
+    label: {
+      placeholder: string;
+      header: string;
+    };
+    arrow: string;
+  };
   button: {
     primary: string;
     secondary: string;
@@ -41,7 +53,7 @@ export type ThemeProviderProps = {
 export default function ThemeProvider({ children }: ThemeProviderProps) {
   const [value, setValue] = useState<Theme>({
     input: {
-      base: "peer px-3 pt-1 outline-none border border-zinc-300 w-[250px] h-[46px] hover:bg-light-100 focus:bg-light-100 active:bg-light-100 focus:border-b-2 focus:border-x-0 focus:border-t-0 focus:border-primary-500 appearance-none focus:outline-none",
+      base: "peer px-3 pt-1 outline-none border border-zinc-300 w-[300px] h-[46px] hover:bg-light-100 focus:bg-light-100 active:bg-light-100 focus:border-b-2 focus:border-x-0 focus:border-t-0 focus:border-primary-500 appearance-none focus:outline-none",
       onDisable:
         "bg-zinc-200 hover:bg-zinc-200 focus:bg-zinc-200 active:bg-zinc-200",
       onError:
@@ -54,8 +66,8 @@ export default function ThemeProvider({ children }: ThemeProviderProps) {
       },
     },
     singleSelect: {
-      base: "relative peer z-0 px-3 pt-1 outline-none border border-zinc-300 w-[125px] h-[46px] hover:bg-light-100 focus:border-none appearance-none focus:outline-none cursor-pointer",
-      menu: "absolute z-10 top-[14px] left-0 border shadow-md min-w-[125px]",
+      base: "relative peer z-0 px-3 pt-1 outline-none border border-zinc-300 w-[144px] h-[46px] hover:bg-light-100 focus:border-none appearance-none focus:outline-none cursor-pointer",
+      menu: "absolute z-10 top-[14px] left-0 border shadow-md min-w-[144px]",
       menuItem: "px-4 py-1.5 bg-light-100 hover:bg-primary-75 cursor-pointer",
       onDisable:
         "bg-zinc-200 hover:bg-zinc-200 focus:bg-zinc-200 active:bg-zinc-200",
@@ -63,7 +75,24 @@ export default function ThemeProvider({ children }: ThemeProviderProps) {
         "border-l-8 border-t-0 border-b-2 border-r-0 border-red-600 focus:border-l-8 focus:border-t-0 focus:border-b-2 focus:border-r-0 focus:rounded-b-none focus:border-red-600",
       label: {
         placeholder:
-          "absolute left-1 peer-focus:p-0 peer-focus:pl-0 peer-focus:pr-3 peer-focus:rounded-lg peer-focus:-translate-y-3 peer-focus:translate-x-3 peer-focus:text-primary-500 peer-focus:text-[14px] peer-focus:font-medium peer-focus:bg-white text-slate-400 left-0 p-[0.8em] ml-[0.5em] peer-focus:tracking-wide transition-all duration-75",
+          "absolute left-1 peer-focus:p-0 peer-focus:pl-0 peer-focus:pr-3 peer-focus:rounded-lg peer-focus:-translate-y-3 peer-focus:translate-x-3 peer-focus:text-primary-500 peer-focus:text-[14px] peer-focus:font-medium peer-focus:bg-white text-slate-400 left-0 p-[0.8em] ml-[0.5em] peer-focus:tracking-wide transition-all duration-75 cursor-pointer whitespace-nowrap",
+        header:
+          "text-primary-500 font-medium translate-x-1 -translate-y-3 peer-focus:-translate-y-3 peer-focus:translate-x-3 peer-focus:bg-white peer-focus:font-medium text-[14px] tracking-wide bg-white p-0 px-2 rounded-lg",
+      },
+      arrow:
+        "text-[13px] text-slate-400 absolute hidden top-4 right-3 peer-hover:block cursor-pointer",
+    },
+    dateCalendar: {
+      base: "peer z-0 px-3 pt-1 outline-none border border-zinc-300 w-[144px] h-[46px] hover:bg-light-100 focus:border-none appearance-none focus:outline-none cursor-pointer",
+      menu: "absolute z-10 top-[14px] left-0 border shadow-md min-w-[144px]",
+      menuItem: "px-4 py-1.5 bg-light-100 hover:bg-primary-75 cursor-pointer",
+      onDisable:
+        "bg-zinc-200 hover:bg-zinc-200 focus:bg-zinc-200 active:bg-zinc-200",
+      onError:
+        "border-l-8 border-t-0 border-b-2 border-r-0 border-red-600 focus:border-l-8 focus:border-t-0 focus:border-b-2 focus:border-r-0 focus:rounded-b-none focus:border-red-600",
+      label: {
+        placeholder:
+          "absolute left-1 peer-focus:p-0 peer-focus:pl-0 peer-focus:pr-3 peer-focus:rounded-lg peer-focus:-translate-y-3 peer-focus:translate-x-3 peer-focus:text-primary-500 peer-focus:text-[14px] peer-focus:font-medium peer-focus:bg-white text-slate-400 left-0 p-[0.8em] ml-[0.5em] peer-focus:tracking-wide transition-all duration-75 cursor-pointer whitespace-nowrap",
         header:
           "text-primary-500 font-medium translate-x-1 -translate-y-3 peer-focus:-translate-y-3 peer-focus:translate-x-3 peer-focus:bg-white peer-focus:font-medium text-[14px] tracking-wide bg-white p-0 px-2 rounded-lg",
       },

@@ -20,7 +20,7 @@ import vezraLogo from "public/img/vezra-logo.png";
 import { BsFillDiamondFill } from "react-icons/bs";
 
 // -=-=-= Types -=-=-= //
-export type SignInFormData = z.infer<typeof ZodSignInFormData>;
+export type SignInForm = z.infer<typeof ZodSignInFormData>;
 
 type SignInFormProps = {
   //
@@ -32,14 +32,15 @@ export default function SignInForm({}: SignInFormProps) {
   const { isLoaded, signIn, setActive } = useSignIn();
   const theme: Theme = useContext(ThemeContext);
 
-  const { register, watch, handleSubmit, formState } = useForm<SignInFormData>({
-    resolver: zodResolver(ZodSignInFormData),
-  });
+  const { register, watch, control, setValue, handleSubmit, formState } =
+    useForm<SignInForm>({
+      resolver: zodResolver(ZodSignInFormData),
+    });
 
   const [isFormDisabled, setIsFormDisabled] = useState(false);
   const [clerkErrors, setClerkErrors] = useState<string[]>([]);
 
-  async function signInUser({ username, password }: SignInFormData) {
+  async function signInUser({ username, password }: SignInForm) {
     setIsFormDisabled(true);
     setClerkErrors([]);
     try {
@@ -68,19 +69,22 @@ export default function SignInForm({}: SignInFormProps) {
       />
       <form onSubmit={handleSubmit(signInUser)} noValidate>
         <div className="mb-6">
-          <Input
+          <Input<SignInForm, string>
             config={{
               id: "username",
               label: "Username",
               syncDisable: isFormDisabled,
               syncError: formState.errors.username?.message,
               syncValue: watch("username"),
+              syncControl: control,
+              syncSetValue: setValue,
               syncFnProps: () =>
                 register("username", {
                   required: "Username is required",
                 }),
             }}
             type="text"
+            className="w-[250px]"
           />
           {formState.errors.username && (
             <InlineErrorController
@@ -90,13 +94,15 @@ export default function SignInForm({}: SignInFormProps) {
           )}
         </div>
         <div className="mb-5">
-          <Input
+          <Input<SignInForm, string>
             config={{
               id: "password",
               label: "Password",
               syncDisable: isFormDisabled,
               syncError: formState.errors.password?.message,
               syncValue: watch("password"),
+              syncControl: control,
+              syncSetValue: setValue,
               syncFnProps: () =>
                 register("password", {
                   required: "Password is required",
@@ -104,6 +110,7 @@ export default function SignInForm({}: SignInFormProps) {
             }}
             type="password"
             autoComplete="off"
+            className="w-[250px]"
           />
           {formState.errors.password && (
             <InlineErrorController

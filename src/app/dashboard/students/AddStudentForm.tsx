@@ -1,12 +1,12 @@
 "use client";
 
 import { ThemeContext } from "@/app/ThemeProvider";
-import Input from "@/components/(inputs)/Input";
-import SingleSelect from "@/components/(inputs)/SingleSelect";
+import { Input, SingleSelect } from "@/components/(inputs)";
+import DateSelect from "@/components/(inputs)/DateCalendar";
 import { LoadingSpinner } from "@/components/(loading)";
 import InlineErrorController from "@/components/InlineErrorController";
-import { cn } from "@/lib/utils";
 import { ZodAddStudentForm, gradeEnum } from "@/lib/validators";
+import { GradeEnum } from "@/models/Student";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -45,6 +45,8 @@ export default function AddStudentForm({
               syncDisable: isFormDisabled,
               syncError: formState.errors.lastName?.message,
               syncValue: watch("lastName"),
+              syncControl: control,
+              syncSetValue: setValue,
               syncFnProps: () =>
                 register("lastName", {
                   required: "Last Name is required",
@@ -67,6 +69,8 @@ export default function AddStudentForm({
               syncDisable: isFormDisabled,
               syncError: formState.errors.firstName?.message,
               syncValue: watch("firstName"),
+              syncControl: control,
+              syncSetValue: setValue,
               syncFnProps: () =>
                 register("firstName", {
                   required: "First Name is required",
@@ -81,65 +85,38 @@ export default function AddStudentForm({
               errors={formState.errors.firstName.message}
             />
           )}
-
-          <SingleSelect<AddStudentForm>
-            config={{
-              id: "grade",
-              label: "Grade",
-              choices: gradeEnum,
-              syncControl: control,
-              syncValue: watch("grade"),
-              syncSetValue: setValue,
-              syncDisable: isFormDisabled,
-              syncError: formState.errors?.grade?.message,
-              syncFnProps: () =>
-                register("grade", {
-                  required: "Grade is required",
-                }),
-            }}
-          />
-          <input
-            autoComplete="off"
-            disabled={isFormDisabled}
-            className={cn(
-              theme.input.base,
-              isFormDisabled && theme.input.onDisable
-              // formState.errors.password && theme.input.onError
-            )}
-            id="grade"
-            type="text"
-            // {...register("username", {
-            //   required: "Username is required",
-            // })}
-          />
-          {/* {formState.errors.username && (
-            <InlineErrorController
-              type="zod"
-              errors={formState.errors.username.message}
+          <div className="flex gap-3">
+            <SingleSelect<AddStudentForm, GradeEnum>
+              config={{
+                id: "grade",
+                label: "Grade",
+                choices: gradeEnum,
+                syncControl: control,
+                syncValue: watch("grade"),
+                syncSetValue: setValue,
+                syncDisable: isFormDisabled,
+                syncError: formState.errors?.grade?.message,
+                syncFnProps: () =>
+                  register("grade", {
+                    required: "Grade is required",
+                  }),
+              }}
+              className="w-[120px]"
             />
-          )} */}
-          {/* // <<--| Replace below input w/ Calender Picker */}
-          <input
-            autoComplete="off"
-            disabled={isFormDisabled}
-            className={cn(
-              theme.input.base,
-              isFormDisabled && theme.input.onDisable
-              // formState.errors.password && theme.input.onError
-            )}
-            id="date"
-            type="text"
-            placeholder=" Date"
-            // {...register("username", {
-            //   required: "Username is required",
-            // })}
-          />
-          {/* {formState.errors.username && (
-            <InlineErrorController
-              type="zod"
-              errors={formState.errors.username.message}
+            <DateSelect<AddStudentForm, Date>
+              config={{
+                id: "dateEnrolled",
+                label: "Enroll Date",
+                syncControl: control,
+                syncSetValue: setValue,
+                syncValue: watch("dateEnrolled"),
+                syncFnProps: () => register("dateEnrolled"),
+                syncDisable: isFormDisabled,
+                syncError: formState.errors?.dateEnrolled?.message,
+              }}
+              className="w-[168px]"
             />
-          )} */}
+          </div>
         </div>
 
         <div className="flex gap-2 border border-red-500">

@@ -15,6 +15,7 @@ import type {
   FieldValues,
   Path,
   PathValue,
+  UseFormSetValue,
   UseFormWatch,
 } from "react-hook-form";
 import type { TypedUseSelectorHook } from "react-redux";
@@ -61,6 +62,7 @@ export type {
   Table,
   TypedUseSelectorHook,
   UseFormWatch,
+  UseFormSetValue,
   Path,
   PathValue,
 };
