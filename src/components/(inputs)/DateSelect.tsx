@@ -10,7 +10,13 @@ import type {
 
 import { ThemeContext } from "@/app/ThemeProvider";
 import { cn } from "@/lib/utils";
-import { InputHTMLAttributes, useContext, useRef, useState } from "react";
+import {
+  InputHTMLAttributes,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useController } from "react-hook-form";
@@ -42,16 +48,18 @@ export default function DateSelect<
   // React Hook Form handles everything but isMenuOpen and activeChoice (which controls displayed label).
 
   const theme = useContext(ThemeContext);
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [startDate, setStartDate] = useState<Date | string>("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeChoice, setActiveChoice] = useState(undefined);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const spanRef = useRef<HTMLSpanElement>(null);
 
-  // useEffect(() => {
-  //   console.log("startDate >>> ", startDate); // <<--*
-  //   console.log("isMenuOpen >>> ", isMenuOpen); // <<--*
-  //   console.log("activeChoice >>> ", activeChoice); // <<--*
-  // }, [startDate, isMenuOpen, activeChoice]);
+  useEffect(() => {
+    console.log("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"); // <<--*
+    console.log("startDate >>> ", startDate); // <<--*
+    console.log("syncValue >>> ", config.syncValue); // <<--*
+    console.log("isMenuOpen >>> ", isMenuOpen); // <<--*
+    console.log("activeChoice >>> ", activeChoice); // <<--*
+  }, [startDate, isMenuOpen, activeChoice, config.syncValue]);
 
   const {
     field: { onChange, onBlur, value, ref },
@@ -66,7 +74,9 @@ export default function DateSelect<
     >,
   });
 
-  const handleSelect = (date: Date) => {
+  const handleSelect = (rawDate: Date) => {
+    const date = rawDate.toLocaleDateString();
+
     config.syncSetValue(
       config.id as Path<TFormSchema>,
       date as PathValue<TFormSchema, Path<TFormSchema>>,
@@ -75,6 +85,20 @@ export default function DateSelect<
         shouldDirty: true,
       }
     );
+    setStartDate(date);
+    setIsMenuOpen(false);
+  };
+
+  const handleClearChoice = () => {
+    config.syncSetValue(
+      config.id as Path<TFormSchema>,
+      "" as PathValue<TFormSchema, Path<TFormSchema>>,
+      {
+        // shouldValidate: true,
+        shouldDirty: true,
+      }
+    );
+    setStartDate("");
     setIsMenuOpen(false);
   };
 
@@ -88,34 +112,51 @@ export default function DateSelect<
         id={config.id}
         disabled={config.syncDisable}
         onClick={() => {
-          console.log("onClick works"); // <<--*
-          setIsMenuOpen(true);
+          if (!isMenuOpen) {
+            // this check is a precaution to avoid conflicts w/ {handleClearChoice} in <span>
+            setIsMenuOpen(true);
+          }
         }}
         className={cn(
-          cn(theme.singleSelect.base, className),
-          config?.syncDisable && theme.singleSelect.onDisable,
-          config?.syncError && theme.singleSelect.onError
+          cn(theme.dateCalendar.base, className),
+          config?.syncDisable && theme.dateCalendar.onDisable,
+          config?.syncError && theme.dateCalendar.onError
         )}
       />
       <label
         className={cn(
-          theme.singleSelect.label.placeholder,
-          isMenuOpen && theme.singleSelect.label.header,
-          config.syncValue && theme.singleSelect.label.header
+          theme.dateCalendar.label.placeholder,
+          isMenuOpen && theme.dateCalendar.label.header,
+          config.syncValue && theme.dateCalendar.label.header
         )}
         htmlFor={config.id}
       >
         {config.label}
       </label>
+      {isMenuOpen && (
+        <span
+          ref={spanRef}
+          onClick={() => handleClearChoice()}
+          className={theme.dateCalendar.clearChoice}
+        >
+          {"..."}
+        </span>
+      )}
       <BiDownArrow
         onClick={() => setIsMenuOpen(true)}
-        className={theme.singleSelect.arrow}
+        className={theme.dateCalendar.arrow}
       />
       {isMenuOpen && (
         <DatePicker
-          className="absolute z-10"
+          className="hidden absolute z-10 border border-red-500"
+          calendarClassName="absolute z-20 scale-[0.90] -top-[44px] left-[10px]"
           startOpen={true}
-          onClickOutside={() => setIsMenuOpen(false)}
+          onClickOutside={(e) => {
+            // this check is necessary to avoid conflicts w/ {handleClearChoice} in <span>
+            if (spanRef && !spanRef.current!.contains(e.target as Node)) {
+              setIsMenuOpen(false);
+            }
+          }}
           shouldCloseOnSelect={false}
           onChange={(date: Date) => handleSelect(date)}
         />

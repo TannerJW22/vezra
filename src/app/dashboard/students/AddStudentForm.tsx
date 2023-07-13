@@ -15,13 +15,11 @@ import { z } from "zod";
 export type AddStudentForm = z.infer<typeof ZodAddStudentForm>;
 
 type AddStudentFormProps = {
-  postNewStudent: () => Promise<void>;
+  //
 };
 
 // =-=-=- Main Component =-=-=- //
-export default function AddStudentForm({
-  postNewStudent,
-}: AddStudentFormProps) {
+export default function AddStudentForm({}: AddStudentFormProps) {
   const { register, watch, setValue, control, handleSubmit, formState } =
     useForm<AddStudentForm>({
       resolver: zodResolver(ZodAddStudentForm),
@@ -31,11 +29,17 @@ export default function AddStudentForm({
   const [dbErrors, setDbErrors] = useState<string[]>([]);
   const theme = useContext(ThemeContext);
 
+  // <<--| Learn about React Query in a vacuum and then make into the Next API integration.
+  // const {} = useMutation({
+  //   lastName: "TestLastName",
+  //   firstName: "TestFirstName",
+  //   grade: "3" as GradeEnum,
+  //   dateEnrolled: new Date(),
+  // });
+
   return (
-    //
-    //
     <div>
-      <form onSubmit={handleSubmit(postNewStudent)} noValidate>
+      <form onSubmit={() => alert("")} noValidate>
         <div className="flex flex-col gap-6 mb-5 pt-5">
           <Input
             config={{
@@ -100,7 +104,7 @@ export default function AddStudentForm({
                     required: "Grade is required",
                   }),
               }}
-              className="w-[120px]"
+              className="w-[110px]"
             />
             <DateSelect<AddStudentForm, Date>
               config={{
@@ -113,12 +117,12 @@ export default function AddStudentForm({
                 syncDisable: isFormDisabled,
                 syncError: formState.errors?.dateEnrolled?.message,
               }}
-              className="w-[168px]"
+              className="w-[178px]"
             />
           </div>
         </div>
 
-        <div className="flex gap-2 border border-red-500">
+        <div className="flex gap-2">
           <button className={theme.button.secondary} disabled={isFormDisabled}>
             {isFormDisabled ? <LoadingSpinner color="#FAFAFA" /> : "Submit Now"}
           </button>

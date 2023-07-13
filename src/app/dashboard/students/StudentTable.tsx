@@ -94,7 +94,7 @@ export default function StudentTable({ columns }: StudentTableProps) {
   });
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["getAllStudents"],
+    queryKey: ["students"],
     queryFn: () =>
       axios
         .get(`${_baseURL_}/api/students`)

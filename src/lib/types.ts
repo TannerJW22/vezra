@@ -47,6 +47,7 @@ import type { Theme } from "@/app/ThemeProvider";
 // "@/components/..."
 
 // "@/app/dashboard/students/..."
+import type { AddStudentForm } from "@/app/dashboard/students/AddStudentForm";
 import type { StudentTableData } from "@/app/dashboard/students/StudentTable";
 
 // ::: Exports
@@ -72,6 +73,7 @@ export type {
   Theme,
   ColumnSort,
   SortingState,
+  AddStudentForm,
   FilterFn,
   RootState,
   VezraDispatch,

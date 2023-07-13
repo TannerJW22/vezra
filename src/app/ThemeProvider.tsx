@@ -30,7 +30,7 @@ export type Theme = {
   dateCalendar: {
     base: string;
     menu: string;
-    menuItem: string;
+    clearChoice: string;
     onDisable: string;
     onError: string;
     label: {
@@ -80,12 +80,13 @@ export default function ThemeProvider({ children }: ThemeProviderProps) {
           "text-primary-500 font-medium translate-x-1 -translate-y-3 peer-focus:-translate-y-3 peer-focus:translate-x-3 peer-focus:bg-white peer-focus:font-medium text-[14px] tracking-wide bg-white p-0 px-2 rounded-lg",
       },
       arrow:
-        "text-[13px] text-slate-400 absolute hidden top-4 right-3 peer-hover:block cursor-pointer",
+        "text-[13px] text-slate-400 absolute hidden top-[18px] right-3 peer-hover:block cursor-pointer",
     },
     dateCalendar: {
       base: "peer z-0 px-3 pt-1 outline-none border border-zinc-300 w-[144px] h-[46px] hover:bg-light-100 focus:border-none appearance-none focus:outline-none cursor-pointer",
       menu: "absolute z-10 top-[14px] left-0 border shadow-md min-w-[144px]",
-      menuItem: "px-4 py-1.5 bg-light-100 hover:bg-primary-75 cursor-pointer",
+      clearChoice:
+        "absolute flex justify-center right-0 -top-[11px] z-10 w-16 pb-1 border border-zinc-400 bg-[#F0F0F0] rounded-md hover:bg-primary-75 cursor-pointer",
       onDisable:
         "bg-zinc-200 hover:bg-zinc-200 focus:bg-zinc-200 active:bg-zinc-200",
       onError:
@@ -97,7 +98,7 @@ export default function ThemeProvider({ children }: ThemeProviderProps) {
           "text-primary-500 font-medium translate-x-1 -translate-y-3 peer-focus:-translate-y-3 peer-focus:translate-x-3 peer-focus:bg-white peer-focus:font-medium text-[14px] tracking-wide bg-white p-0 px-2 rounded-lg",
       },
       arrow:
-        "text-[13px] text-slate-400 absolute hidden top-4 right-3 peer-hover:block cursor-pointer",
+        "text-[13px] text-slate-400 absolute hidden top-[18px] right-3 peer-hover:block cursor-pointer",
     },
     button: {
       primary:
