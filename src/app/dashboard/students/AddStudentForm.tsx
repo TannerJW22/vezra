@@ -1,8 +1,7 @@
 "use client";
 
 import { ThemeContext } from "@/app/ThemeProvider";
-import { Input, SingleSelect } from "@/components/(inputs)";
-import DateSelect from "@/components/(inputs)/DateCalendar";
+import { DateSelect, Input, SingleSelect } from "@/components/(inputs)";
 import { LoadingSpinner } from "@/components/(loading)";
 import InlineErrorController from "@/components/InlineErrorController";
 import { ZodAddStudentForm, gradeEnum } from "@/lib/validators";
