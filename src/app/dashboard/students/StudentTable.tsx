@@ -95,11 +95,12 @@ export default function StudentTable({ columns }: StudentTableProps) {
 
   const { isLoading, isError } = useQuery({
     queryKey: ["students"],
-    queryFn: () =>
-      axios.get(`${_baseURL_}/api/students`).then((res) => {
+    queryFn: () => {
+      return axios.get(`${_baseURL_}/api/students`).then((res) => {
         setTableData(res.data.students);
         return res.data.students;
-      }),
+      });
+    },
   });
 
   if (isLoading) {

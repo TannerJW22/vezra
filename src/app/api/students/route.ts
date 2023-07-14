@@ -22,6 +22,7 @@ export async function GET(req: Request) {
 // :::
 export async function POST(req: Request) {
   let newStudent;
+  console.log(req); // <<--*
 
   try {
     await dbConnect();
@@ -36,5 +37,7 @@ export async function POST(req: Request) {
     console.error(err);
   }
 
-  return NextResponse.json({ newStudent });
+  return NextResponse.json({
+    newStudent,
+  });
 }

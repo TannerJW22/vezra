@@ -4,9 +4,12 @@ import { ThemeContext } from "@/app/ThemeProvider";
 import { DateSelect, Input, SingleSelect } from "@/components/(inputs)";
 import { LoadingSpinner } from "@/components/(loading)";
 import InlineErrorController from "@/components/InlineErrorController";
+import { _baseURL_ } from "@/lib/utils";
 import { ZodAddStudentForm, gradeEnum } from "@/lib/validators";
 import { GradeEnum } from "@/models/Student";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -30,16 +33,44 @@ export default function AddStudentForm({}: AddStudentFormProps) {
   const theme = useContext(ThemeContext);
 
   // <<--| Learn about React Query in a vacuum and then make into the Next API integration.
-  // const {} = useMutation({
-  //   lastName: "TestLastName",
-  //   firstName: "TestFirstName",
-  //   grade: "3" as GradeEnum,
-  //   dateEnrolled: new Date(),
-  // });
+  const mutation = useMutation({
+    mutationFn: (newPost: AddStudentForm) => {
+      return axios.post(
+        `${_baseURL_}/api/students`,
+        {
+          lastName: newPost.lastName,
+          firstName: newPost.firstName,
+          grade: newPost.grade,
+          dateEnrolled: newPost.dateEnrolled,
+        }
+        // {
+        //   headers: {
+        //     "Content-Type": "multipart/formdata",
+        //   },
+        // }
+      );
+      // .then((res) => {
+      //   console.log(res.data); // <<--*
+      //   return res.data;
+      // })
+      // .catch((err) => console.log(err)); // <<--*
+    },
+  });
 
   return (
     <div>
-      <form onSubmit={() => alert("")} noValidate>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          mutation.mutate({
+            lastName: "TestLastName",
+            firstName: "TestFirstName",
+            grade: "3" as GradeEnum,
+            dateEnrolled: new Date(),
+          });
+        }}
+        noValidate
+      >
         <div className="flex flex-col gap-6 mb-5 pt-5">
           <Input
             config={{
@@ -123,7 +154,11 @@ export default function AddStudentForm({}: AddStudentFormProps) {
         </div>
 
         <div className="flex gap-2">
-          <button className={theme.button.secondary} disabled={isFormDisabled}>
+          <button
+            type="submit"
+            className={theme.button.secondary}
+            disabled={isFormDisabled}
+          >
             {isFormDisabled ? <LoadingSpinner color="#FAFAFA" /> : "Submit Now"}
           </button>
           <button className={theme.button.primary} disabled={isFormDisabled}>
