@@ -59,11 +59,10 @@ export default function StudentTableToolbar({
           <TbRefresh className="text-[22px]" />
           <span className="text-[15px]">Reset Table</span>
         </button>
-        <SheetTrigger>
-          <button className="flex gap-1.5 items-center justify-center rounded-xl h-9 w-36 bg-light-100 text-primary-500 drop-shadow-sm border border-zinc-300 hover:bg-light-200">
-            <TbUserPlus className="text-[22px]" />
-            <span className="text-[15px]">Add Student</span>
-          </button>
+
+        <SheetTrigger className="flex gap-1.5 items-center justify-center rounded-xl h-9 w-36 bg-light-100 text-primary-500 drop-shadow-sm border border-zinc-300 hover:bg-light-200">
+          <TbUserPlus className="text-[22px]" />
+          <span className="text-[15px]">Add Student</span>
         </SheetTrigger>
       </div>
 

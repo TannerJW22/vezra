@@ -93,19 +93,20 @@ export default function StudentTable({ columns }: StudentTableProps) {
     debugColumns: false,
   });
 
-  const { data, isLoading, isError } = useQuery({
+  const { isLoading, isError } = useQuery({
     queryKey: ["students"],
     queryFn: () =>
-      axios
-        .get(`${_baseURL_}/api/students`)
-        .then((res) => setTableData(res.data.students)),
+      axios.get(`${_baseURL_}/api/students`).then((res) => {
+        setTableData(res.data.students);
+        return res.data.students;
+      }),
   });
 
   if (isLoading) {
     console.log("Students is Loading...");
     return <p>Loading...</p>;
   }
-  if (!isLoading) console.log("Students >> ", data); // <<--*
+  if (!isLoading) console.log("Students >> ", tableData); // <<--*
 
   const renderSortingIcon = (sortStatus: "asc" | "desc" | "") => {
     switch (sortStatus) {
