@@ -4,6 +4,7 @@ import { ThemeContext } from "@/app/ThemeProvider";
 import { DateSelect, Input, SingleSelect } from "@/components/(inputs)";
 import { LoadingSpinner } from "@/components/(loading)";
 import InlineErrorController from "@/components/InlineErrorController";
+import type { SubmitHandler } from "@/lib/types";
 import { _baseURL_ } from "@/lib/utils";
 import { ZodAddStudentForm, gradeEnum } from "@/lib/validators";
 import { GradeEnum } from "@/models/Student";
@@ -23,38 +24,56 @@ type AddStudentFormProps = {
 
 // =-=-=- Main Component =-=-=- //
 export default function AddStudentForm({}: AddStudentFormProps) {
-  const { register, watch, setValue, control, handleSubmit, formState } =
-    useForm<AddStudentForm>({
-      resolver: zodResolver(ZodAddStudentForm),
-    });
+  const {
+    register,
+    watch,
+    setValue,
+    control,
+    getValues,
+    handleSubmit,
+    formState,
+  } = useForm<AddStudentForm>({
+    resolver: zodResolver(ZodAddStudentForm),
+  });
 
   const [isFormDisabled, setIsFormDisabled] = useState(false);
   const [dbErrors, setDbErrors] = useState<string[]>([]);
   const theme = useContext(ThemeContext);
 
-  // <<--| Learn about React Query in a vacuum and then make into the Next API integration.
-  const mutation = useMutation({
-    mutationFn: (newPost: AddStudentForm) => {
-      return axios.post(
-        `${_baseURL_}/api/students`,
-        {
-          lastName: newPost.lastName,
-          firstName: newPost.firstName,
-          grade: newPost.grade,
-          dateEnrolled: newPost.dateEnrolled,
-        }
-        // {
-        //   headers: {
-        //     "Content-Type": "multipart/formdata",
-        //   },
-        // }
-      );
-      // .then((res) => {
-      //   console.log(res.data); // <<--*
-      //   return res.data;
-      // })
-      // .catch((err) => console.log(err)); // <<--*
+  const {
+    mutate: postNewStudent,
+    isLoading,
+    isSuccess,
+  } = useMutation({
+    mutationFn: async (newPost: AddStudentForm) => {
+      try {
+        //
+        const res = await axios.post(
+          `${_baseURL_}/api/students`,
+          JSON.stringify({
+            lastName: newPost.lastName,
+            firstName: newPost.firstName,
+            grade: newPost.grade,
+            dateEnrolled: newPost.dateEnrolled,
+          }),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        return res;
+      } catch (err) {
+        // // <<--| All error handling is done here.
+        // Build custom Error messages into ZodValidator
+        // Seems like useMutation handles everything and you dont use <form> onSubmit
+        // After proof of concept you will need to integrate useMut into SignIn Page as well.
+      }
+
+      return;
     },
+    // onSuccess: (data) => {}
+    // onError: (err) => {}
   });
 
   return (
@@ -62,12 +81,7 @@ export default function AddStudentForm({}: AddStudentFormProps) {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          mutation.mutate({
-            lastName: "TestLastName",
-            firstName: "TestFirstName",
-            grade: "3" as GradeEnum,
-            dateEnrolled: new Date(),
-          });
+          handleSubmit(postNewStudent as SubmitHandler<AddStudentForm>);
         }}
         noValidate
       >
@@ -92,7 +106,7 @@ export default function AddStudentForm({}: AddStudentFormProps) {
           {formState.errors.lastName && (
             <InlineErrorController
               type="zod"
-              errors={formState.errors.lastName.message}
+              errors={formState.errors?.lastName?.message}
             />
           )}
 
@@ -116,7 +130,7 @@ export default function AddStudentForm({}: AddStudentFormProps) {
           {formState.errors.firstName && (
             <InlineErrorController
               type="zod"
-              errors={formState.errors.firstName.message}
+              errors={formState.errors?.firstName?.message}
             />
           )}
           <div className="flex gap-3">
@@ -137,6 +151,12 @@ export default function AddStudentForm({}: AddStudentFormProps) {
               }}
               className="w-[110px]"
             />
+            {formState.errors.grade && (
+              <InlineErrorController
+                type="zod"
+                errors={formState.errors?.grade?.message}
+              />
+            )}
             <DateSelect<AddStudentForm, Date>
               config={{
                 id: "dateEnrolled",
@@ -150,6 +170,12 @@ export default function AddStudentForm({}: AddStudentFormProps) {
               }}
               className="w-[178px]"
             />
+            {formState.errors.dateEnrolled && (
+              <InlineErrorController
+                type="zod"
+                errors={formState.errors?.dateEnrolled?.message}
+              />
+            )}
           </div>
         </div>
 

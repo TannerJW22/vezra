@@ -1,11 +1,10 @@
-import type { AddStudentForm, GradeEnum } from "@/lib/types";
-
 import dbConnect from "@/lib/mongoDB";
+import { AddStudentForm } from "@/lib/types";
 import { Student } from "@/models/Student";
 import { NextResponse } from "next/server";
 
 // :::
-export async function GET(req: Request) {
+export async function GET(request: Request, _: Response) {
   let students;
 
   try {
@@ -20,24 +19,37 @@ export async function GET(req: Request) {
 }
 
 // :::
-export async function POST(req: Request) {
+export async function POST(request: Request, _: Response) {
   let newStudent;
-  console.log(req); // <<--*
+
+  // Parse the body from Readable Stream using OoB MDN method.
+  const reqBody: AddStudentForm = await request.json();
 
   try {
+    //
     await dbConnect();
-    const res = await Student.create<AddStudentForm>({
-      lastName: "TestLastName",
-      firstName: "TestFirstName",
-      grade: "3" as GradeEnum,
-      dateEnrolled: new Date(),
-    });
-    newStudent = res;
+    newStudent = await Student.create<AddStudentForm>(reqBody);
   } catch (err) {
-    console.error(err);
+    // Error Handling
+    return NextResponse.json(
+      {
+        message: "error",
+        data: null,
+      },
+      {
+        status: 500,
+      }
+    );
   }
 
-  return NextResponse.json({
-    newStudent,
-  });
+  // onSuccess
+  return NextResponse.json(
+    {
+      message: `New student successfully created: ${reqBody.firstName} ${reqBody.lastName}`,
+      data: { newStudent },
+    },
+    {
+      status: 200,
+    }
+  );
 }

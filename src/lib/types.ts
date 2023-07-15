@@ -15,6 +15,7 @@ import type {
   FieldValues,
   Path,
   PathValue,
+  SubmitHandler,
   UseFormSetValue,
   UseFormWatch,
 } from "react-hook-form";
@@ -54,6 +55,7 @@ import type { StudentTableData } from "@/app/dashboard/students/StudentTable";
 
 // External Library Types
 export type {
+  SubmitHandler,
   ColumnDef,
   ZodType,
   FieldError,
