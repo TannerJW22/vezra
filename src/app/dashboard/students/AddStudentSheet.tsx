@@ -14,7 +14,7 @@ type AddStudentSheetProps = {
 export default function AddStudentSheet({}: AddStudentSheetProps) {
   return (
     <div>
-      <SheetContent side="right">
+      <SheetContent side="right" className="min-w-[450px]">
         <SheetHeader>
           <SheetTitle>Add New Student</SheetTitle>
           <AddStudentForm />

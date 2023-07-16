@@ -48,7 +48,10 @@ import type { Theme } from "@/app/ThemeProvider";
 // "@/components/..."
 
 // "@/app/dashboard/students/..."
-import type { AddStudentForm } from "@/app/dashboard/students/AddStudentForm";
+import type {
+  AddStudentForm,
+  VezraError,
+} from "@/app/dashboard/students/AddStudentForm";
 import type { StudentTableData } from "@/app/dashboard/students/StudentTable";
 
 // ::: Exports
@@ -68,6 +71,7 @@ export type {
   UseFormSetValue,
   Path,
   PathValue,
+  FilterFn,
 };
 // Internal Custom Types
 export type {
@@ -76,7 +80,7 @@ export type {
   ColumnSort,
   SortingState,
   AddStudentForm,
-  FilterFn,
+  VezraError,
   RootState,
   VezraDispatch,
   VezraUser,

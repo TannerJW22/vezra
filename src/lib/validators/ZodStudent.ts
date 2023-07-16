@@ -14,10 +14,31 @@ const ancestryEnum = [
 ] as const;
 
 const ZodStudent = z.object({
-  lastName: z.string(),
-  firstName: z.string(),
-  grade: z.enum(gradeEnum),
-  dateEnrolled: z.date(),
+  lastName: z
+    .string({
+      invalid_type_error: "Valid Last Name is required.",
+    })
+    .nonempty({
+      message: "Valid Last Name is required.",
+    }),
+  firstName: z
+    .string({
+      invalid_type_error: "Valid First Name is required.",
+    })
+    .nonempty({
+      message: "Valid First Name is required.",
+    }),
+  grade: z.enum(gradeEnum, {
+    errorMap: (issue, _ctx) => {
+      return {
+        message: "Valid Grade is required",
+      };
+    },
+  }),
+  dateEnrolled: z.date({
+    invalid_type_error: "Valid Date is required.",
+    required_error: "Valid Date is required.",
+  }),
   homeroom: z.string().optional(),
   lockerNumber: z.string().optional(),
   lockerLocation: z.enum(lockerlocationEnum).optional(),

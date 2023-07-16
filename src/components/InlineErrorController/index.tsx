@@ -3,8 +3,9 @@ import { twMerge } from "tailwind-merge";
 // -=-=-= Types -=-=-= //
 type InlineErrorControllerProps = {
   errors: any;
-  className?: string;
   type: "server" | "zod";
+  className?: string;
+  customMessage?: string;
 };
 
 // =-=-=- Main Component =-=-=- //
@@ -20,7 +21,7 @@ export default function InlineErrorController({
       <div
         className={twMerge(
           className,
-          "py-2 text-[0.8rem] text-red-600 font-medium"
+          "absolute mt-[42px] ml-2 py-2 text-[0.8rem] text-red-600 font-medium"
         )}
       >
         <p className="flex italic tracking-tight whitespace-normal">
@@ -46,7 +47,7 @@ export default function InlineErrorController({
               key={i}
               className="flex justify-center mx-4 gap-2 whitespace-normal"
             >
-              {error}
+              {errors}
               <br />
             </p>
           );
