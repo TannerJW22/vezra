@@ -16,7 +16,9 @@ export default function AddStudentSheet({}: AddStudentSheetProps) {
     <div>
       <SheetContent side="right" className="min-w-[450px]">
         <SheetHeader>
-          <SheetTitle>Add New Student</SheetTitle>
+          <SheetTitle className="pt-2 pl-10 text-[22px]">
+            Add New Student
+          </SheetTitle>
           <AddStudentForm />
         </SheetHeader>
       </SheetContent>

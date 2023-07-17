@@ -9,6 +9,7 @@ import type {
 } from "@/lib/types";
 
 import { ThemeContext } from "@/app/ThemeProvider";
+import { useHideOnBlurEffect } from "@/hooks";
 import { cn } from "@/lib/utils";
 import {
   InputHTMLAttributes,
@@ -17,7 +18,11 @@ import {
   useRef,
   useState,
 } from "react";
-import { useController } from "react-hook-form";
+import {
+  UseFormClearErrors,
+  UseFormRegisterReturn,
+  useController,
+} from "react-hook-form";
 import { BiDownArrow } from "react-icons/bi";
 
 // -=-=-= Types -=-=-= //
@@ -26,15 +31,16 @@ type SingleSelectProps<
   TInputValue
 > = InputHTMLAttributes<HTMLInputElement> & {
   config: {
-    id: string;
+    id: Path<TFormSchema>;
     label: string;
     choices: ReadonlyArray<string>;
-    syncFnProps: () => any;
+    syncFnProps: () => UseFormRegisterReturn;
     syncValue: TInputValue;
     syncSetValue: UseFormSetValue<TFormSchema>;
+    syncClearErrors: UseFormClearErrors<TFormSchema>;
     syncControl: Control<TFormSchema>;
     syncError?: any;
-    syncDisable?: string | string[] | boolean;
+    syncDisable?: boolean;
     syncCustomDefault?: unknown;
   };
 };
@@ -48,38 +54,27 @@ export default function SingleSelect<
   className,
   ...props
 }: SingleSelectProps<TFormSchema, TInputValue>) {
-  // React Hook Form handles everything but isMenuOpen and activeChoice (which controls displayed label).
+  // :::( React Hook Form handles all logic except dropdown visibility
 
   const theme = useContext(ThemeContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLUListElement>(null);
 
+  // Close dropdown on click away
+  useHideOnBlurEffect<HTMLUListElement>({
+    syncRef: menuRef,
+    syncIsRefVisible: isMenuOpen,
+    syncSetIsRefVisible: setIsMenuOpen,
+  });
+
+  // Clear errors onValueChange to reset UI styles
   useEffect(() => {
-    console.log("isMenuOpen", isMenuOpen); // <<--*
-    console.log("menuRef.current", menuRef.current); // <<--*
+    if (config.syncError) {
+      config.syncClearErrors(config.id);
+    }
+  }, [config.syncValue]);
 
-    const closeMenuOnBlur = (event: Event) => {
-      console.log("isMenuOpen >>>", isMenuOpen); // <<--*
-      console.log("menuRef.current >>>", menuRef.current); // <<--*
-      console.log("event.target >>>", event.target); // <<--*
-
-      if (
-        isMenuOpen &&
-        menuRef.current &&
-        !menuRef.current.contains(event.target as Node)
-      ) {
-        console.log("hello from inside"); // <<--*
-        setIsMenuOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", closeMenuOnBlur);
-
-    return () => {
-      document.removeEventListener("mousedown", closeMenuOnBlur);
-    };
-  }, [isMenuOpen]);
-
+  // Wire up input to React Hook Form
   const {
     field: { onChange, onBlur, value, ref },
     fieldState: { invalid, isTouched, isDirty, error },
@@ -93,26 +88,27 @@ export default function SingleSelect<
     >,
   });
 
+  //
   const handleSelect = (e: any) => {
-    // --- Universal "Clear" Option --- //
+    // Universal "Clear" Option
     if (e.target.textContent === "...") {
       config.syncSetValue(
         config.id as Path<TFormSchema>,
         "" as PathValue<TFormSchema, Path<TFormSchema>>,
         {
-          // shouldValidate: true,
+          // ? // shouldValidate: true,
           shouldDirty: true,
         }
       );
       setIsMenuOpen(false);
       //
     } else {
-      // --- Normal Selection --- //
+      // Normal Selection
       config.syncSetValue(
         config.id as Path<TFormSchema>,
         e.target.textContent,
         {
-          // shouldValidate: true,
+          // ? // shouldValidate: true,
           shouldDirty: true,
         }
       );
@@ -121,7 +117,6 @@ export default function SingleSelect<
   };
 
   return (
-    //
     <div className="relative">
       <input
         {...props}

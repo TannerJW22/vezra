@@ -37,6 +37,7 @@ export default function AddStudentForm({}: AddStudentFormProps) {
     handleSubmit,
     trigger,
     formState,
+    clearErrors,
   } = useForm<AddStudentForm>({
     resolver: zodResolver(ZodAddStudentForm),
   });
@@ -45,25 +46,25 @@ export default function AddStudentForm({}: AddStudentFormProps) {
   const theme = useContext(ThemeContext);
 
   const {
-    mutate: postNewStudent,
+    mutate,
     isError: mutateIsError,
     isLoading: mutateIsLoading,
     isSuccess: mutateIsSuccess,
   } = useMutation({
-    mutationFn: async (newPost: AddStudentForm) => {
+    mutationFn: async (values: AddStudentForm) => {
       // Validation Step
       if (!(await trigger()))
-        throw new Error(" AddStudentForm Validation failed.");
+        throw new Error("AddStudentForm Validation failed.");
 
       try {
         // Attempt Post Request on Successful Validation
         const res = await axios.post(
           `${_baseURL_}/api/students`,
           JSON.stringify({
-            lastName: newPost.lastName,
-            firstName: newPost.firstName,
-            grade: newPost.grade,
-            dateEnrolled: newPost.dateEnrolled,
+            lastName: values.lastName,
+            firstName: values.firstName,
+            grade: values.grade,
+            dateEnrolled: values.dateEnrolled,
           }),
           {
             headers: {
@@ -81,10 +82,13 @@ export default function AddStudentForm({}: AddStudentFormProps) {
       return;
     },
     onSuccess: (data) => {
+      setIsFormDisabled(false);
       // <<--| Global Notifications / Toast
-      alert("onSuccess");
     },
     onError: (err) => {
+      // <<--| Catches Validation Error thrown above.
+      // grab message and push to Notification System / Toast
+      alert("mutate().onError() callback triggered");
       setIsFormDisabled(false);
     },
   });
@@ -95,7 +99,7 @@ export default function AddStudentForm({}: AddStudentFormProps) {
         onSubmit={(e) => {
           e.preventDefault();
           setIsFormDisabled(true);
-          postNewStudent(getValues());
+          mutate(getValues());
         }}
         noValidate
       >
@@ -110,6 +114,7 @@ export default function AddStudentForm({}: AddStudentFormProps) {
                 syncValue: watch("lastName"),
                 syncControl: control,
                 syncSetValue: setValue,
+                syncClearErrors: clearErrors,
                 syncFnProps: () => register("lastName"),
               }}
               autoComplete="off"
@@ -133,6 +138,7 @@ export default function AddStudentForm({}: AddStudentFormProps) {
                 syncValue: watch("firstName"),
                 syncControl: control,
                 syncSetValue: setValue,
+                syncClearErrors: clearErrors,
                 syncFnProps: () => register("firstName"),
               }}
               autoComplete="off"
@@ -156,6 +162,7 @@ export default function AddStudentForm({}: AddStudentFormProps) {
                   syncControl: control,
                   syncValue: watch("grade"),
                   syncSetValue: setValue,
+                  syncClearErrors: clearErrors,
                   syncDisable: isFormDisabled,
                   syncError: formState.errors?.grade?.message,
                   syncFnProps: () => register("grade"),
@@ -174,11 +181,12 @@ export default function AddStudentForm({}: AddStudentFormProps) {
                   id: "dateEnrolled",
                   label: "Enroll Date",
                   syncControl: control,
-                  syncSetValue: setValue,
                   syncValue: watch("dateEnrolled"),
-                  syncFnProps: () => register("dateEnrolled"),
+                  syncSetValue: setValue,
+                  syncClearErrors: clearErrors,
                   syncDisable: isFormDisabled,
                   syncError: formState.errors?.dateEnrolled?.message,
+                  syncFnProps: () => register("dateEnrolled"),
                 }}
                 className="w-[160px]"
               />

@@ -1,10 +1,11 @@
 "use client";
 
-import type { Control, FieldValues, UseFormSetValue } from "@/lib/types";
+import type { Control, FieldValues, Path, UseFormSetValue } from "@/lib/types";
 
 import { ThemeContext } from "@/app/ThemeProvider";
 import { cn } from "@/lib/utils";
-import { InputHTMLAttributes, useContext } from "react";
+import { InputHTMLAttributes, useContext, useEffect } from "react";
+import { UseFormClearErrors, UseFormRegisterReturn } from "react-hook-form";
 
 // -=-=-= Types -=-=-= //
 type InputProps<
@@ -12,14 +13,15 @@ type InputProps<
   TInputValue
 > = InputHTMLAttributes<HTMLInputElement> & {
   config: {
-    id: string;
+    id: Path<TFormSchema>;
     label: string;
-    syncFnProps: () => any;
+    syncFnProps: () => UseFormRegisterReturn;
     syncValue: TInputValue;
     syncSetValue: UseFormSetValue<TFormSchema>;
+    syncClearErrors: UseFormClearErrors<TFormSchema>;
     syncControl: Control<TFormSchema>;
     syncError?: any;
-    syncDisable?: string | string[] | boolean;
+    syncDisable?: boolean;
   };
 };
 
@@ -30,6 +32,13 @@ export default function Input<TFormSchema extends FieldValues, TInputValue>({
   ...props
 }: InputProps<TFormSchema, TInputValue>) {
   const theme = useContext(ThemeContext);
+
+  // Clear Error Styles onValueChange
+  useEffect(() => {
+    if (config.syncError) {
+      config.syncClearErrors(config.id);
+    }
+  }, [config.syncValue]);
 
   return (
     //
