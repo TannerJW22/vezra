@@ -32,10 +32,17 @@ export default function SignInForm({}: SignInFormProps) {
   const { isLoaded, signIn, setActive } = useSignIn();
   const theme: Theme = useContext(ThemeContext);
 
-  const { register, watch, control, setValue, handleSubmit, formState } =
-    useForm<SignInForm>({
-      resolver: zodResolver(ZodSignInFormData),
-    });
+  const {
+    register,
+    watch,
+    control,
+    setValue,
+    clearErrors,
+    handleSubmit,
+    formState,
+  } = useForm<SignInForm>({
+    resolver: zodResolver(ZodSignInFormData),
+  });
 
   const [isFormDisabled, setIsFormDisabled] = useState(false);
   const [clerkErrors, setClerkErrors] = useState<string[]>([]);
@@ -78,6 +85,7 @@ export default function SignInForm({}: SignInFormProps) {
               syncValue: watch("username"),
               syncControl: control,
               syncSetValue: setValue,
+              syncClearErrors: clearErrors,
               syncFnProps: () =>
                 register("username", {
                   required: "Username is required",
@@ -103,6 +111,7 @@ export default function SignInForm({}: SignInFormProps) {
               syncValue: watch("password"),
               syncControl: control,
               syncSetValue: setValue,
+              syncClearErrors: clearErrors,
               syncFnProps: () =>
                 register("password", {
                   required: "Password is required",
