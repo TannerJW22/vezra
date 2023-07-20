@@ -1,11 +1,11 @@
-import { z } from "zod";
+import ZodStudent from "./ZodStudent";
 
-const ZodStudentTableData = z.object({
-  _id: z.string(),
-  lastName: z.string(),
-  firstName: z.string(),
-  grade: z.string(),
-  homeroom: z.string(),
+const ZodStudentTableData = ZodStudent.pick({
+  _id: true,
+  lastName: true,
+  firstName: true,
+  grade: true,
+  homeroom: true,
 });
 
 export default ZodStudentTableData;

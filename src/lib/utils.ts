@@ -3,8 +3,6 @@ import type { ClassValue } from "@/lib/types";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-// -=-=-= Types -=-=-= //
-
 // =-=-=- Constants =-=-=- //
 export const _baseURL_ =
   process.env.NODE_ENV === "development"

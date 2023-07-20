@@ -1,42 +1,72 @@
 import dbConnect from "@/lib/mongoDB";
-import { AddStudentForm } from "@/lib/types";
+import { AddStudentForm, StudentTableData } from "@/lib/types";
+import {
+  ZodAddStudentForm,
+  ZodStudent,
+  ZodStudentTableData,
+} from "@/lib/validators";
 import { Student } from "@/models/Student";
 import { NextResponse } from "next/server";
+import { z } from "zod";
 
 // :::
 export async function GET(request: Request, _: Response) {
-  let students;
+  let students: StudentTableData[];
 
   try {
     await dbConnect();
-    const res = await Student.find();
-    students = res;
+    const res = await Student.find({}, [
+      "_id",
+      "lastName",
+      "firstName",
+      "grade",
+      "homeroom",
+    ]);
+    students = z.array(ZodStudentTableData).parse(res);
+    //
   } catch (err) {
-    console.error(err);
+    // Error Handling
+    return NextResponse.json(null, {
+      statusText: "error",
+      status: 500,
+    });
   }
 
-  return NextResponse.json({ students });
+  // onSuccess
+  return NextResponse.json(
+    {
+      students,
+    },
+    {
+      statusText: "success",
+      status: 200,
+    }
+  );
 }
 
 // :::
 export async function POST(request: Request, _: Response) {
-  let newStudent;
+  let newStudent: AddStudentForm | Partial<Student>;
 
   // Parse the body from Readable Stream using OoB MDN method.
-  const reqBody: AddStudentForm = await request.json();
+  let reqBody: AddStudentForm = await request.json();
 
   try {
     //
     await dbConnect();
-    newStudent = await Student.create<AddStudentForm>(reqBody);
+    reqBody = ZodAddStudentForm.parse(reqBody);
+    const res: Student = await Student.create<AddStudentForm>(reqBody);
+    newStudent = ZodStudent.parse(res);
+
+    //
   } catch (err) {
     // Error Handling
     return NextResponse.json(
       {
-        message: "error",
-        data: null,
+        error: "Internal Server Error.",
       },
       {
+        statusText: "error",
         status: 500,
       }
     );
@@ -45,10 +75,10 @@ export async function POST(request: Request, _: Response) {
   // onSuccess
   return NextResponse.json(
     {
-      message: `New student successfully created: ${reqBody.firstName} ${reqBody.lastName}`,
-      data: { newStudent },
+      newStudent,
     },
     {
+      statusText: "success",
       status: 200,
     }
   );

@@ -4,6 +4,8 @@ import { Student } from "@/models/Student";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { NextResponse } from "next/server";
 
+// -=-=-= Types -=-=-= //
+
 // :::
 export async function GET(_: Request, { params }: Params) {
   let student;
@@ -14,24 +16,19 @@ export async function GET(_: Request, { params }: Params) {
     student = res;
   } catch (err) {
     // Error Handling
-    return NextResponse.json(
-      {
-        message: err,
-        data: null,
-      },
-      {
-        status: 500,
-      }
-    );
+    return NextResponse.json(null, {
+      statusText: "error",
+      status: 500,
+    });
   }
 
   // onSuccess
   return NextResponse.json(
     {
-      message: "success",
-      data: student,
+      student,
     },
     {
+      statusText: "success",
       status: 200,
     }
   );
@@ -50,24 +47,19 @@ export async function POST(request: Request, _: Response) {
     newStudent = await Student.create<AddStudentForm>(reqBody);
   } catch (err) {
     // Error Handling
-    return NextResponse.json(
-      {
-        message: "error",
-        data: null,
-      },
-      {
-        status: 500,
-      }
-    );
+    return NextResponse.json(null, {
+      statusText: "error",
+      status: 500,
+    });
   }
 
   // onSuccess
   return NextResponse.json(
     {
-      message: `New student successfully created: ${reqBody.firstName} ${reqBody.lastName}`,
-      data: { newStudent },
+      newStudent,
     },
     {
+      statusText: "success",
       status: 200,
     }
   );

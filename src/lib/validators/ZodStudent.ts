@@ -14,6 +14,7 @@ const ancestryEnum = [
 ] as const;
 
 const ZodStudent = z.object({
+  _id: z.unknown(),
   lastName: z
     .string({
       invalid_type_error: "Valid Last Name is required.",

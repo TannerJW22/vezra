@@ -4,7 +4,6 @@ import type { ColumnDef, FilterFn, SortingState } from "@/lib/types";
 
 import { RankingInfo, rankItem } from "@tanstack/match-sorter-utils";
 import {
-  Row,
   flexRender,
   getCoreRowModel,
   getFacetedMinMaxValues,
@@ -53,7 +52,6 @@ type StudentTableProps = {
 
 // =-=-=- Main Component =-=-=- //
 export default function StudentTable({ columns }: StudentTableProps) {
-  const [tableData, setTableData] = useState<StudentTableData[]>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [filter, setFilter] = useState("");
 
@@ -72,8 +70,20 @@ export default function StudentTable({ columns }: StudentTableProps) {
     return itemRank.passed;
   };
 
+  const { data, error, isLoading, isError } = useQuery<
+    StudentTableData[],
+    Error
+  >({
+    queryKey: ["students"],
+    queryFn: () => {
+      return axios.get(`${_baseURL_}/api/students`).then((res) => {
+        return res.data.students;
+      });
+    },
+  });
+
   const table = useReactTable({
-    data: tableData,
+    data: data || [],
     columns,
     filterFns: {
       fuzzy: fuzzyFilter,
@@ -95,30 +105,13 @@ export default function StudentTable({ columns }: StudentTableProps) {
     debugTable: true,
     debugHeaders: true,
     debugColumns: false,
-    getRowId: (
-      originalRow: StudentTableData,
-      index: number,
-      parent: Row<StudentTableData> | undefined
-    ) => {
-      return originalRow._id;
-    },
-  });
-
-  const { isLoading, isError } = useQuery({
-    queryKey: ["students"],
-    queryFn: () => {
-      return axios.get(`${_baseURL_}/api/students`).then((res) => {
-        setTableData(res.data.students);
-        return res.data.students;
-      });
-    },
   });
 
   if (isLoading) {
+    // <<--| Integrate actual Loading States
     console.log("Students is Loading...");
     return <p>Loading...</p>;
   }
-  if (!isLoading) console.log("Students >> ", tableData); // <<--*
 
   const renderSortingIcon = (sortStatus: "asc" | "desc" | "") => {
     switch (sortStatus) {
@@ -190,7 +183,9 @@ export default function StudentTable({ columns }: StudentTableProps) {
                   className="z-30 cursor-pointer select-none hover:bg-primary-50 hover:outline hover:outline-1 hover:outline-primary-100 hover:scale-[1.035] hover:translate-x-1 transition-all duration-200"
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  onClick={() => router.push(`dashboard/students/${row.id}`)}
+                  onClick={() =>
+                    router.push(`dashboard/students/${row.original._id}`)
+                  }
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell className="p-2 max-w-[100px]" key={cell.id}>

@@ -1,4 +1,4 @@
-import type { ColumnDef, Student } from "@/lib/types";
+import type { ColumnDef, StudentTableData } from "@/lib/types";
 
 import { Sheet } from "@/components/_(shadcn-ui)/_sheet";
 import AddStudentSheet from "./AddStudentSheet";
@@ -11,7 +11,7 @@ type StudentPageProps = {
 
 // =-=-=- Main Component =-=-=- //
 export default function StudentsPage({}: StudentPageProps) {
-  const columns: ColumnDef<Partial<Student>>[] = [
+  const columns: ColumnDef<StudentTableData, any>[] = [
     {
       accessorKey: "lastName",
       header: "Last Name",

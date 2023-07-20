@@ -15,8 +15,9 @@ export default function StudentDetailPage({ params }: StudentDetailPageProps) {
   const { data, error, isError, isLoading } = useQuery({
     queryKey: ["students"],
     queryFn: (): Promise<Student> => {
-      return axios.get(`${_baseURL_}/api/student/${params.id}`).then((res) => {
-        return res.data.students;
+      return axios.get(`${_baseURL_}/api/students/${params.id}`).then((res) => {
+        console.log(res.data); // <<--*
+        return res.data;
       });
     },
   });
@@ -24,6 +25,6 @@ export default function StudentDetailPage({ params }: StudentDetailPageProps) {
   return (
     //
     //
-    <main>{JSON.stringify(params)}</main>
+    <main>{JSON.stringify(data)}</main>
   );
 }
