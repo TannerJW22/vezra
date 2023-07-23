@@ -1,3 +1,4 @@
+import { VezraError } from "@/lib/helpers";
 import dbConnect from "@/lib/mongoDB";
 import { AddStudentForm, StudentTableData } from "@/lib/types";
 import {
@@ -26,7 +27,7 @@ export async function GET(request: Request, _: Response) {
     //
   } catch (err) {
     // Error Handling
-    return NextResponse.json(null, {
+    return NextResponse.json(VezraError.parse(err), {
       statusText: "error",
       status: 500,
     });
