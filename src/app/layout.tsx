@@ -5,6 +5,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import ThemeProvider from "./ThemeProvider";
 import QueryProvider from "./QueryProvider";
+import { Toaster } from "react-hot-toast";
 
 // -=-=-= Types -=-=-= //
 type RootLayoutProps = {
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <ThemeProvider>
           <html lang="en">
             <body className={rubik.className}>
+              <Toaster position="top-center" />
               {/* <ReduxProvider> */}
               {children}
               {/* </ReduxProvider> */}

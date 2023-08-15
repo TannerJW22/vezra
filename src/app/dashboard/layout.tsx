@@ -1,4 +1,5 @@
-import CheckForRedirect from "@/components/CheckForRedirect";
+"use client";
+
 import { HeaderPanel, LeftNavPanel } from "@/components/layouts";
 
 // -=-=-= Types -=-=-= //
@@ -9,12 +10,12 @@ type DashboardLayoutProps = {
 // =-=-=- Main Component =-=-=- //
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
-    <CheckForRedirect noAuth="/">
+    <>
       <HeaderPanel />
       <div className="flex">
         <LeftNavPanel />
         <div className="bg-light-100 w-full h-[85vh]">{children}</div>
       </div>
-    </CheckForRedirect>
+    </>
   );
 }

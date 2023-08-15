@@ -1,11 +1,11 @@
 "use client";
 
-import { useSignIn } from "@clerk/nextjs";
+import { useAuth, useSignIn } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -28,9 +28,18 @@ type SignInFormProps = {
 
 // =-=-=- Main Component =-=-=- //
 export default function SignInForm({}: SignInFormProps) {
+  const auth = useAuth();
   const router = useRouter();
   const { isLoaded, signIn, setActive } = useSignIn();
   const theme: Theme = useContext(ThemeContext);
+
+  useEffect(() => {
+    console.log("Form >> ", auth.isLoaded, auth.isSignedIn);
+    if (auth.isLoaded && auth.isSignedIn) {
+      console.log(">>> Form Trigger"); // <<--*
+      router.push("/dashboard");
+    }
+  });
 
   const {
     register,
@@ -57,10 +66,13 @@ export default function SignInForm({}: SignInFormProps) {
       });
 
       setActive!({ session: res.createdSessionId });
-      router.push("/dashboard");
+      // router.push("/dashboard");
       //
     } catch (err: any) {
-      setClerkErrors([err.errors[0].longMessage]);
+      if (err.errors) {
+        setClerkErrors([err.errors[0].longMessage]);
+      }
+
       setIsFormDisabled(false);
     }
   }

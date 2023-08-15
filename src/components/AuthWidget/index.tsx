@@ -1,6 +1,6 @@
 "use client";
 
-import type { VezraUser } from "@/lib/types";
+import type { VezraUser } from "@/lib/hooks/useVezraUser";
 
 import { useState } from "react";
 

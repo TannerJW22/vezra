@@ -34,9 +34,6 @@ import type {
   Student,
 } from "@/models/Student";
 
-// "@/hooks/..."
-import type { VezraUser, useVezraUserReturn } from "@/hooks/useVezraUser";
-
 // "@/store/..."
 import type { RootState, VezraDispatch } from "@/store/index";
 
@@ -83,8 +80,6 @@ export type {
   VezraError,
   RootState,
   VezraDispatch,
-  VezraUser,
-  useVezraUserReturn,
   Student,
   AncestryEnum,
   GenderEnum,

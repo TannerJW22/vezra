@@ -1,10 +1,21 @@
 "use client";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 // -=-=-= Types & Constants -=-=-= //
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  queryCache: new QueryCache({
+    onError: (error) => {
+      toast.error("Internal Server Error. Please Try Again.");
+    },
+  }),
+});
 
 type QueryClientProviderProps = {
   children: React.ReactNode;

@@ -1,5 +1,5 @@
 "use client";
-import type { VezraUser } from "@/lib/types";
+import type { VezraUser } from "@/lib/hooks/useVezraUser";
 
 import { useAuth } from "@clerk/nextjs";
 import Link from "next/link";

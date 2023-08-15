@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export default function middleware(req: Request, res: Response) {
   authMiddleware();
 
-  NextResponse.next();
+  return NextResponse.next();
 }
 
 export const config = {

@@ -70,20 +70,17 @@ export default function StudentTable({ columns }: StudentTableProps) {
     return itemRank.passed;
   };
 
-  const { data, error, isLoading, isError } = useQuery<
-    StudentTableData[],
-    Error
-  >({
+  const students = useQuery<StudentTableData[], Error>({
     queryKey: ["students"],
-    queryFn: () => {
+    queryFn: async () => {
       return axios.get(`${_baseURL_}/api/students`).then((res) => {
-        return res.data.students;
+        return res.data.data;
       });
     },
   });
 
   const table = useReactTable({
-    data: data || [],
+    data: students.data || [],
     columns,
     filterFns: {
       fuzzy: fuzzyFilter,
@@ -107,10 +104,14 @@ export default function StudentTable({ columns }: StudentTableProps) {
     debugColumns: false,
   });
 
-  if (isLoading) {
+  if (students.isLoading) {
     // <<--| Integrate actual Loading States
     console.log("Students is Loading...");
     return <p>Loading...</p>;
+  }
+
+  if (students.isError) {
+    // <<--| Integrate error handling UI
   }
 
   const renderSortingIcon = (sortStatus: "asc" | "desc" | "") => {

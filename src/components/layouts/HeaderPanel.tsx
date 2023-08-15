@@ -1,14 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
-
 import Image from "next/image";
-import { redirect } from "next/navigation";
 import { IoNotificationsSharp, IoSettingsSharp } from "react-icons/io5";
 
 import AuthWidget from "@/components/AuthWidget";
-import { useVezraUser } from "@/hooks";
+import { useVezraUser } from "@/lib/hooks";
+import { useAuth } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 import vezraLogo from "public/img/vezra-logo.png";
+import { useEffect } from "react";
 
 // -=-=-= Types -=-=-= //
 type HeaderPanelProps = {
@@ -17,13 +17,17 @@ type HeaderPanelProps = {
 
 // =-=-=- Main Component =-=-=- //
 export default function HeaderPanel({}: HeaderPanelProps) {
-  const { userIsLoaded, userIsSignedIn, user } = useVezraUser();
+  const auth = useAuth();
+  const router = useRouter();
+  const { user } = useVezraUser();
 
   useEffect(() => {
-    if (userIsLoaded && !userIsSignedIn) {
-      redirect("/");
+    console.log("Header >>", auth.isLoaded, auth.isSignedIn);
+    if (auth.isLoaded && !auth.isSignedIn) {
+      console.log(">>> Header Trigger"); // <<--*
+      router.push("/");
     }
-  }, [userIsSignedIn]);
+  }, [auth.isLoaded, auth.isSignedIn]);
 
   return (
     //

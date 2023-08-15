@@ -9,6 +9,8 @@ export const _baseURL_ =
     ? "http://localhost:3000"
     : "http://vezra.io";
 
+export const _publicPaths_ = ["/"];
+
 // =-=-=- Utility Functions =-=-=- //
 
 // :::

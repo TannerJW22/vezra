@@ -9,7 +9,7 @@ import type {
 } from "@/lib/types";
 
 import { ThemeContext } from "@/app/ThemeProvider";
-import { useHideOnBlurEffect } from "@/hooks";
+import { useHideOnBlurEffect } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 import {
   InputHTMLAttributes,
