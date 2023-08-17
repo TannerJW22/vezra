@@ -34,9 +34,7 @@ export default function SignInForm({}: SignInFormProps) {
   const theme: Theme = useContext(ThemeContext);
 
   useEffect(() => {
-    console.log("Form >> ", auth.isLoaded, auth.isSignedIn);
     if (auth.isLoaded && auth.isSignedIn) {
-      console.log(">>> Form Trigger"); // <<--*
       router.push("/dashboard");
     }
   });
@@ -66,7 +64,6 @@ export default function SignInForm({}: SignInFormProps) {
       });
 
       setActive!({ session: res.createdSessionId });
-      // router.push("/dashboard");
       //
     } catch (err: any) {
       if (err.errors) {
