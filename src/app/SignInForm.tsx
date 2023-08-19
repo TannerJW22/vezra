@@ -11,7 +11,7 @@ import { z } from "zod";
 
 import { ThemeContext } from "@/app/ThemeProvider";
 import LoadingSpinner from "@/components/(loading)/LoadingSpinner";
-import InlineErrorController from "@/components/InlineErrorController";
+import InlineError from "@/components/InlineError";
 
 import Input from "@/components/(inputs)/Input";
 import { Theme } from "@/lib/types";
@@ -104,7 +104,7 @@ export default function SignInForm({}: SignInFormProps) {
             className="w-[250px]"
           />
           {formState.errors.username && (
-            <InlineErrorController
+            <InlineError
               type="zod"
               errors={formState.errors.username.message}
             />
@@ -131,7 +131,7 @@ export default function SignInForm({}: SignInFormProps) {
             className="w-[250px]"
           />
           {formState.errors.password && (
-            <InlineErrorController
+            <InlineError
               type="zod"
               errors={formState.errors.password.message}
             />
@@ -145,9 +145,7 @@ export default function SignInForm({}: SignInFormProps) {
             {isFormDisabled ? <LoadingSpinner color="#FAFAFA" /> : "Login"}
           </button>
         </div>
-        {!isFormDisabled && (
-          <InlineErrorController type="server" errors={clerkErrors} />
-        )}
+        {!isFormDisabled && <InlineError type="server" errors={clerkErrors} />}
       </form>
       <p className="text-base font-medium text-zinc-800">
         Not an Authorized User?

@@ -3,7 +3,7 @@
 import { ThemeContext } from "@/app/ThemeProvider";
 import { DateSelect, Input, SingleSelect } from "@/components/(inputs)";
 import { LoadingSpinner } from "@/components/(loading)";
-import InlineErrorController from "@/components/InlineErrorController";
+import InlineError from "@/components/InlineError";
 import { _baseURL_, cn } from "@/lib/utils";
 import { ZodAddStudentForm, gradeEnum } from "@/lib/validators";
 import { GradeEnum } from "@/models/Student";
@@ -121,7 +121,7 @@ export default function AddStudentForm({}: AddStudentFormProps) {
               type="text"
             />
             {formState.errors.lastName && (
-              <InlineErrorController
+              <InlineError
                 type="zod"
                 errors={formState.errors?.lastName?.message}
               />
@@ -145,7 +145,7 @@ export default function AddStudentForm({}: AddStudentFormProps) {
               type="text"
             />
             {formState.errors.firstName && (
-              <InlineErrorController
+              <InlineError
                 type="zod"
                 errors={formState.errors?.firstName?.message}
               />
@@ -169,7 +169,7 @@ export default function AddStudentForm({}: AddStudentFormProps) {
                 }}
               />
               {formState.errors.grade && (
-                <InlineErrorController
+                <InlineError
                   type="zod"
                   errors={formState.errors?.grade?.message}
                 />
@@ -191,7 +191,7 @@ export default function AddStudentForm({}: AddStudentFormProps) {
                 className="w-[160px]"
               />
               {formState.errors.dateEnrolled && (
-                <InlineErrorController
+                <InlineError
                   type="zod"
                   errors={formState.errors?.dateEnrolled?.message}
                 />
@@ -224,7 +224,7 @@ export default function AddStudentForm({}: AddStudentFormProps) {
           </button>
         </div>
         {/* {!isFormDisabled && (
-          <InlineErrorController type="server" errors={clerkErrors} />
+          <InlineError type="server" errors={clerkErrors} />
         )} */}
       </form>
     </div>

@@ -7,12 +7,14 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 // -=-=-= Types & Validators -=-=-= //
+export type UseAuthReturn = ReturnType<typeof useAuth>;
+
 type ProtectRouteProps = {
   children?: React.ReactNode;
   className?: string;
   appRouterInstance?: AppRouterInstance;
   customRedirectPath?: string;
-  useAuthReturn?: any;
+  useAuthReturn?: UseAuthReturn;
 };
 
 // =-=-=- Main Component =-=-=- //

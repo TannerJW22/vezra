@@ -106,7 +106,6 @@ export default function StudentTable({ columns }: StudentTableProps) {
 
   if (students.isLoading) {
     // <<--| Integrate actual Loading States
-    console.log("Students is Loading...");
     return <p>Loading...</p>;
   }
 

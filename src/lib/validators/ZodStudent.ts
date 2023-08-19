@@ -17,28 +17,28 @@ const ZodStudent = z.object({
   _id: z.unknown(),
   lastName: z
     .string({
-      invalid_type_error: "Valid Last Name is required.",
+      invalid_type_error: "Valid Last Name required.",
     })
     .nonempty({
-      message: "Valid Last Name is required.",
+      message: "Valid Last Name required.",
     }),
   firstName: z
     .string({
-      invalid_type_error: "Valid First Name is required.",
+      invalid_type_error: "Valid First Name required.",
     })
     .nonempty({
-      message: "Valid First Name is required.",
+      message: "Valid First Name required.",
     }),
   grade: z.enum(gradeEnum, {
     errorMap: (issue, _ctx) => {
       return {
-        message: "Valid Grade is required",
+        message: "Valid Grade required",
       };
     },
   }),
   dateEnrolled: z.date({
-    invalid_type_error: "Valid Date is required.",
-    required_error: "Valid Date is required.",
+    invalid_type_error: "Valid Date required.",
+    required_error: "Valid Date required.",
   }),
   homeroom: z.string().optional(),
   lockerNumber: z.string().optional(),

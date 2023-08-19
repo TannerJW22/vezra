@@ -21,7 +21,7 @@ export default function InlineError({
       <div
         className={twMerge(
           className,
-          "absolute mt-[42px] ml-2 py-2 text-[0.8rem] text-red-600 font-medium"
+          "ml-2 text-[0.8rem] text-red-600 font-medium"
         )}
       >
         <p className="flex italic tracking-tight whitespace-normal">

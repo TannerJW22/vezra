@@ -125,7 +125,6 @@ export default function SingleSelect<
         id={config.id}
         disabled={config.syncDisable}
         onClick={() => {
-          console.log("onClick works"); // <<--*
           setIsMenuOpen(true);
         }}
         className={cn(
