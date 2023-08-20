@@ -3,7 +3,6 @@ import { twMerge } from "tailwind-merge";
 // -=-=-= Types -=-=-= //
 type InlineErrorProps = {
   errors: any;
-  type: "server" | "zod";
   className?: string;
   customMessage?: string;
 };
@@ -11,11 +10,10 @@ type InlineErrorProps = {
 // =-=-=- Main Component =-=-=- //
 export default function InlineError({
   className,
-  type = "zod",
   errors,
+  customMessage,
 }: InlineErrorProps) {
-  if (errors && type === "zod") {
-    if (typeof errors !== "string") return <p></p>;
+  if (errors) {
     return (
       //
       <div
@@ -28,30 +26,6 @@ export default function InlineError({
           {errors}
           <br />
         </p>
-      </div>
-    );
-  }
-
-  if (errors && errors.length !== 0 && type === "server") {
-    return (
-      //
-      <div
-        className={twMerge(
-          className,
-          "mb-6 bg-red-100 py-2 rounded-md border text-[0.8rem] border-red-600 text-red-600 font-medium"
-        )}
-      >
-        {errors.map((error: string, i: number) => {
-          return (
-            <p
-              key={i}
-              className="flex justify-center mx-4 gap-2 whitespace-normal"
-            >
-              {errors}
-              <br />
-            </p>
-          );
-        })}
       </div>
     );
   }

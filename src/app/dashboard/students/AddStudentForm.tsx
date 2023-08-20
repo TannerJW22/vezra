@@ -4,13 +4,14 @@ import { ThemeContext } from "@/app/ThemeProvider";
 import { DateSelect, Input, SingleSelect } from "@/components/(inputs)";
 import { LoadingSpinner } from "@/components/(loading)";
 import InlineError from "@/components/InlineError";
+import { useNotification } from "@/lib/hooks";
 import { _baseURL_, cn } from "@/lib/utils";
 import { ZodAddStudentForm, gradeEnum } from "@/lib/validators";
 import { GradeEnum } from "@/models/Student";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -28,6 +29,14 @@ type AddStudentFormProps = {
 
 // =-=-=- Main Component =-=-=- //
 export default function AddStudentForm({}: AddStudentFormProps) {
+  const [isFormDisabled, setIsFormDisabled] = useState(false);
+  const theme = useContext(ThemeContext);
+  const { notifications, notify, pausedAt } = useNotification();
+
+  useEffect(() => {
+    console.log(notifications); // <<--*
+  }, [notifications]);
+
   const {
     register,
     watch,
@@ -41,9 +50,6 @@ export default function AddStudentForm({}: AddStudentFormProps) {
   } = useForm<AddStudentForm>({
     resolver: zodResolver(ZodAddStudentForm),
   });
-
-  const [isFormDisabled, setIsFormDisabled] = useState(false);
-  const theme = useContext(ThemeContext);
 
   const {
     mutate,
@@ -59,7 +65,7 @@ export default function AddStudentForm({}: AddStudentFormProps) {
       try {
         // Attempt Post Request on Successful Validation
         const res = await axios.post(
-          `${_baseURL_}/api/students`,
+          `${_baseURL_}/api/studens`,
           JSON.stringify({
             lastName: values.lastName,
             firstName: values.firstName,
@@ -73,10 +79,10 @@ export default function AddStudentForm({}: AddStudentFormProps) {
           }
         );
         return res;
-      } catch (err) {
-        // Catches Post-Validation Errors (Server, Network, etc.)
-        // <<--| Global Notifications / Toast
-        throw new Error("Internal Server Error");
+      } catch (err: any) {
+        notify.error(
+          err.message ?? "Unhandled Server Error. Please Try Again."
+        );
       }
 
       return;
@@ -121,10 +127,7 @@ export default function AddStudentForm({}: AddStudentFormProps) {
               type="text"
             />
             {formState.errors.lastName && (
-              <InlineError
-                type="zod"
-                errors={formState.errors?.lastName?.message}
-              />
+              <InlineError errors={formState.errors?.lastName?.message} />
             )}
           </div>
 
@@ -145,10 +148,7 @@ export default function AddStudentForm({}: AddStudentFormProps) {
               type="text"
             />
             {formState.errors.firstName && (
-              <InlineError
-                type="zod"
-                errors={formState.errors?.firstName?.message}
-              />
+              <InlineError errors={formState.errors?.firstName?.message} />
             )}
           </div>
 
@@ -169,10 +169,7 @@ export default function AddStudentForm({}: AddStudentFormProps) {
                 }}
               />
               {formState.errors.grade && (
-                <InlineError
-                  type="zod"
-                  errors={formState.errors?.grade?.message}
-                />
+                <InlineError errors={formState.errors?.grade?.message} />
               )}
             </div>
             <div className="flex flex-col">
@@ -191,10 +188,7 @@ export default function AddStudentForm({}: AddStudentFormProps) {
                 className="w-[160px]"
               />
               {formState.errors.dateEnrolled && (
-                <InlineError
-                  type="zod"
-                  errors={formState.errors?.dateEnrolled?.message}
-                />
+                <InlineError errors={formState.errors?.dateEnrolled?.message} />
               )}
             </div>
           </div>
@@ -223,9 +217,6 @@ export default function AddStudentForm({}: AddStudentFormProps) {
             )}
           </button>
         </div>
-        {/* {!isFormDisabled && (
-          <InlineError type="server" errors={clerkErrors} />
-        )} */}
       </form>
     </div>
   );

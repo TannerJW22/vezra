@@ -53,7 +53,7 @@ export type ThemeProviderProps = {
 export default function ThemeProvider({ children }: ThemeProviderProps) {
   const [value, setValue] = useState<Theme>({
     input: {
-      base: "peer px-3 pt-1 mb-[8px] outline-none border border-zinc-300 w-[220px] h-[46px] hover:bg-light-100 focus:bg-light-100 active:bg-light-100 focus:border-b-2 focus:border-x-0 focus:border-t-0 focus:border-primary-500 appearance-none focus:outline-none",
+      base: "peer px-3 pt-1 mb-[6px] outline-none border border-zinc-300 w-[220px] h-[46px] hover:bg-light-100 focus:bg-light-100 active:bg-light-100 focus:border-b-2 focus:border-x-0 focus:border-t-0 focus:border-primary-500 appearance-none focus:outline-none",
       onDisable:
         "bg-zinc-200 hover:bg-zinc-200 focus:bg-zinc-200 active:bg-zinc-200",
       onError:
@@ -66,7 +66,7 @@ export default function ThemeProvider({ children }: ThemeProviderProps) {
       },
     },
     singleSelect: {
-      base: "relative peer z-0 px-3 pt-1 mb-[8px] outline-none border border-zinc-300 w-[152px] h-[46px] hover:bg-light-100 focus:border-none appearance-none focus:outline-none cursor-pointer",
+      base: "relative peer z-0 px-3 pt-1 mb-[6px] outline-none border border-zinc-300 w-[152px] h-[46px] hover:bg-light-100 focus:border-none appearance-none focus:outline-none cursor-pointer",
       menu: "absolute z-10 top-[14px] left-0 border shadow-md min-w-[152px]",
       menuItem: "px-4 py-1.5 bg-light-100 hover:bg-primary-75 cursor-pointer",
       onDisable:
@@ -83,7 +83,7 @@ export default function ThemeProvider({ children }: ThemeProviderProps) {
         "text-[13px] text-slate-400 absolute hidden top-[18px] right-3 peer-hover:block cursor-pointer",
     },
     dateCalendar: {
-      base: "peer z-0 px-3 pt-1 mb-[8px] outline-none border border-zinc-300 w-[144px] h-[46px] hover:bg-light-100 focus:border-none appearance-none focus:outline-none cursor-pointer",
+      base: "peer z-0 px-3 pt-1 mb-[6px] outline-none border border-zinc-300 w-[144px] h-[46px] hover:bg-light-100 focus:border-none appearance-none focus:outline-none cursor-pointer",
       menu: "absolute z-10 top-[14px] border shadow-md min-w-[144px]",
       clearChoice:
         "absolute flex justify-center right-0 -top-[11px] z-10 w-12 pb-1 border border-zinc-400 bg-[#F0F0F0] rounded-md hover:bg-primary-75 cursor-pointer",

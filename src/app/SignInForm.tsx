@@ -14,6 +14,7 @@ import LoadingSpinner from "@/components/(loading)/LoadingSpinner";
 import InlineError from "@/components/InlineError";
 
 import Input from "@/components/(inputs)/Input";
+import { useNotification } from "@/lib/hooks";
 import { Theme } from "@/lib/types";
 import { ZodSignInFormData } from "@/lib/validators";
 import vezraLogo from "public/img/vezra-logo.png";
@@ -31,6 +32,7 @@ export default function SignInForm({}: SignInFormProps) {
   const auth = useAuth();
   const router = useRouter();
   const { isLoaded, signIn, setActive } = useSignIn();
+  const { notifications, notify, pausedAt } = useNotification();
   const theme: Theme = useContext(ThemeContext);
 
   useEffect(() => {
@@ -52,11 +54,9 @@ export default function SignInForm({}: SignInFormProps) {
   });
 
   const [isFormDisabled, setIsFormDisabled] = useState(false);
-  const [clerkErrors, setClerkErrors] = useState<string[]>([]);
 
   async function signInUser({ username, password }: SignInForm) {
     setIsFormDisabled(true);
-    setClerkErrors([]);
     try {
       const res = await signIn!.create({
         identifier: username,
@@ -67,7 +67,7 @@ export default function SignInForm({}: SignInFormProps) {
       //
     } catch (err: any) {
       if (err.errors) {
-        setClerkErrors([err.errors[0].longMessage]);
+        notify.error(`${[err.errors[0].longMessage]}`);
       }
 
       setIsFormDisabled(false);
@@ -104,10 +104,7 @@ export default function SignInForm({}: SignInFormProps) {
             className="w-[250px]"
           />
           {formState.errors.username && (
-            <InlineError
-              type="zod"
-              errors={formState.errors.username.message}
-            />
+            <InlineError errors={formState.errors.username.message} />
           )}
         </div>
         <div className="mb-5">
@@ -131,10 +128,7 @@ export default function SignInForm({}: SignInFormProps) {
             className="w-[250px]"
           />
           {formState.errors.password && (
-            <InlineError
-              type="zod"
-              errors={formState.errors.password.message}
-            />
+            <InlineError errors={formState.errors.password.message} />
           )}
         </div>
         <div className="mb-5">
@@ -145,7 +139,6 @@ export default function SignInForm({}: SignInFormProps) {
             {isFormDisabled ? <LoadingSpinner color="#FAFAFA" /> : "Login"}
           </button>
         </div>
-        {!isFormDisabled && <InlineError type="server" errors={clerkErrors} />}
       </form>
       <p className="text-base font-medium text-zinc-800">
         Not an Authorized User?
