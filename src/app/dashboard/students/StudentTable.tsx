@@ -27,10 +27,9 @@ import {
 } from "@/components/_(shadcn-ui)/_table";
 import StudentTableToolbar from "./StudentTableToolbar";
 
-import { _baseURL_, cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { ZodStudentTableData } from "@/lib/validators";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { UseQueryResult } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { BsArrowDownShort, BsArrowUpShort } from "react-icons/bs";
 
@@ -48,10 +47,11 @@ declare module "@tanstack/table-core" {
 
 type StudentTableProps = {
   columns: ColumnDef<StudentTableData, any>[];
+  query: UseQueryResult<StudentTableData[], Error>;
 };
 
 // =-=-=- Main Component =-=-=- //
-export default function StudentTable({ columns }: StudentTableProps) {
+export default function StudentTable({ columns, query }: StudentTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [filter, setFilter] = useState("");
 
@@ -70,17 +70,8 @@ export default function StudentTable({ columns }: StudentTableProps) {
     return itemRank.passed;
   };
 
-  const students = useQuery<StudentTableData[], Error>({
-    queryKey: ["students"],
-    queryFn: async () => {
-      return axios.get(`${_baseURL_}/api/students`).then((res) => {
-        return res.data.data;
-      });
-    },
-  });
-
   const table = useReactTable({
-    data: students.data || [],
+    data: query.data || [],
     columns,
     filterFns: {
       fuzzy: fuzzyFilter,
@@ -104,13 +95,12 @@ export default function StudentTable({ columns }: StudentTableProps) {
     debugColumns: false,
   });
 
-  if (students.isLoading) {
+  if (query.isLoading) {
     // <<--| Integrate actual Loading States
     return <p>Loading...</p>;
   }
 
-  if (students.isError) {
-    // <<--| Integrate error handling UI
+  if (query.isError) {
   }
 
   const renderSortingIcon = (sortStatus: "asc" | "desc" | "") => {
@@ -134,6 +124,7 @@ export default function StudentTable({ columns }: StudentTableProps) {
     <main className="p-5 bg-white shadow-md w-full h-[99%]">
       <div className="px-3 pl-3 pr-8 flex flex-col gap-3 w-[85%]">
         <StudentTableToolbar
+          query={query}
           table={table}
           filter={filter}
           setFilter={setFilter}

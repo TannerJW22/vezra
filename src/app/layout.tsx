@@ -32,7 +32,31 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <ThemeProvider>
           <html lang="en">
             <body className={rubik.className}>
-              <Toaster position="top-center" />
+              <Toaster
+                position="top-center"
+                toastOptions={{
+                  error: {
+                    className: "border-[1.5px] shadow-md border-red-400",
+                    style: {
+                      background: "rgb(254 202 202)",
+                      paddingLeft: "2rem",
+                      paddingRight: "2rem",
+                      whiteSpace: "nowrap",
+                      minWidth: "max-content",
+                    },
+                  },
+                  success: {
+                    className: "border-[1.5px] shadow-md border-green-400",
+                    style: {
+                      background: "rgb(187 247 208)",
+                      paddingLeft: "2rem",
+                      paddingRight: "2rem",
+                      whiteSpace: "nowrap",
+                      minWidth: "max-content",
+                    },
+                  },
+                }}
+              />
               {/* <ReduxProvider> */}
               {children}
               {/* </ReduxProvider> */}

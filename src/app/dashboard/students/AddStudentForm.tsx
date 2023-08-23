@@ -5,13 +5,14 @@ import { DateSelect, Input, SingleSelect } from "@/components/(inputs)";
 import { LoadingSpinner } from "@/components/(loading)";
 import InlineError from "@/components/InlineError";
 import { useNotification } from "@/lib/hooks";
+import { StudentTableData } from "@/lib/types";
 import { _baseURL_, cn } from "@/lib/utils";
 import { ZodAddStudentForm, gradeEnum } from "@/lib/validators";
 import { GradeEnum } from "@/models/Student";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { UseQueryResult, useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -24,18 +25,14 @@ export type VezraError = {
 };
 
 type AddStudentFormProps = {
-  //
+  query: UseQueryResult<StudentTableData[], Error>;
 };
 
 // =-=-=- Main Component =-=-=- //
-export default function AddStudentForm({}: AddStudentFormProps) {
+export default function AddStudentForm({ query }: AddStudentFormProps) {
   const [isFormDisabled, setIsFormDisabled] = useState(false);
   const theme = useContext(ThemeContext);
   const { notifications, notify, pausedAt } = useNotification();
-
-  useEffect(() => {
-    console.log(notifications); // <<--*
-  }, [notifications]);
 
   const {
     register,
@@ -65,7 +62,7 @@ export default function AddStudentForm({}: AddStudentFormProps) {
       try {
         // Attempt Post Request on Successful Validation
         const res = await axios.post(
-          `${_baseURL_}/api/studens`,
+          `${_baseURL_}/api/students`,
           JSON.stringify({
             lastName: values.lastName,
             firstName: values.firstName,
@@ -80,21 +77,20 @@ export default function AddStudentForm({}: AddStudentFormProps) {
         );
         return res;
       } catch (err: any) {
-        notify.error(
-          err.message ?? "Unhandled Server Error. Please Try Again."
-        );
+        notify.error("Internal Server Error. Please Try Again.");
       }
 
       return;
     },
-    onSuccess: (data) => {
+    onSuccess: (res, body) => {
+      if (res?.statusText === "success") {
+        notify.success(`New Student Added: ${body.firstName} ${body.lastName}`);
+        query.refetch();
+      }
+
       setIsFormDisabled(false);
-      // <<--| Global Notifications / Toast
     },
     onError: (err) => {
-      // <<--| Catches Validation Error thrown above.
-      // grab message and push to Notification System / Toast
-      alert("mutate().onError() callback triggered");
       setIsFormDisabled(false);
     },
   });

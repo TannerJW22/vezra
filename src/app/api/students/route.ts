@@ -56,6 +56,7 @@ export async function POST(request: Request, _: Response) {
 
   // Parse the body from Readable Stream using OoB MDN method.
   let reqBody: AddStudentForm = await request.json();
+  reqBody.dateEnrolled = new Date(reqBody.dateEnrolled);
 
   try {
     //
@@ -64,12 +65,13 @@ export async function POST(request: Request, _: Response) {
     const res: Student = await Student.create<AddStudentForm>(reqBody);
     newStudent = ZodStudent.parse(res);
 
-    //
+    //s
   } catch (err) {
     // Error Handling
     return NextResponse.json(
       {
         error: "Internal Server Error.",
+        temp: err,
       },
       {
         statusText: "error",

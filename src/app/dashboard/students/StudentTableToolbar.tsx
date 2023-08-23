@@ -9,10 +9,11 @@ import { DebouncedSearchBar } from "@/components/(inputs)";
 import { SheetTrigger } from "@/components/_(shadcn-ui)/_sheet";
 
 import { cn } from "@/lib/utils";
-import { useQueryClient } from "@tanstack/react-query";
+import { UseQueryResult } from "@tanstack/react-query";
 
 // -=-=-= Types -=-=-= //
 export type StudentTableToolbarProps = {
+  query: UseQueryResult;
   table: Table<StudentTableData>;
   filter: string;
   setFilter: (filter: string) => void;
@@ -21,13 +22,12 @@ export type StudentTableToolbarProps = {
 
 // =-=-=- Main Component =-=-=- //
 export default function StudentTableToolbar({
+  query,
   table,
   filter,
   setFilter,
   setSorting,
 }: StudentTableToolbarProps) {
-  const queryClient = useQueryClient();
-
   const handlePagination = (action: "prev" | "next") => {
     switch (action) {
       case "prev":
@@ -53,7 +53,7 @@ export default function StudentTableToolbar({
         />
         <button
           onClick={() => {
-            queryClient.invalidateQueries({ queryKey: ["students"] });
+            query.refetch();
             setFilter("");
             setSorting([]);
             table.setPageIndex(0);

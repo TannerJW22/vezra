@@ -75,7 +75,7 @@ export default function SignInForm({}: SignInFormProps) {
   }
 
   return (
-    <div className="absolute top-16 left-12 sm:left-32 md:left-1/3 max-w-[375px] bg-white shadow-lg shadow-zinc-700 overflow-hidden rounded-lg py-8 px-10 text-center justify-center items-center sm:px-12 md:px-[60px]">
+    <div className="absolute top-[100px] left-12 sm:left-32 md:left-1/3 max-w-[375px] bg-white shadow-lg shadow-zinc-700 overflow-hidden rounded-lg py-8 px-10 text-center justify-center items-center sm:px-12 md:px-[60px]">
       <Image
         className="mb-6"
         src={vezraLogo}
